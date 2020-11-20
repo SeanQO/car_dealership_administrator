@@ -4,5 +4,6 @@ in charge of sellers, and the dealership clients, also, each dealership has a va
 to test in a race simulation also as part of the program.
 
 ## Technical aspects:
+- Developers and gitbub accounts: [Anderson Cardenas](https://github.com/anderson-154), [Sean Quintero](https://github.com/SeanQO)
 - coded on java 1.8.0 & javafx on windows 10 using Eclipse workspace and scene builder.
 - Find the documentation here [Documentation folder](https://github.com/SeanQO/car_dealership_administrator/tree/main/doc), [Documentation document](https://github.com/SeanQO/car_dealership_administrator/tree/main/doc/Cardenas-Quintero.pdf)
