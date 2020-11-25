@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-public class Dealer {
+public abstract class Dealer {
 	
 	private Dealer nextDealer;
 	private Dealer prevDealer;
@@ -78,9 +78,9 @@ public class Dealer {
 	}
 
 	
+	public abstract boolean addVehicle(Vehicle vehicle);
 
-
-	
+	public abstract boolean removeVehicle(Vehicle vehicle);
 	
 	
 }
