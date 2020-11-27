@@ -86,10 +86,28 @@ public class Company {
 			BSTtoListInOrder(current.getRight(), list);
 		}
 	}
+	
+	public void addCarDealer(CarDealer carDealer) {
+		CarDealer newDealer = carDealer;
+		addDealer(newDealer);
+		
+	}
+	
+	public void addMotorcycleDealer(MotorcycleDealer motorcycleDealer) {
+		MotorcycleDealer newDealer = motorcycleDealer;
+		addDealer(newDealer);
+		
+	}
 
-	public void addDealer(Dealer c) {
+	public void addVehicleDealer(VehicleDealer vehicleDealer) {
+		VehicleDealer newDealer = vehicleDealer;
+		addDealer(newDealer);
+		
+	}
 
-		Dealer newDealer = new Dealer(c.getName(), c.getAdmin(), c.getAdmin());
+	private void addDealer(Dealer c) {
+
+		Dealer newDealer = c;
 
 		// Case: Empty list.
 		if (firstDealer == null) {
