@@ -7,6 +7,7 @@ public abstract class Dealer {
 	private Dealer nextDealer;
 	private Dealer prevDealer;
 	
+	
 	private String name;
 	private Admin admin;
 	private String adress;	

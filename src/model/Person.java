@@ -2,18 +2,18 @@ package model;
 
 import java.io.Serializable;
 
-public class Person implements Serializable{
+public class Person  implements Comparable<Person>, Serializable{
 	private static final long serialVersionUID = 1;
 	
 	private String name;
-	private String lastname;
+	private String lastName;
 	private String email;
 	private long id;
 	private int phoneNumber;
 	
-	public Person(String name, String lastname, String email, long id, int phoneNumber) {
+	public Person(String name, String lastName, String email, long id, int phoneNumber) {
 		this.name = name;
-		this.lastname = lastname;
+		this.lastName = lastName;
 		this.email = email;
 		this.id = id;
 		this.phoneNumber = phoneNumber;
@@ -23,8 +23,8 @@ public class Person implements Serializable{
 		return name;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getLastName() {
+		return lastName;
 	}
 
 	public String getEmail() {
@@ -39,4 +39,13 @@ public class Person implements Serializable{
 		return phoneNumber;
 	}
 	
+	public int compareTo(Person p) {
+		int difference;
+		if(this.lastName.equals(p.lastName)) {
+			difference = this.name.compareTo(p.name);
+		}else {
+			difference = this.lastName.compareTo(p.lastName);
+		}
+		return difference;
+	}
 }
