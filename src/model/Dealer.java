@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-public abstract class Dealer {
+public abstract class Dealer implements Comparable<Dealer>{
 	
 	private Dealer nextDealer;
 	private Dealer prevDealer;
@@ -78,6 +78,15 @@ public abstract class Dealer {
 		return sellers;
 	}
 
+	public int compareTo(Dealer p) {
+		int difference;
+		if(this.name.equals(p.name)) {
+			difference = this.name.compareTo(p.name);
+		}else {
+			difference = this.name.compareTo(p.name);
+		}
+		return difference;
+	}
 	
 	public abstract boolean addVehicle(Vehicle vehicle);
 

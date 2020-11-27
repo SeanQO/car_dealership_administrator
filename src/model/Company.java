@@ -64,15 +64,15 @@ public class Company {
 		}
 		return vehicles;
 	}
-	
-	public List<Dealer> getDealers(){
+
+	public List<Dealer> getDealers() {
 		List<Dealer> dealers = new ArrayList<Dealer>();
-		if(firstDealer!=null) {
+		if (firstDealer != null) {
 			Dealer current = firstDealer;
 			do {
 				dealers.add(current);
-				current=current.getNextDealer();
-			}while(current!=firstDealer);
+				current = current.getNextDealer();
+			} while (current != firstDealer);
 		}
 		return dealers;
 	}
@@ -132,7 +132,7 @@ public class Company {
 		}
 	}
 
-	public Dealer searchDebtor(String name) throws EmptyDataException {
+	public Dealer searchDealer(String name) throws EmptyDataException {
 		if (name == null || name.equals("")) {
 			throw new EmptyDataException("name");
 		}
@@ -149,4 +149,89 @@ public class Company {
 		return dealer;
 	}
 
+	public void deleteDealer(Dealer dealer) throws EmptyDataException {
+
+		// Case > 0
+		if (firstDealer != null) {
+			// Case 1: list size: 1.
+			if (firstDealer == firstDealer.getNextDealer()) {
+				firstDealer = null;
+			}
+			// Case 1: list size: 2.
+			else if (dealer.getNextDealer().getNextDealer() == dealer) {
+				firstDealer = dealer.getNextDealer();
+				firstDealer.setNextDealer(null);
+				firstDealer.setPrevDealer(null);
+			}
+			// Case 1: list size >= 3.
+			else {
+				Dealer prev = dealer.getPrevDealer();
+				Dealer next = dealer.getNextDealer();
+
+				prev.setNextDealer(next);
+				next.setPrevDealer(prev);
+				if (dealer == firstDealer) {
+					firstDealer = dealer.getNextDealer();
+				}
+			}
+		}
+	}
+
+	public void sortCByFullName() { // Bubble Sort
+		if (firstDealer != null) {
+			boolean thereWasSwap = true;
+
+			while (thereWasSwap) {
+				Dealer current = firstDealer;
+				thereWasSwap = false;
+
+				// Case: list >=2
+				while (current.getNextDealer() != firstDealer) {
+					if (current.getNextDealer().compareTo(current) < 0) {
+						swap(current, current.getNextDealer());
+						thereWasSwap = true;
+					}
+					current = current.getNextDealer();
+				}
+			}
+		}
+	}
+
+	private void swap(Dealer c1, Dealer c2) {
+
+		// Case: c1 is the first
+		if (c1 == firstDealer) {
+			firstDealer = c2;
+		}
+		// Case: c1 is the last
+		else if (c2 == firstDealer) {
+			firstDealer = c1;
+		}
+
+		// Case: list size: 3.
+		else if (c1.getPrevDealer() == c2.getNextDealer()) {
+			Dealer c3 = c1.getPrevDealer();
+			c1.setNextDealer(c3);
+			c1.setPrevDealer(c2);
+
+			c2.setNextDealer(c1);
+			c2.setPrevDealer(c3);
+
+			c3.setNextDealer(c2);
+			c3.setPrevDealer(c1);
+		}
+		// Case: list size >= 4.
+		else {
+			Dealer pc1 = c1.getPrevDealer();
+			Dealer nc2 = c2.getNextDealer();
+
+			pc1.setNextDealer(c2);
+
+			c2.setPrevDealer(pc1);
+			c2.setNextDealer(c1);
+
+			c1.setPrevDealer(c2);
+			c1.setNextDealer(nc2);
+		}
+	}
 }
