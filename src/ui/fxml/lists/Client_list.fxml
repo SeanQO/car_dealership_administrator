@@ -10,18 +10,18 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.DealershipGUI">
    <children>
       <ScrollPane layoutY="70.0" prefHeight="429.0" prefWidth="680.0">
          <content>
-            <TableView fx:id="coursesListTable" prefHeight="429.0">
+            <TableView fx:id="clientsListTable" prefHeight="429.0">
                <columns>
                   <TableColumn fx:id="columnName" prefWidth="146.0" text="Name" />
-                  <TableColumn fx:id="columnCredits" prefWidth="131.0" text="lastname" />
-                  <TableColumn fx:id="columnCurriculum" minWidth="9.0" prefWidth="77.0" text="Id" />
-                  <TableColumn fx:id="columnEvaluation" prefWidth="102.0" text="Email" />
-                  <TableColumn fx:id="columnDate" prefWidth="96.0" text="Phone number" />
-                  <TableColumn fx:id="columnDate1" prefWidth="127.0" text="# purchased vehicles" />
+                  <TableColumn fx:id="columnLastName" prefWidth="131.0" text="lastname" />
+                  <TableColumn fx:id="columnId" minWidth="9.0" prefWidth="77.0" text="Id" />
+                  <TableColumn fx:id="columnEmail" prefWidth="102.0" text="Email" />
+                  <TableColumn fx:id="columnPhoneNumber" prefWidth="96.0" text="Phone number" />
+                  <TableColumn fx:id="columnPurchasedVehicles" prefWidth="127.0" text="# purchased vehicles" />
                </columns>
             </TableView>
          </content>
@@ -33,8 +33,8 @@
                   <Font name="Verdana Bold" size="22.0" />
                </font>
             </Label>
-            <TextField prefHeight="25.0" prefWidth="264.0" />
-            <Button mnemonicParsing="false" onAction="#signUp" text="Search Client">
+            <TextField fx:id="searchClientTxt" prefHeight="25.0" prefWidth="264.0" />
+            <Button mnemonicParsing="false" onAction="#searchClient" text="Search Client">
                <font>
                   <Font name="Verdana Bold" size="15.0" />
                </font>
