@@ -90,4 +90,21 @@ public class Vehicle {
 		return ""+id+","+totalSalePrice+","+","+brand+","+weight+","+topSpeed+","+mileage+","+used;
 	}
 	
+	public int compareTo(Vehicle v) {
+		int difference;
+		if(this.id.equals(v.id)) {
+			difference = this.id.compareTo(v.id);
+		}else {
+			difference = this.id.compareTo(v.id);
+		}
+		return difference;
+	}
+	
+	public Vehicle getMin() {
+		Vehicle min = this;
+		while(min.getLeft()!=null) {
+				min=min.getLeft();
+		}
+		return min;
+	}
 }
