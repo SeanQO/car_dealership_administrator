@@ -130,6 +130,7 @@ public class Company {
 		}
 	}
 
+	
 	public void deleteVehicle(String id) {
 		Vehicle nodo = searchVehicle(id);
 		if (nodo != null) {
