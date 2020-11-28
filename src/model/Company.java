@@ -88,6 +88,7 @@ public class Company {
 		}
 	}
 
+	
 	public void addVehicle(String id, double totalSalePrice, String brand, double weight, String typeOfMotor,
 			double topSpeed, int mileage, boolean used) throws DoubleRegistrationException, EmptyDataException {
 		String emptyData = verifyFields(id, totalSalePrice, brand, weight, typeOfMotor, topSpeed, mileage, used);
