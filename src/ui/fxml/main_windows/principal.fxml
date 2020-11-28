@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="CENTER_LEFT" prefHeight="550.0" prefWidth="680.0" spacing="20.0">
+         <children>
+            <Label alignment="BOTTOM_LEFT" text="Management sofware for dealer network">
+               <font>
+                  <Font name="Verdana Bold" size="22.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="100.0" />
+               </VBox.margin>
+            </Label>
+            <Label text="Administrator: ">
+               <font>
+                  <Font name="Verdana Bold" size="22.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </Label>
+            <Label text="Total sales:">
+               <font>
+                  <Font name="Verdana Bold" size="22.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </Label>
+            <Label text="Total earnings:">
+               <font>
+                  <Font name="Verdana Bold" size="22.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </Label>
+            <Label text="Dealer list">
+               <font>
+                  <Font name="Verdana Bold" size="22.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </Label>
+            <ScrollPane prefHeight="153.0" prefWidth="369.0">
+               <content>
+                  <TableView fx:id="coursesListTable" prefHeight="151.0" prefWidth="579.0">
+                     <columns>
+                        <TableColumn fx:id="columnName" prefWidth="299.0" text="Dealer name" />
+                        <TableColumn fx:id="columnCredits" prefWidth="279.0" text="Admin name" />
+                     </columns>
+                  </TableView>
+               </content>
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" />
+               </VBox.margin>
+            </ScrollPane>
+            <Button mnemonicParsing="false" onAction="#signUp" text="Open dealer">
+               <font>
+                  <Font name="Verdana Bold" size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="290.0" />
+               </VBox.margin>
+            </Button>
+            <Label text="Nit: ">
+               <font>
+                  <Font name="Verdana Bold" size="22.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="20.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>
