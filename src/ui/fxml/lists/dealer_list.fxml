@@ -19,8 +19,8 @@
                   <Font name="Verdana Bold" size="22.0" />
                </font>
             </Label>
-            <TextField prefHeight="25.0" prefWidth="264.0" />
-            <Button mnemonicParsing="false" onAction="#signUp" text="Search dealer">
+            <TextField fx:id="searchDealerTxt" prefHeight="25.0" prefWidth="264.0" />
+            <Button mnemonicParsing="false" onAction="#searchDealer" text="Search dealer">
                <font>
                   <Font name="Verdana Bold" size="15.0" />
                </font>
@@ -29,16 +29,16 @@
       </HBox>
       <ScrollPane layoutY="71.0" prefHeight="430.0" prefWidth="680.0">
          <content>
-            <TableView fx:id="coursesListTable" editable="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="676.0">
+            <TableView fx:id="DealerListTable" editable="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="676.0">
                <columns>
                   <TableColumn fx:id="columnName" prefWidth="338.0" text="Dealer name" />
-                  <TableColumn minWidth="0.0" prefWidth="337.0" text="Admin name" />
+                  <TableColumn fx:id="columnAdminName" minWidth="0.0" prefWidth="337.0" text="Admin name" />
                </columns>
             </TableView>
          </content>
       </ScrollPane>
-      <Button layoutX="533.0" layoutY="520.0" mnemonicParsing="false" text="Delete dealer" />
-      <Button layoutX="303.0" layoutY="520.0" mnemonicParsing="false" text="Add dealer" />
-      <Button layoutX="76.0" layoutY="520.0" mnemonicParsing="false" text="Change admin dealer" />
+      <Button layoutX="533.0" layoutY="520.0" mnemonicParsing="false" onAction="#deleteDealer" text="Delete dealer" />
+      <Button layoutX="303.0" layoutY="520.0" mnemonicParsing="false" onAction="#addDealer" text="Add dealer" />
+      <Button layoutX="76.0" layoutY="520.0" mnemonicParsing="false" onAction="#changeAdminDealer" text="Change admin dealer" />
    </children>
 </AnchorPane>

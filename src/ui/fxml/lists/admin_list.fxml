@@ -10,19 +10,19 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.DealershipGUI">
    <children>
       <ScrollPane layoutX="-8.0" layoutY="76.0" prefHeight="424.0" prefWidth="688.0">
          <content>
-            <TableView fx:id="coursesListTable" prefHeight="423.0">
+            <TableView fx:id="adminsListTable" prefHeight="423.0">
                <columns>
                   <TableColumn fx:id="columnName" prefWidth="120.0" text="Name" />
-                  <TableColumn fx:id="columnCredits" prefWidth="114.0" text="lastname" />
-                  <TableColumn fx:id="columnCurriculum" minWidth="9.0" prefWidth="72.0" text="Id" />
-                  <TableColumn fx:id="columnEvaluation" prefWidth="70.0" text="Email" />
-                  <TableColumn fx:id="columnDate" prefWidth="102.0" text="Phone number" />
-                  <TableColumn fx:id="columnDate2" prefWidth="85.0" text="Salary" />
-                  <TableColumn fx:id="columnDate1" prefWidth="116.0" text="In charge of" />
+                  <TableColumn fx:id="columnLastName" prefWidth="114.0" text="lastname" />
+                  <TableColumn fx:id="columnId" minWidth="9.0" prefWidth="72.0" text="Id" />
+                  <TableColumn fx:id="columnEmail" prefWidth="70.0" text="Email" />
+                  <TableColumn fx:id="columnPhoneNumber" prefWidth="102.0" text="Phone number" />
+                  <TableColumn fx:id="columnSalary" prefWidth="85.0" text="Salary" />
+                  <TableColumn fx:id="columnInChargeOf" prefWidth="116.0" text="In charge of" />
                </columns>
             </TableView>
          </content>
@@ -34,8 +34,8 @@
                   <Font name="Verdana Bold" size="22.0" />
                </font>
             </Label>
-            <TextField prefHeight="25.0" prefWidth="264.0" />
-            <Button mnemonicParsing="false" onAction="#signUp" text="Search Admin">
+            <TextField fx:id="searchAdmintxt" prefHeight="25.0" prefWidth="264.0" />
+            <Button mnemonicParsing="false" onAction="#searchAdmin" text="Search Admin">
                <font>
                   <Font name="Verdana Bold" size="15.0" />
                </font>

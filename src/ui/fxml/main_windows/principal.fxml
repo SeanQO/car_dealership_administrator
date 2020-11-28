@@ -7,10 +7,11 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.DealershipGUI">
    <children>
       <VBox alignment="CENTER_LEFT" prefHeight="550.0" prefWidth="680.0" spacing="20.0">
          <children>
@@ -22,41 +23,59 @@
                   <Insets left="100.0" />
                </VBox.margin>
             </Label>
-            <Label text="Administrator: ">
-               <font>
-                  <Font name="Verdana Bold" size="22.0" />
-               </font>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Label text="Administrator: ">
+                     <font>
+                        <Font name="Verdana Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="mainAdminNameLabel" prefHeight="17.0" prefWidth="420.0" text="admin name" />
+               </children>
                <VBox.margin>
                   <Insets left="20.0" />
                </VBox.margin>
-            </Label>
-            <Label text="Total sales:">
-               <font>
-                  <Font name="Verdana Bold" size="22.0" />
-               </font>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Label text="Total sales:">
+                     <font>
+                        <Font name="Verdana Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="mainTotalSalesLabel" prefHeight="17.0" prefWidth="420.0" text="000000000" />
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Label text="Total earnings:">
+                     <font>
+                        <Font name="Verdana Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="mainTotalEarningsLabel" prefHeight="17.0" prefWidth="420.0" text="000000000" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
                <VBox.margin>
                   <Insets left="20.0" />
                </VBox.margin>
-            </Label>
-            <Label text="Total earnings:">
-               <font>
-                  <Font name="Verdana Bold" size="22.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="20.0" />
-               </VBox.margin>
-            </Label>
+            </HBox>
             <Label text="Dealer list">
                <font>
                   <Font name="Verdana Bold" size="22.0" />
                </font>
                <VBox.margin>
-                  <Insets left="20.0" />
+                  <Insets left="288.0" />
                </VBox.margin>
             </Label>
             <ScrollPane prefHeight="153.0" prefWidth="369.0">
                <content>
-                  <TableView fx:id="coursesListTable" prefHeight="151.0" prefWidth="579.0">
+                  <TableView fx:id="mainDealerListTable" prefHeight="151.0" prefWidth="579.0">
                      <columns>
                         <TableColumn fx:id="columnName" prefWidth="299.0" text="Dealer name" />
                         <TableColumn fx:id="columnCredits" prefWidth="279.0" text="Admin name" />
@@ -67,7 +86,7 @@
                   <Insets left="50.0" right="50.0" />
                </VBox.margin>
             </ScrollPane>
-            <Button mnemonicParsing="false" onAction="#signUp" text="Open dealer">
+            <Button mnemonicParsing="false" onAction="#openDealer" text="Open dealer">
                <font>
                   <Font name="Verdana Bold" size="15.0" />
                </font>
@@ -75,14 +94,20 @@
                   <Insets left="290.0" />
                </VBox.margin>
             </Button>
-            <Label text="Nit: ">
-               <font>
-                  <Font name="Verdana Bold" size="22.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="20.0" />
-               </VBox.margin>
-            </Label>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Label text="NIT: ">
+                     <font>
+                        <Font name="Verdana Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="mainNitLabel" prefHeight="17.0" prefWidth="207.0" text="000000000" />
+                  <Label fx:id="mainAdressLabel" prefHeight="17.0" prefWidth="353.0" text="000000000" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
          </children>
          <padding>
             <Insets bottom="20.0" />
