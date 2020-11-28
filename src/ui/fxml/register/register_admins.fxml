@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ClassroomGUI">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.DealershipGUI ">
    <children>
       <VBox alignment="CENTER" prefHeight="600.0" prefWidth="400.0" spacing="35.0">
          <children>
@@ -29,7 +29,7 @@
                         <Font name="Verdana Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtUserName" />
+                  <TextField fx:id="txtName" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
@@ -39,7 +39,7 @@
                         <Font name="Verdana Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtUserName1" />
+                  <TextField fx:id="txtLastname" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
@@ -49,7 +49,7 @@
                         <Font name="Verdana Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtUserName111" />
+                  <TextField fx:id="txtId" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
@@ -59,7 +59,7 @@
                         <Font name="Verdana Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtUserName2" />
+                  <TextField fx:id="txtEmail" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
@@ -69,7 +69,7 @@
                         <Font name="Verdana Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtUserName21" />
+                  <TextField fx:id="txtPhoneNumber" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
@@ -79,7 +79,7 @@
                         <Font name="Verdana Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtUserName3" />
+                  <TextField fx:id="txtSalary" />
                </children>
             </HBox>
             <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="265.0" spacing="40.0">
@@ -89,12 +89,12 @@
                         <Font name="Verdana Bold" size="15.0" />
                      </font>
                   </Label>
-                  <ComboBox prefWidth="150.0" promptText="Dealer" />
+                  <ComboBox fx:id="dealerComboBox" prefWidth="150.0" promptText="Dealer" />
                </children>
             </HBox>
             <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="265.0" spacing="40.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#signUp" text="Register">
+                  <Button mnemonicParsing="false" onAction="#registerAdmin" text="Register">
                      <font>
                         <Font name="Verdana Bold" size="15.0" />
                      </font>
