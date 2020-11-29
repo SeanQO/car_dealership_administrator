@@ -58,7 +58,7 @@ public class Company {
 		return vehicleRoot;
 	}
 
-	public List<Vehicle> getEmployees() {
+	public List<Vehicle> getVehicles() {
 		List<Vehicle> vehicles = new ArrayList<Vehicle>();
 		if (vehicleRoot != null) {
 			BSTtoListInOrder(vehicleRoot, vehicles);
