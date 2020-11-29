@@ -62,8 +62,6 @@ public class DealershipGUI {
 
     @FXML
     private Label dealerTotalEarningsLabel;
-
-
     
     public DealershipGUI() {
 		// TODO Auto-generated constructor stub
