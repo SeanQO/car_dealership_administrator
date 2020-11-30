@@ -1,9 +1,15 @@
+
+
+
+
 package ui;
 
 import java.io.IOException;
 import java.util.Optional;
 
-import com.sun.xml.internal.ws.wsdl.writer.document.OpenAtts;
+import org.omg.CORBA.PRIVATE_MEMBER;
+
+import com.sun.xml.internal.ws.Closeable;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +26,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import javafx.event.EventHandler;
 
 public class DealershipGUI {
 	
@@ -109,18 +117,17 @@ public class DealershipGUI {
 
     // *************************** GUI attributes and builder***************************
     private Stage dealerStage;
+    
+    private boolean registerOpen;
+    
+    private Stage registerStage;
 	
 	private Stage listStage;
 	
-	private Stage registerStage;
-	
-	private Stage alertStage;
-    
     public DealershipGUI() {
 		dealerStage = null;
 		listStage = null;
-		registerStage = null;
-		alertStage = null;
+		
 	}
     
     // *************************** main window action ***************************
@@ -146,7 +153,7 @@ public class DealershipGUI {
     
     @FXML
     void openRegisterClient(ActionEvent event) throws IOException{
-    	if (registerStage == null) {
+    	if (!registerOpen) {
     		openRegisterClient();
     		
 		}else {
@@ -165,8 +172,8 @@ public class DealershipGUI {
     }
     
     private void openRegisterClient() throws IOException{
-    	System.out.println("open register client working");
     	
+    	registerOpen = true;
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/register/register_clients.fxml"));
     	fxmlLoader.setController(this);
     	Parent registerClientPane = fxmlLoader.load();
@@ -176,8 +183,18 @@ public class DealershipGUI {
 		stage.setScene(scene);
 		stage.setTitle("Register client");
 		registerStage = stage;
+		stage.setOnCloseRequest(e -> closeStage());
+		
 		stage.show();
+		
     }
+    
+    private void  closeStage() {
+		registerOpen = false;
+		
+		registerStage.close();
+		
+	}
     
     @FXML
     void openClientList(ActionEvent event) throws IOException{
@@ -187,7 +204,7 @@ public class DealershipGUI {
     // *************************** sellers menu
     @FXML
     void openRegisterSeller(ActionEvent event) throws IOException{
-    	if (registerStage == null) {
+    	if (!registerOpen) {
     		openRegisterSeller();
     		
 		}else {
@@ -206,8 +223,9 @@ public class DealershipGUI {
     }
     
     private void openRegisterSeller() throws IOException{
-    	System.out.println("open reister seller working");
-
+    	
+    	registerOpen = true;
+    	
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/register/register_sellers.fxml"));
     	fxmlLoader.setController(this);
     	Parent registerSellerPane = fxmlLoader.load();
@@ -217,7 +235,22 @@ public class DealershipGUI {
 		stage.setScene(scene);
 		stage.setTitle("Register client");
 		registerStage = stage;
+		/*
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+	          public void handle(WindowEvent we) {
+	        	  System.out.println("disconected");
+	              stage.setScene(null);
+	        	  stage.close();
+	          }
+	      }); 
+		*/
+		
+		stage.setOnCloseRequest(e -> closeStage());
+		
 		stage.show();
+		
+
+		
     }
 
     @FXML
@@ -240,9 +273,9 @@ public class DealershipGUI {
    
     @FXML
     void registerClient(ActionEvent event) {
-    	System.out.println("Register client working");
     	registerStage.close();
     	registerStage = null;
+    	registerOpen = false;
 
     }
     
@@ -250,9 +283,9 @@ public class DealershipGUI {
 
     @FXML
     void registerSeller(ActionEvent event) {
-    	System.out.println("Register seller working");
     	registerStage.close();
     	registerStage = null;
+    	registerOpen = false;
     }
     
     // *************************** alerts ***************************
