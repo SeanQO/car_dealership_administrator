@@ -25,20 +25,20 @@
                <children>
                   <SplitMenuButton mnemonicParsing="false" text="Clients">
                     <items>
-                      <MenuItem mnemonicParsing="false" onAction="#registerClient" text="register client" />
-                      <MenuItem mnemonicParsing="false" onAction="#clientList" text="show client list" />
+                      <MenuItem mnemonicParsing="false" onAction="#openRegisterClient" text="register client" />
+                      <MenuItem mnemonicParsing="false" onAction="#openClientList" text="show client list" />
                     </items>
                   </SplitMenuButton>
                   <SplitMenuButton mnemonicParsing="false" text="Sellers">
                     <items>
-                      <MenuItem mnemonicParsing="false" onAction="#registerSeller" text="register seller" />
-                      <MenuItem mnemonicParsing="false" onAction="#sellerList" text="sellers list" />
+                      <MenuItem mnemonicParsing="false" onAction="#openRegisterSeller" text="register seller" />
+                      <MenuItem mnemonicParsing="false" onAction="#openSellerList" text="sellers list" />
                     </items>
                   </SplitMenuButton>
                   <SplitMenuButton mnemonicParsing="false" text="Vehicles">
                     <items>
-                      <MenuItem mnemonicParsing="false" onAction="#addVehicle" text="add vehicle" />
-                      <MenuItem mnemonicParsing="false" onAction="#vehicleList" text="vehicle list" />
+                      <MenuItem mnemonicParsing="false" onAction="#openAddVehicle" text="add vehicle" />
+                      <MenuItem mnemonicParsing="false" onAction="#openVehicleList" text="vehicle list" />
                     </items>
                   </SplitMenuButton>
                </children>
