@@ -27,7 +27,7 @@ public class Main extends Application{
 		
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
-		primaryStage.setTitle("Course Registration");
+		primaryStage.setTitle("Company");
 		primaryStage.show();
 		
 	}

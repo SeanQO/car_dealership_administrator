@@ -19,11 +19,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -114,6 +116,36 @@ public class DealershipGUI {
 
     @FXML
     private ComboBox<?> rSadminComboBox;
+    
+    // *************************** add vehicle window attributes ***************************
+    // *aV* add vehicle window indicator
+    @FXML
+    private TextField aVTxtId;
+
+    @FXML
+    private TextField aVTxtBasePrice;
+
+    @FXML
+    private TextField txtId;
+
+    @FXML
+    private TextField aVTxtBrand;
+
+    @FXML
+    private TextField aVTxtWeight;
+
+    @FXML
+    private TextField aVTxtNumOfPassengers;
+
+    @FXML
+    private ChoiceBox<?> aVEngineTypeChoiceBox;
+
+    @FXML
+    private TextField aVTxtMileage;
+
+    @FXML
+    private RadioButton aVPreOwnedRB;
+
 
     // *************************** GUI attributes and builder***************************
     private Stage dealerStage;
@@ -152,9 +184,13 @@ public class DealershipGUI {
     // *************************** clients menu
     
     @FXML
-    void openRegisterClient(ActionEvent event) throws IOException{
+    void openRegisterClient(ActionEvent event) {
     	if (!registerOpen) {
-    		openRegisterClient();
+    		try {
+    			openRegisterClient();
+			} catch (IOException ioException) {
+				// TODO: handle exception
+			}
     		
 		}else {
 			boolean runRegister = false;
@@ -162,7 +198,11 @@ public class DealershipGUI {
 			runRegister = multipleRegisterAlert("Register client");
 					
 			if (runRegister) {
-				openRegisterClient();
+				try {
+	    			openRegisterClient();
+				} catch (IOException ioException) {
+					// TODO: handle exception
+				}
 				
 			}
 			
@@ -203,9 +243,14 @@ public class DealershipGUI {
     
     // *************************** sellers menu
     @FXML
-    void openRegisterSeller(ActionEvent event) throws IOException{
+    void openRegisterSeller(ActionEvent event) {
     	if (!registerOpen) {
-    		openRegisterSeller();
+    		try {
+    			openRegisterSeller();
+			} catch (IOException ioException) {
+				// TODO: handle exception
+			}
+    		
     		
 		}else {
 			boolean runRegister = false;
@@ -213,7 +258,11 @@ public class DealershipGUI {
 			runRegister = multipleRegisterAlert("Register seller");
 					
 			if (runRegister) {
-				openRegisterSeller();
+				try {
+	    			openRegisterSeller();
+				} catch (IOException ioException) {
+					// TODO: handle exception
+				}
 				
 			}
 			
@@ -235,21 +284,10 @@ public class DealershipGUI {
 		stage.setScene(scene);
 		stage.setTitle("Register client");
 		registerStage = stage;
-		/*
-		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-	          public void handle(WindowEvent we) {
-	        	  System.out.println("disconected");
-	              stage.setScene(null);
-	        	  stage.close();
-	          }
-	      }); 
-		*/
 		
 		stage.setOnCloseRequest(e -> closeStage());
 		
 		stage.show();
-		
-
 		
     }
 
@@ -261,9 +299,50 @@ public class DealershipGUI {
     // *************************** vehicles menu
     @FXML
     void openAddVehicle(ActionEvent event) {
-    	System.out.println("open add vehicle working");
+    	if (!registerOpen) {
+    		try {
+    			openAddVehicle();
+			} catch (IOException ioException) {
+				// TODO: handle exception
+			}
+    		
+    		
+		}else {
+			boolean runRegister = false;
+			
+			runRegister = multipleRegisterAlert("Register seller");
+					
+			if (runRegister) {
+				try {
+	    			openAddVehicle();
+				} catch (IOException ioException) {
+					// TODO: handle exception
+				}
+				
+			}
+			
+			
+		}
     }
     
+    private void openAddVehicle() throws IOException{
+    	registerOpen = true;
+
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/register/add_vehicle.fxml"));
+    	fxmlLoader.setController(this);
+    	Parent addVehicPane = fxmlLoader.load();
+
+    	Scene scene = new Scene(addVehicPane);
+    	Stage stage = new Stage();
+    	stage.setScene(scene);
+    	stage.setTitle("Register Vehicle");
+    	registerStage = stage;
+
+    	stage.setOnCloseRequest(e -> closeStage());
+
+    	stage.show();
+    }
+
     @FXML
     void openVehicleList(ActionEvent event) {
     	System.out.println("open vehicle list working");
@@ -279,10 +358,18 @@ public class DealershipGUI {
 
     }
     
- // *************************** register seller window actions ***************************
+    // *************************** register seller window actions ***************************
 
     @FXML
     void registerSeller(ActionEvent event) {
+    	registerStage.close();
+    	registerStage = null;
+    	registerOpen = false;
+    }
+  
+    // *************************** add vehicle window actions ***************************
+    @FXML
+    void addVehicle(ActionEvent event) {
     	registerStage.close();
     	registerStage = null;
     	registerOpen = false;
