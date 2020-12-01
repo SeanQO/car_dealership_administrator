@@ -14,6 +14,7 @@ public class Vehicle {
 	private double topSpeed;
 	private int mileage;
 	private boolean used;
+	private int numOfpassengers;
 	
 	public Vehicle(String id, double totalSalePrice, String brand, double weight, String typeOfMotor, double topSpeed,
 			int mileage, boolean used) {
@@ -72,6 +73,10 @@ public class Vehicle {
 
 	public Vehicle getLeft() {
 		return left;
+	}
+	
+	public int getNumOfPassengers() {
+		return numOfpassengers;
 	}
 
 	public void setHead(Vehicle head) {
