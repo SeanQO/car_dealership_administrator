@@ -94,7 +94,7 @@ public class DealershipGUI {
     @FXML
     private ComboBox<?> rCsellerComboBox;
     
-    // *************************** register client window attributes ***************************
+    // *************************** register seller window attributes ***************************
     // *rS* register client window indicator
     @FXML
     private TextField rStxtName;
@@ -116,6 +116,33 @@ public class DealershipGUI {
 
     @FXML
     private ComboBox<?> rSadminComboBox;
+    
+    // *************************** clients list window attributes ***************************
+    // *cL* client list window indicator
+    
+    @FXML
+    private TableView<?> clientsListTable;
+
+    @FXML
+    private TableColumn<?, ?> cLcolumnName;
+
+    @FXML
+    private TableColumn<?, ?> cLcolumnLastName;
+
+    @FXML
+    private TableColumn<?, ?> cLcolumnId;
+
+    @FXML
+    private TableColumn<?, ?> cLcolumnEmail;
+
+    @FXML
+    private TableColumn<?, ?> cLcolumnPhoneNumber;
+
+    @FXML
+    private TableColumn<?, ?> cLcolumnPurchasedVehicles;
+
+    @FXML
+    private TextField searchClientTxt;
     
     // *************************** add vehicle window attributes ***************************
     // *aV* add vehicle window indicator
@@ -146,7 +173,6 @@ public class DealershipGUI {
     @FXML
     private RadioButton aVPreOwnedRB;
 
-
     // *************************** GUI attributes and builder***************************
     private Stage dealerStage;
     
@@ -154,11 +180,17 @@ public class DealershipGUI {
     
     private Stage registerStage;
 	
-	private Stage listStage;
+	private Stage clientList;
+	
+	private Stage sellerList;
+	
+	private Stage vehicleList;
 	
     public DealershipGUI() {
 		dealerStage = null;
-		listStage = null;
+		clientList = null;
+		sellerList = null;
+		vehicleList = null;
 		
 	}
     
@@ -223,22 +255,32 @@ public class DealershipGUI {
 		stage.setScene(scene);
 		stage.setTitle("Register client");
 		registerStage = stage;
-		stage.setOnCloseRequest(e -> closeStage());
+		stage.setOnCloseRequest(e -> closeRegisterStage() );
 		
 		stage.show();
 		
     }
     
-    private void  closeStage() {
-		registerOpen = false;
-		
-		registerStage.close();
-		
-	}
-    
     @FXML
-    void openClientList(ActionEvent event) throws IOException{
-    	System.out.println("open client list working");
+    void openClientList(ActionEvent event) {
+    	try {
+    		
+        	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/lists/client_list.fxml"));
+        	fxmlLoader.setController(this);
+        	Parent clientListParent = fxmlLoader.load();
+        	
+        	Scene scene = new Scene(clientListParent);
+    		Stage stage = new Stage();
+    		stage.setScene(scene);
+    		stage.setTitle("Register client");
+    		clientList = stage;
+    		stage.setOnCloseRequest(e -> closeListStage(clientList) );
+    		
+    		stage.show();
+    		
+		} catch (IOException ioException) {
+			System.out.println("Here");
+		}
     }
     
     // *************************** sellers menu
@@ -285,7 +327,7 @@ public class DealershipGUI {
 		stage.setTitle("Register client");
 		registerStage = stage;
 		
-		stage.setOnCloseRequest(e -> closeStage());
+		stage.setOnCloseRequest(e -> closeRegisterStage() );
 		
 		stage.show();
 		
@@ -338,7 +380,7 @@ public class DealershipGUI {
     	stage.setTitle("Register Vehicle");
     	registerStage = stage;
 
-    	stage.setOnCloseRequest(e -> closeStage());
+    	stage.setOnCloseRequest(e -> closeRegisterStage() );
 
     	stage.show();
     }
@@ -356,6 +398,13 @@ public class DealershipGUI {
     	registerStage = null;
     	registerOpen = false;
 
+    }
+    
+    // *************************** clients list window actions ***************************
+    
+    @FXML
+    void searchClient(ActionEvent event) {
+    	System.out.println("search client working");
     }
     
     // *************************** register seller window actions ***************************
@@ -402,6 +451,18 @@ public class DealershipGUI {
 		return false;
 		
     }
+    
+    // *************************** close stage ***************************
+    private void  closeRegisterStage() {
+		registerOpen = false;
+		registerStage.close();
+		
+	}
+    
+    private void  closeListStage(Stage listStage) {
+    	listStage.close();
+		
+	}
 }
 
     
