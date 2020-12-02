@@ -28,8 +28,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import model.Admin;
+import model.CarDealer;
 import model.Company;
 import model.Dealer;
+import model.MotorcycleDealer;
+import model.VehicleDealer;
 
 public class DealershipGUI implements Initializable{
 	
@@ -392,7 +395,7 @@ public class DealershipGUI implements Initializable{
     	
     	dealerTypeChoiceBox.getItems().addAll("Cars dealer",
     										"Motorcycles dealer",
-    										"vehicle dealer");
+    										"Vehicle dealer");
     	
     }
     
@@ -651,36 +654,44 @@ public class DealershipGUI implements Initializable{
     
     @FXML
     void registerDealer(ActionEvent event) {
-    	/*
-    	if () {
-    		@FXML
-    	    private ChoiceBox<String> dealerTypeChoiceBox;
-    	    
-    	    @FXML
-    	    private TextField rDtxtName;
+    	
+    	//dealer
+    	String dealerName = rDtxtName.getText();
+    	String dealerAdress = rDtxtAdress.getText();
+    	String dealerType = dealerTypeChoiceBox.getValue();
+    	
+    	//admin
+    	
+    	String adminName = rDtxtAdminName.getText();
+    	String adminLastname = rDtxtAdminLastname.getText();
+    	long adminId = Long.parseLong( rDtxtAdminId.getText() );
+    	String adminEmail = rDtxtAdminEmail.getText();
+    	long adminPhoneNumber = Long.parseLong( rDtxtAdminPhoneNumber.getText() );
+    	double adminSalary = Double.parseDouble( rDtxtAdminSalary.getText() );
 
-    	    @FXML
-    	    private TextField rDtxtAdress;
-
-    	    @FXML
-    	    private TextField rDtxtAdminName;
-
-    	    @FXML
-    	    private TextField rDtxtAdminLastname;
-
-    	    @FXML
-    	    private TextField rDtxtAdminId;
-
-    	    @FXML
-    	    private TextField rDtxtAdminEmail;
-
-    	    @FXML
-    	    private TextField rDtxtAdminPhoneNumber;
-
-    	    @FXML
-    	    private TextField rDtxtAdminSalary;
+    	Admin newAdmin = new Admin(adminName, adminLastname, adminEmail, adminId, adminPhoneNumber,adminSalary);
+    	
+    	Dealer newDealer = null;
+    	
+    	if (dealerType.equals("Cars dealer")) {
+    		
+    		newDealer = new CarDealer(dealerName, newAdmin, dealerAdress);
+    		company.addCarDealer((CarDealer)newDealer);
+    		
+		}else if (dealerType.equals("Motorcycles dealer")) {
+			
+			newDealer = new MotorcycleDealer(dealerName, newAdmin, dealerAdress);
+			company.addMotorcycleDealer((MotorcycleDealer)newDealer);
+			
+		}else if (dealerType.equals("Vehicle dealer")) {
+			
+			newDealer = new VehicleDealer(dealerName, newAdmin, dealerAdress);
+			company.addVehicleDealer((VehicleDealer) newDealer);
+			
 		}
-    	*/
+    	
+    	updateMainWindowInfo();
+    	
     }
     
     // *************************** register client window actions 

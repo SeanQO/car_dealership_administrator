@@ -9,7 +9,7 @@ public class Seller extends Person {
 	private int sells;
 	private Client[] clients;
 	
-	public Seller(String name, String lastname, String email, long id, int phoneNumber,
+	public Seller(String name, String lastname, String email, long id, Long  phoneNumber,
 					double salary) {
 		
 		super(name, lastname, email, id, phoneNumber);

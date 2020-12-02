@@ -10,7 +10,7 @@ public class Admin extends Person {
 	private int sells;
 	private ArrayList<Seller> sellers;
 	
-	public Admin(String name, String lastname, String email, long id, int phoneNumber,
+	public Admin(String name, String lastname, String email, long id, long phoneNumber,
 					double salary) {
 		super(name, lastname, email, id, phoneNumber);
 		this.salary = salary;

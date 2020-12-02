@@ -5,7 +5,7 @@ public class Client extends Person {
 	
 	private Seller sellerInCharge;
 	
-	public Client(String name, String lastname, String email, long id, int phoneNumber,
+	public Client(String name, String lastname, String email, long id, long phoneNumber,
 					Seller sellerInCharge) {
 		super(name, lastname, email, id, phoneNumber);
 		

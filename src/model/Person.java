@@ -9,9 +9,9 @@ public class Person  implements Comparable<Person>, Serializable{
 	private String lastName;
 	private String email;
 	private long id;
-	private int phoneNumber;
+	private long phoneNumber;
 	
-	public Person(String name, String lastName, String email, long id, int phoneNumber) {
+	public Person(String name, String lastName, String email, long id, long phoneNumber) {
 		this.name = name;
 		this.lastName = lastName;
 		this.email = email;
@@ -35,7 +35,7 @@ public class Person  implements Comparable<Person>, Serializable{
 		return id;
 	}
 
-	public int getPhoneNumber() {
+	public long getPhoneNumber() {
 		return phoneNumber;
 	}
 	
