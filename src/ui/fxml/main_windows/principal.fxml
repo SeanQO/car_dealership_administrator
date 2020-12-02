@@ -11,16 +11,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox alignment="CENTER_LEFT" prefHeight="550.0" prefWidth="680.0" spacing="20.0">
          <children>
-            <Label alignment="BOTTOM_LEFT" text="Management sofware for dealer network">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="680.0" text="Management sofware for dealership network">
                <font>
                   <Font name="Verdana Bold" size="22.0" />
                </font>
                <VBox.margin>
-                  <Insets left="100.0" />
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="companyNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="680.0" text="company name">
+               <font>
+                  <Font name="Verdana Bold" size="22.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
                </VBox.margin>
             </Label>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">

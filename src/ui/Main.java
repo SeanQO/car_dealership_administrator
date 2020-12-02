@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application{
-	
 	private DealershipGUI dealershipGUI;
 	
 	public Main() {
@@ -31,4 +30,6 @@ public class Main extends Application{
 		primaryStage.show();
 		
 	}
+	
+	
 }

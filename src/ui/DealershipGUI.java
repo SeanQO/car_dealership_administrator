@@ -1,12 +1,8 @@
 package ui;
 
 import java.io.IOException;
+
 import java.util.Optional;
-
-import org.omg.CORBA.PRIVATE_MEMBER;
-
-import com.sun.xml.internal.ws.Closeable;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,18 +19,22 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import javafx.event.EventHandler;
+import model.Company;
 
 public class DealershipGUI {
 	
+	
+	
+	
+	//*************************** main screen ***************************
+	
 	// *************************** main window attributes ***************************
-    @FXML
-    private AnchorPane mainPane;
-
-    @FXML
+	
+	@FXML
+    private Label companyNameLabel;
+    
+	@FXML
     private Label mainAdminNameLabel;
 
     @FXML
@@ -248,7 +248,8 @@ public class DealershipGUI {
     private ProgressBar progressBarVTwo;
 
     // *************************** GUI attributes and builder***************************
-    private Stage dealerStage;
+    
+    private Company company;
     
     private boolean registerOpen;
     
@@ -263,11 +264,22 @@ public class DealershipGUI {
 	private Stage simulationStage;
 	
     public DealershipGUI() {
-		dealerStage = null;
 		clientList = null;
 		sellerList = null;
 		vehicleList = null;
+		/*
+		 company = new Company("concesionario la 9na", 123456789, 
+				new Admin("Carlos", "Perea", "carlosPera@gmail.com", 123456987, 374456985, 8000000));
 		
+		companyNameLabel.setText(company.getName());
+	    
+		mainAdminNameLabel.setText(company.getPrincipalAdmin().getName());
+
+		mainTotalSalesLabel.setText(company.getTotalSales() + "");
+		
+		mainTotalEarningsLabel.setText(company.getTotalEarnings() + "");
+		 */
+		 
 	}
     
     // *************************** main window action ***************************
@@ -282,7 +294,6 @@ public class DealershipGUI {
 		Stage stage = new Stage();
 		stage.setScene(scene);
 		stage.setTitle("DealerShip");
-		dealerStage = stage;
 		stage.show();
 		
     }
