@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import customException.EmptyDataException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,6 +34,7 @@ import model.Company;
 import model.Dealer;
 import model.MotorcycleDealer;
 import model.VehicleDealer;
+import oracle.jrockit.jfr.tools.ConCatRepository;
 
 public class DealershipGUI implements Initializable{
 	
@@ -654,47 +656,67 @@ public class DealershipGUI implements Initializable{
     
     @FXML
     void registerDealer(ActionEvent event) {
-    	
-    	//dealer
-    	String dealerName = rDtxtName.getText();
-    	String dealerAdress = rDtxtAdress.getText();
-    	String dealerType = dealerTypeChoiceBox.getValue();
-    	
-    	//admin
-    	
-    	String adminName = rDtxtAdminName.getText();
-    	String adminLastname = rDtxtAdminLastname.getText();
-    	long adminId = Long.parseLong( rDtxtAdminId.getText() );
-    	String adminEmail = rDtxtAdminEmail.getText();
-    	long adminPhoneNumber = Long.parseLong( rDtxtAdminPhoneNumber.getText() );
-    	double adminSalary = Double.parseDouble( rDtxtAdminSalary.getText() );
-
-    	Admin newAdmin = new Admin(adminName, adminLastname, adminEmail, adminId, adminPhoneNumber,adminSalary);
-    	
-    	Dealer newDealer = null;
-    	
-    	if (dealerType.equals("Cars dealer")) {
+    	try {
     		
-    		newDealer = new CarDealer(dealerName, newAdmin, dealerAdress);
-    		company.addCarDealer((CarDealer)newDealer);
-    		
-		}else if (dealerType.equals("Motorcycles dealer")) {
+    		//dealer
+        	String dealerName = rDtxtName.getText();
+        	String dealerAdress = rDtxtAdress.getText();
+        	String dealerType = dealerTypeChoiceBox.getValue();
+        	
+        	//admin
+        	
+        	String adminName = rDtxtAdminName.getText();
+        	String adminLastname = rDtxtAdminLastname.getText();
+        	long adminId = Long.parseLong( rDtxtAdminId.getText() );
+        	String adminEmail = rDtxtAdminEmail.getText();
+        	long adminPhoneNumber = Long.parseLong( rDtxtAdminPhoneNumber.getText() );
+        	double adminSalary = Double.parseDouble( rDtxtAdminSalary.getText() );
+        	
+        	if(dealerName.equals("") || dealerAdress.equals("") || dealerType.equals("") || adminName.equals("") ||
+        			adminLastname.equals("") || (adminId + "").equals("") || adminEmail.equals("") || 
+        			(adminPhoneNumber + "").equals("") || (adminSalary +"").equals("")) {
+        		throw new EmptyDataException("");
+        	}
+        	
+        	Admin newAdmin = new Admin(adminName, adminLastname, adminEmail, adminId, adminPhoneNumber,adminSalary);
+        	
+        	Dealer newDealer = null;
+        	
+        	if (dealerType.equals("Cars dealer")) {
+        		
+        		newDealer = new CarDealer(dealerName, newAdmin, dealerAdress);
+        		company.addCarDealer((CarDealer)newDealer);
+        		
+    		}else if (dealerType.equals("Motorcycles dealer")) {
+    			
+    			newDealer = new MotorcycleDealer(dealerName, newAdmin, dealerAdress);
+    			company.addMotorcycleDealer((MotorcycleDealer)newDealer);
+    			
+    		}else if (dealerType.equals("Vehicle dealer")) {
+    			
+    			newDealer = new VehicleDealer(dealerName, newAdmin, dealerAdress);
+    			company.addVehicleDealer((VehicleDealer) newDealer);
+    			
+    		}
+        	
+        	updateMainWindowInfo();
+        	
+        	registerStage.close();
+        	registerStage = null; 
+        	registerOpen = false;
+        	
+		} catch (EmptyDataException emptyDataException) {
 			
-			newDealer = new MotorcycleDealer(dealerName, newAdmin, dealerAdress);
-			company.addMotorcycleDealer((MotorcycleDealer)newDealer);
+			emptyFieldsAlert();
 			
-		}else if (dealerType.equals("Vehicle dealer")) {
+		}catch (NumberFormatException numberFormatException) {
 			
-			newDealer = new VehicleDealer(dealerName, newAdmin, dealerAdress);
-			company.addVehicleDealer((VehicleDealer) newDealer);
+			incorrectDataTypeAlert();
 			
 		}
     	
-    	updateMainWindowInfo();
+
     	
-    	registerStage.close();
-    	registerStage = null;
-    	registerOpen = false;
     	
     }
     
@@ -844,7 +866,25 @@ public class DealershipGUI implements Initializable{
     	listAlreadyOpen.setTitle(" list is open");
     	listAlreadyOpen.setHeaderText(listName + " list is already open");
     	listAlreadyOpen.showAndWait();
+    	
 	}
+    
+    private void emptyFieldsAlert() {
+    	Alert error = new Alert(AlertType.ERROR);
+		error.setTitle("Fields are empty");
+		error.setHeaderText("Some fields are empty");
+		error.setContentText("Please fill the required fields");
+		error.showAndWait();
+    	
+    }
+    
+    private void incorrectDataTypeAlert() {
+    	Alert error = new Alert(AlertType.ERROR);
+		error.setTitle("Error");
+		error.setHeaderText("Make sure that in \"admin  id\" and \"salary\" fields are no characters but numbers");
+		error.showAndWait();
+    	
+    }
     
     // *************************** close stage ***************************
     private void  closeRegisterStage() {
