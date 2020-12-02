@@ -355,14 +355,22 @@ public class DealershipGUI implements Initializable{
 		dealerStage = null;
 		openDealer = null;
 		dealerTypeChoiceBox = new ChoiceBox<String>();
-		 
+		
 	}
     
     @Override
 	public void initialize(URL location, ResourceBundle resources) {
+    	if (company == null) {
+    		company = new Company("concesionario la 9na", 123456789, 
+    				new Admin("Carlos", "Perea", "carlosPera@gmail.com", 123456987, 374456985, 8000000));
+        	//testDealers
+        	company.addCarDealer(new CarDealer("TESTDEALER1", new Admin("Pedro1", "qqq1", "@", 123, 123, 100), "CRA1"));
+        	company.addMotorcycleDealer(new MotorcycleDealer("TESTDEALER2", new Admin("Pedro2", "qqq2", "@", 123, 123, 100), "CRA2"));
+        	company.addVehicleDealer(new VehicleDealer("TESTDEALER3", new Admin("Pedro3", "qqq3", "@", 123, 123, 100), "CRA3"));
+        	
+		}
     	
-    	company = new Company("concesionario la 9na", 123456789, 
-				new Admin("Carlos", "Perea", "carlosPera@gmail.com", 123456987, 374456985, 8000000));
+    	
     	updateMainWindowInfo();
     	loadCompanyWindowTable();
 	}
@@ -770,6 +778,7 @@ public class DealershipGUI implements Initializable{
     
     @FXML
     void registerDealer(ActionEvent event) {
+    	System.out.println(company.getDealers().size());
     	try {
     		
     		//dealer
@@ -813,11 +822,11 @@ public class DealershipGUI implements Initializable{
     			
     		}
         	
-        	updateMainWindowInfo();
-        	
         	registerStage.close();
         	registerStage = null; 
         	registerOpen = false;
+        	
+        	updateMainWindowInfo();
         	
 		} catch (EmptyDataException emptyDataException) {
 			
@@ -833,7 +842,7 @@ public class DealershipGUI implements Initializable{
 			
 		}
     	
-
+    	System.out.println("after : " + company.getDealers().size());
     	
     	
     }
