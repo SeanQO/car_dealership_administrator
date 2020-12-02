@@ -1,11 +1,14 @@
 package ui;
 
 import java.io.IOException;
-
+import java.net.URL;
 import java.util.Optional;
+import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -17,17 +20,23 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
+import model.Admin;
 import model.Company;
 
-public class DealershipGUI {
+public class DealershipGUI implements Initializable{
 	
 	
 	
 	
 	//*************************** main screen ***************************
+	
+	@FXML
+	private AnchorPane mainPane;
 	
 	// *************************** main window attributes ***************************
 	
@@ -52,12 +61,13 @@ public class DealershipGUI {
     @FXML
     private TableColumn<?, ?> columnCredits;
     
-    // *************************** dealer window attributes ***************************
     @FXML
     private Label mainNitLabel;
 
     @FXML
     private Label mainAdressLabel;
+    
+    // *************************** dealer window attributes ***************************
     
     @FXML
     private Label dealerAdminNameLabel;
@@ -70,6 +80,34 @@ public class DealershipGUI {
 
     @FXML
     private Label dealerTotalEarningsLabel;
+    
+    // *************************** register client window attributes ***************************
+    // *rD* register client window indicator
+    
+    @FXML
+    private TextField rDtxtName;
+
+    @FXML
+    private TextField rDtxtAdress;
+
+    @FXML
+    private TextField rDtxtAdminName;
+
+    @FXML
+    private TextField rDtxtAdminLastname;
+
+    @FXML
+    private TextField rDtxtAdminId;
+
+    @FXML
+    private TextField rDtxtAdminEmail;
+
+    @FXML
+    private TextField rDtxtAdminPhoneNumber;
+
+    @FXML
+    private TextField rDtxtAdminSalary;
+
     
     // *************************** register client window attributes ***************************
     // *rC* register client window indicator
@@ -267,19 +305,15 @@ public class DealershipGUI {
 		clientList = null;
 		sellerList = null;
 		vehicleList = null;
-		/*
-		 company = new Company("concesionario la 9na", 123456789, 
-				new Admin("Carlos", "Perea", "carlosPera@gmail.com", 123456987, 374456985, 8000000));
-		
-		companyNameLabel.setText(company.getName());
-	    
-		mainAdminNameLabel.setText(company.getPrincipalAdmin().getName());
-
-		mainTotalSalesLabel.setText(company.getTotalSales() + "");
-		
-		mainTotalEarningsLabel.setText(company.getTotalEarnings() + "");
-		 */
 		 
+	}
+    
+    @Override
+	public void initialize(URL location, ResourceBundle resources) {
+    	
+    	company = new Company("concesionario la 9na", 123456789, 
+				new Admin("Carlos", "Perea", "carlosPera@gmail.com", 123456987, 374456985, 8000000));
+    	updateMainWindowInfo();
 	}
     
     // *************************** main window action ***************************
@@ -296,6 +330,49 @@ public class DealershipGUI {
 		stage.setTitle("DealerShip");
 		stage.show();
 		
+    }
+    
+    @FXML
+    void openRegisterDealer(ActionEvent event) {
+    	if (!registerOpen) {
+    		try {
+    			openRegisterDealer();
+			} catch (IOException ioException) {
+				// TODO: handle exception
+			}
+    		
+		}else {
+			boolean runRegister = false;
+			
+			runRegister = multipleRegisterAlert("Register dealer");
+					
+			if (runRegister) {
+				try {
+					openRegisterDealer();
+				} catch (IOException ioException) {
+					// TODO: handle exception
+				}
+				
+			}
+			
+			
+		} 	
+    }
+    
+    private void openRegisterDealer() throws IOException{
+    	registerOpen = true;
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/register/register_dealer.fxml"));
+    	fxmlLoader.setController(this);
+    	Parent registerDealerParent = fxmlLoader.load();
+    	
+    	Scene scene = new Scene(registerDealerParent);
+		Stage stage = new Stage();
+		stage.setScene(scene);
+		stage.setTitle("Register Dealer");
+		registerStage = stage;
+		stage.setOnCloseRequest(e -> closeRegisterStage() );
+		
+		stage.show();
     }
     
     // *************************** dealer window actions ***************************
@@ -466,7 +543,7 @@ public class DealershipGUI {
     
     // *************************** vehicles menu
     
-    // *************************** Add vehicle
+    // *************************** open Add vehicle
     @FXML
     void openAddVehicle(ActionEvent event) {
     	if (!registerOpen) {
@@ -513,7 +590,7 @@ public class DealershipGUI {
     	stage.show();
     }
     
-    // *************************** vehicle list
+    // *************************** open vehicle list
     
     @FXML
     void openVehicleList(ActionEvent event) {
@@ -545,8 +622,18 @@ public class DealershipGUI {
 		
 		stage.show();
 	}
+    
+    
+    // *************************** register window actions ***************************
+    
+    // *************************** register client window actions
+    
+    @FXML
+    void registerDealer(ActionEvent event) {
 
-    // *************************** register client window actions ***************************
+    }
+    
+    // *************************** register client window actions 
    
     @FXML
     void registerClient(ActionEvent event) {
@@ -556,7 +643,26 @@ public class DealershipGUI {
 
     }
     
-    // *************************** clients list window actions ***************************
+    // *************************** register seller window actions 
+
+    @FXML
+    void registerSeller(ActionEvent event) {
+    	registerStage.close();
+    	registerStage = null;
+    	registerOpen = false;
+    }
+    
+    // *************************** add vehicle window actions 
+    @FXML
+    void addVehicle(ActionEvent event) {
+    	registerStage.close();
+    	registerStage = null;
+    	registerOpen = false;
+    }
+    
+    // *************************** list window actions ***************************
+    
+    // *************************** clients list window actions 
     
     // also calls openRegisterClient(){}
     
@@ -570,17 +676,10 @@ public class DealershipGUI {
     	System.out.println("remove client working");
     }
     
-    // *************************** register seller window actions ***************************
-
-    @FXML
-    void registerSeller(ActionEvent event) {
-    	registerStage.close();
-    	registerStage = null;
-    	registerOpen = false;
-    }
+   
     
-    // *************************** seller list window actions ***************************
-    
+    // *************************** seller list window actions 
+ 
     // also calls openRegisterSeller(){}
     
     @FXML
@@ -593,15 +692,9 @@ public class DealershipGUI {
     	System.out.println("search seller working");
     }
   
-    // *************************** add vehicle window actions ***************************
-    @FXML
-    void addVehicle(ActionEvent event) {
-    	registerStage.close();
-    	registerStage = null;
-    	registerOpen = false;
-    }
     
-    // *************************** vehicle list window actions ***************************
+    
+    // *************************** vehicle list window actions 
     
     // also calls openAddVehicle(){}
 
@@ -644,6 +737,7 @@ public class DealershipGUI {
     void vehicleCatalog(ActionEvent event) {
     	System.out.println("Open catalog working");
     }
+    
     
     // *************************** simulation window actions ***************************    
     @FXML
@@ -712,6 +806,17 @@ public class DealershipGUI {
     	simulationStage.close();
     	
     }
+    
+    // *************************** update showing info ***************************
+    private void updateMainWindowInfo() {
+    	
+    	companyNameLabel.setText(company.getName());
+		mainAdminNameLabel.setText(company.getPrincipalAdmin().getName());
+		mainTotalSalesLabel.setText(company.getTotalSales() + "");
+		mainTotalEarningsLabel.setText(company.getTotalEarnings() + "");
+		mainNitLabel.setText(company.getNit() + "");
+		mainAdressLabel.setText("Adress");
+	}
     
 }
 

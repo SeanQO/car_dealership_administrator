@@ -94,14 +94,20 @@
                   <Insets left="50.0" right="50.0" />
                </VBox.margin>
             </ScrollPane>
-            <Button mnemonicParsing="false" onAction="#openDealer" text="Open dealer">
-               <font>
-                  <Font name="Verdana Bold" size="15.0" />
-               </font>
-               <VBox.margin>
-                  <Insets left="290.0" />
-               </VBox.margin>
-            </Button>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#openDealer" text="Open dealer">
+                     <font>
+                        <Font name="Verdana Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#openRegisterDealer" text="Register dealer">
+                     <font>
+                        <Font name="Verdana Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <Label text="NIT: ">
