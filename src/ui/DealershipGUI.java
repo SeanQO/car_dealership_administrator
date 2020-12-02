@@ -308,6 +308,10 @@ public class DealershipGUI implements Initializable{
     
     private boolean registerOpen;
     
+    private boolean dealerWindowOpen;
+    
+    private Stage dealerStage;
+    
     private Stage registerStage;
 	
 	private Stage clientList;
@@ -322,6 +326,8 @@ public class DealershipGUI implements Initializable{
 		clientList = null;
 		sellerList = null;
 		vehicleList = null;
+		dealerWindowOpen = false;
+		dealerStage = null;
 		dealerTypeChoiceBox = new ChoiceBox<String>();
 		 
 	}
@@ -341,14 +347,19 @@ public class DealershipGUI implements Initializable{
     void openDealer(ActionEvent event) {
     	Dealer selectedDealer = mainDealerListTable.getSelectionModel().getSelectedItem();
     	
-    	if (selectedDealer != null) {
-			try {
-				openDealer();
-				updateDealerWindowInfo(selectedDealer);
-				
-			} catch (Exception e) {
-				// TODO: handle exception
+    	if (selectedDealer != null ) {
+    		if (!dealerWindowOpen) {
+    			try {
+    				openDealer();
+    				updateDealerWindowInfo(selectedDealer);
+    				dealerWindowOpen = true;
+    			} catch (Exception e) {
+    				// TODO: handle exception
+    			}
+			}else {
+				dealerWindowIsOpen();
 			}
+			
     			
 		}else {
 			
@@ -366,9 +377,12 @@ public class DealershipGUI implements Initializable{
     	
     	Scene scene = new Scene(dealerPane);
 		Stage stage = new Stage();
+		dealerStage = stage;
 		stage.setScene(scene);
 		stage.setTitle("DealerShip");
+		stage.setOnCloseRequest(e -> closeDealerStage() );
 		stage.show();
+		
 		
     }
     
@@ -421,7 +435,13 @@ public class DealershipGUI implements Initializable{
     }
     
     // *************************** dealer window actions ***************************
+
+    // *************************** open register admin
     
+    @FXML
+    void openRegisterAdmin(ActionEvent event) {
+
+    }
     
     // *************************** clients menu *************************** 
     
@@ -927,6 +947,14 @@ public class DealershipGUI implements Initializable{
 		
     }
     
+    private void dealerWindowIsOpen() {
+    	
+    	Alert listAlreadyOpen = new Alert(AlertType.INFORMATION);
+    	listAlreadyOpen.setTitle(" dealer window is open");
+    	listAlreadyOpen.setHeaderText("A dealer window is already open \nOnly one dealer window allowed");
+    	listAlreadyOpen.showAndWait();
+    }
+    
     // *************************** close stage ***************************
     private void  closeRegisterStage() {
 		registerOpen = false;
@@ -951,6 +979,12 @@ public class DealershipGUI implements Initializable{
     private void closeSimulationStage() {
     	simulationStage.close();
     	
+    }
+    
+    private void closeDealerStage() {
+    	dealerStage.close();
+    	dealerStage = null;
+    	dealerWindowOpen = false;
     }
     
     // *************************** update showing info ***************************
@@ -981,7 +1015,6 @@ public class DealershipGUI implements Initializable{
     	if (company.getDealers().size() != 0) {
     		ObservableList<Dealer> observableList;
     		observableList = FXCollections.observableArrayList(company.getDealers());
-    		
     		mainDealerListTable.setItems(observableList);
     		columnDealerName.setCellValueFactory(new PropertyValueFactory<Dealer,String>("name"));
     		columnAdminName.setCellValueFactory(new PropertyValueFactory<Dealer,String>("adminName"));
