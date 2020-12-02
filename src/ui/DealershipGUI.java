@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,14 +21,15 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import model.Admin;
 import model.Company;
+import model.Dealer;
 
 public class DealershipGUI implements Initializable{
 	
@@ -53,13 +56,13 @@ public class DealershipGUI implements Initializable{
     private Label mainTotalEarningsLabel;
 
     @FXML
-    private TableView<?> mainDealerListTable;
+    private TableView<Dealer> mainDealerListTable;
 
     @FXML
-    private TableColumn<?, ?> columnName;
+    private TableColumn<Dealer, String> columnDealerName;
 
     @FXML
-    private TableColumn<?, ?> columnCredits;
+    private TableColumn<Dealer, String> columnCredits;
     
     @FXML
     private Label mainNitLabel;
@@ -314,6 +317,7 @@ public class DealershipGUI implements Initializable{
     	company = new Company("concesionario la 9na", 123456789, 
 				new Admin("Carlos", "Perea", "carlosPera@gmail.com", 123456987, 374456985, 8000000));
     	updateMainWindowInfo();
+    	loadCompanyWindowTable();
 	}
     
     // *************************** main window action ***************************
@@ -816,6 +820,22 @@ public class DealershipGUI implements Initializable{
 		mainTotalEarningsLabel.setText(company.getTotalEarnings() + "");
 		mainNitLabel.setText(company.getNit() + "");
 		mainAdressLabel.setText("Adress");
+		loadCompanyWindowTable();
+	}
+    
+    // *************************** Load table views***************************
+    
+    private void loadCompanyWindowTable() {
+    	if (company.getDealers().size() != 0) {
+    		ObservableList<Dealer> observableList;
+    		observableList = FXCollections.observableArrayList(company.getDealers());
+    		
+    		mainDealerListTable.setItems(observableList);
+    		columnDealerName.setCellValueFactory(new PropertyValueFactory<Dealer,String>("name"));
+    		columnCredits.setCellValueFactory(new PropertyValueFactory<Dealer,String>("adminName"));
+		}
+		
+		
 	}
     
 }

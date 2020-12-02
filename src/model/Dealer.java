@@ -10,6 +10,7 @@ public abstract class Dealer implements Comparable<Dealer>{
 	
 	private String name;
 	private Admin admin;
+	private String adminName;
 	private String adress;	
 	private double earnings;
 	private int sales;
@@ -26,6 +27,8 @@ public abstract class Dealer implements Comparable<Dealer>{
 		sellers = new ArrayList<Seller>();
 		nextDealer = null;
 		prevDealer = null;
+		
+		adminName = admin.getName();
 	}
 
 	public Dealer getNextDealer() {
@@ -51,6 +54,10 @@ public abstract class Dealer implements Comparable<Dealer>{
 
 	public Admin getAdmin() {
 		return admin;
+	}
+	
+	public String getAdminName() {
+		return adminName;
 	}
 	
 	public void setAdmin(Admin admin) {
