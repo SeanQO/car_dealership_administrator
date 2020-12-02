@@ -124,7 +124,30 @@ public class DealershipGUI implements Initializable{
 
     @FXML
     private TextField rDtxtAdminSalary;
+    
+    // *************************** register admin window attributes ***************************
+    // *rC* register admin window indicator
+    
+    @FXML
+    private TextField rATxtName;
 
+    @FXML
+    private TextField rATxtLastname;
+
+    @FXML
+    private TextField rATxtId;
+
+    @FXML
+    private TextField rATxtEmail;
+
+    @FXML
+    private TextField rATxtPhoneNumber;
+
+    @FXML
+    private TextField rATxtSalary;
+
+    @FXML
+    private ComboBox<?> dealerComboBox;
     
     // *************************** register client window attributes ***************************
     // *rC* register client window indicator
@@ -312,6 +335,8 @@ public class DealershipGUI implements Initializable{
     
     private Stage dealerStage;
     
+    private Dealer openDealer;
+    
     private Stage registerStage;
 	
 	private Stage clientList;
@@ -328,6 +353,7 @@ public class DealershipGUI implements Initializable{
 		vehicleList = null;
 		dealerWindowOpen = false;
 		dealerStage = null;
+		openDealer = null;
 		dealerTypeChoiceBox = new ChoiceBox<String>();
 		 
 	}
@@ -350,6 +376,7 @@ public class DealershipGUI implements Initializable{
     	if (selectedDealer != null ) {
     		if (!dealerWindowOpen) {
     			try {
+    				openDealer = selectedDealer;
     				openDealer();
     				updateDealerWindowInfo(selectedDealer);
     				dealerWindowOpen = true;
@@ -440,7 +467,45 @@ public class DealershipGUI implements Initializable{
     
     @FXML
     void openRegisterAdmin(ActionEvent event) {
-
+    	if (!registerOpen) {
+    		try {
+    			openRegisterAdmin();
+			} catch (IOException ioException) {
+				// TODO: handle exception
+			}
+    		
+		}else {
+			boolean runRegister = false;
+			
+			runRegister = multipleRegisterAlert("Register Admin");
+					
+			if (runRegister) {
+				try {
+	    			openRegisterAdmin();
+				} catch (IOException ioException) {
+					// TODO: handle exception
+				}
+				
+			}
+			
+			
+		} 	
+    }
+    
+    private void openRegisterAdmin() throws IOException{
+    	registerOpen = true;
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/register/register_admins.fxml"));
+    	fxmlLoader.setController(this);
+    	Parent registerAdminParent = fxmlLoader.load();
+    	
+    	Scene scene = new Scene(registerAdminParent);
+		Stage stage = new Stage();
+		stage.setScene(scene);
+		stage.setTitle("Register admin");
+		registerStage = stage;
+		stage.setOnCloseRequest(e -> closeRegisterStage() );
+		
+		stage.show();
     }
     
     // *************************** clients menu *************************** 
@@ -795,6 +860,14 @@ public class DealershipGUI implements Initializable{
     // *************************** add vehicle window actions 
     @FXML
     void addVehicle(ActionEvent event) {
+    	registerStage.close();
+    	registerStage = null;
+    	registerOpen = false;
+    }
+    
+    // *************************** add vehicle window actions 
+    @FXML
+    void registerAdmin(ActionEvent event) {
     	registerStage.close();
     	registerStage = null;
     	registerOpen = false;
