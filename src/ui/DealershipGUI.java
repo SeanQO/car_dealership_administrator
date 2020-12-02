@@ -263,25 +263,36 @@ public class DealershipGUI {
     
     @FXML
     void openClientList(ActionEvent event) {
-    	try {
+    	if (clientList == null) {
+    		try {
+    			openClientList();
+			} catch (IOException ioException) {
+				// TODO: handle exception
+			}
     		
-        	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/lists/client_list.fxml"));
-        	fxmlLoader.setController(this);
-        	Parent clientListParent = fxmlLoader.load();
-        	
-        	Scene scene = new Scene(clientListParent);
-    		Stage stage = new Stage();
-    		stage.setScene(scene);
-    		stage.setTitle("Register client");
-    		clientList = stage;
-    		stage.setOnCloseRequest(e -> closeListStage(clientList) );
-    		
-    		stage.show();
-    		
-		} catch (IOException ioException) {
-			System.out.println("Here");
+		}else {
+			
+			listAlreadyOpenAlert("Client");
+			
 		}
+    	
     }
+    
+    private void openClientList() throws IOException{
+    	
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/lists/client_list.fxml"));
+    	fxmlLoader.setController(this);
+    	Parent clientListParent = fxmlLoader.load();
+    	
+    	Scene scene = new Scene(clientListParent);
+		Stage stage = new Stage();
+		stage.setScene(scene);
+		stage.setTitle("Register client");
+		clientList = stage;
+		stage.setOnCloseRequest(e -> closeListStage(clientList) );
+		
+		stage.show();
+	}
     
     // *************************** sellers menu
     @FXML
@@ -452,6 +463,14 @@ public class DealershipGUI {
 		
     }
     
+    private void listAlreadyOpenAlert(String listName) {
+    	
+    	Alert listAlreadyOpen = new Alert(AlertType.INFORMATION);
+    	listAlreadyOpen.setTitle(" list is open");
+    	listAlreadyOpen.setHeaderText(listName + " list is already open");
+    	listAlreadyOpen.showAndWait();
+	}
+    
     // *************************** close stage ***************************
     private void  closeRegisterStage() {
 		registerOpen = false;
@@ -460,9 +479,13 @@ public class DealershipGUI {
 	}
     
     private void  closeListStage(Stage listStage) {
-    	listStage.close();
-		
+    	if (listStage.equals(clientList)) {
+			clientList.close();
+			clientList = null;
+		}
+    	
 	}
+    
 }
 
     
