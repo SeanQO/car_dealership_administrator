@@ -197,6 +197,41 @@ public class DealershipGUI {
 
     @FXML
     private RadioButton aVPreOwnedRB;
+    
+    // *************************** vehicle list window attributes ***************************
+    // *vL* vehicle list window indicator
+    @FXML
+    private TextField searchVehicleTxt;
+
+    @FXML
+    private TableView<?> coursesListTable;
+
+    @FXML
+    private TableColumn<?, ?> vLColumnBrand;
+
+    @FXML
+    private TableColumn<?, ?> vLColumnPrice;
+
+    @FXML
+    private TableColumn<?, ?> columnWeigth;
+
+    @FXML
+    private TableColumn<?, ?> vLColumnEngine;
+
+    @FXML
+    private TableColumn<?, ?> vLColumnTopSpeed;
+
+    @FXML
+    private TableColumn<?, ?> vLcolumnAceleration;
+
+    @FXML
+    private TableColumn<?, ?> columnPassengers;
+
+    @FXML
+    private TableColumn<?, ?> vLColumnMileage;
+
+    @FXML
+    private TableColumn<?, ?> vLColumnUsage;
 
     // *************************** GUI attributes and builder***************************
     private Stage dealerStage;
@@ -403,6 +438,8 @@ public class DealershipGUI {
 	}
     
     // *************************** vehicles menu
+    
+    // *************************** Add vehicle
     @FXML
     void openAddVehicle(ActionEvent event) {
     	if (!registerOpen) {
@@ -448,11 +485,39 @@ public class DealershipGUI {
 
     	stage.show();
     }
-
+    
+    // *************************** vehicle list
+    
     @FXML
     void openVehicleList(ActionEvent event) {
-    	System.out.println("open vehicle list working");
+    	if (vehicleList == null) {
+    		try {
+    			openVehicleList();
+			} catch (IOException ioException) {
+				// TODO: handle exception
+			}
+    		
+		}else {
+			
+			listAlreadyOpenAlert("Vehicle");
+			
+		}
     }
+    
+    private void openVehicleList() throws IOException{
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/lists/vehicle_list.fxml"));
+    	fxmlLoader.setController(this);
+    	Parent vehicleListParent = fxmlLoader.load();
+    	
+    	Scene scene = new Scene(vehicleListParent);
+		Stage stage = new Stage();
+		stage.setScene(scene);
+		stage.setTitle("Add vehicle");
+		vehicleList = stage;
+		stage.setOnCloseRequest(e -> closeListStage(vehicleList) );
+		
+		stage.show();
+	}
 
     // *************************** register client window actions ***************************
    
@@ -509,6 +574,30 @@ public class DealershipGUI {
     	registerOpen = false;
     }
     
+    // *************************** vehicle list window actions ***************************
+    
+    // also calls openAddVehicle(){}
+
+    
+    @FXML
+    void openSimulation(ActionEvent event) {
+    	System.out.println("Open simulation working");
+    }
+
+    @FXML
+    void openSellVehicle(ActionEvent event) {
+    	System.out.println("sell vehicle working");
+    }
+
+    @FXML
+    void serachVehicle(ActionEvent event) {
+    	System.out.println("search vehicle working");
+    }
+
+    @FXML
+    void vehicleCatalog(ActionEvent event) {
+    	System.out.println("Open catalog working");
+    }
     // *************************** alerts ***************************
      
     private boolean multipleRegisterAlert(String title) {
@@ -556,6 +645,12 @@ public class DealershipGUI {
     	if (listStage.equals(clientList)) {
 			clientList.close();
 			clientList = null;
+		}else if (listStage.equals(sellerList)) {
+			sellerList.close();
+			sellerList = null;
+		}else if (listStage.equals(vehicleList)) {
+			vehicleList.close();
+			vehicleList = null;
 		}
     	
 	}
