@@ -16,13 +16,13 @@
          <content>
             <TableView fx:id="sellersListTable" prefHeight="359.0">
                <columns>
-                  <TableColumn fx:id="columnName" prefWidth="120.0" text="Name" />
-                  <TableColumn fx:id="columnLastName" prefWidth="114.0" text="lastname" />
-                  <TableColumn fx:id="columnId" minWidth="9.0" prefWidth="72.0" text="Id" />
-                  <TableColumn fx:id="columnEmail" prefWidth="70.0" text="Email" />
-                  <TableColumn fx:id="columnPhoneNumber" prefWidth="102.0" text="Phone number" />
-                  <TableColumn fx:id="columnSalary" prefWidth="85.0" text="Salary" />
-                  <TableColumn fx:id="adminInCharge" prefWidth="116.0" text="Admin in charge" />
+                  <TableColumn fx:id="sLColumnName" prefWidth="120.0" text="Name" />
+                  <TableColumn fx:id="sLColumnLastName" prefWidth="114.0" text="lastname" />
+                  <TableColumn fx:id="sLColumnId" minWidth="9.0" prefWidth="72.0" text="Id" />
+                  <TableColumn fx:id="sLColumnEmail" prefWidth="70.0" text="Email" />
+                  <TableColumn fx:id="sLColumnPhoneNumber" prefWidth="102.0" text="Phone number" />
+                  <TableColumn fx:id="sLColumnSalary" prefWidth="85.0" text="Salary" />
+                  <TableColumn fx:id="sLAdminInCharge" prefWidth="116.0" text="Admin in charge" />
                </columns>
             </TableView>
          </content>
@@ -44,7 +44,7 @@
       </HBox>
       <HBox alignment="CENTER" layoutY="430.0" prefHeight="70.0" prefWidth="680.0" spacing="100.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#addSeller" text="Add seller">
+            <Button mnemonicParsing="false" onAction="#openRegisterSeller" text="Add seller">
                <font>
                   <Font name="Verdana Bold" size="15.0" />
                </font>

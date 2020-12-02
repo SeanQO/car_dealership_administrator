@@ -1,7 +1,3 @@
-
-
-
-
 package ui;
 
 import java.io.IOException;
@@ -94,29 +90,6 @@ public class DealershipGUI {
     @FXML
     private ComboBox<?> rCsellerComboBox;
     
-    // *************************** register seller window attributes ***************************
-    // *rS* register client window indicator
-    @FXML
-    private TextField rStxtName;
-
-    @FXML
-    private TextField rStxtLastname;
-
-    @FXML
-    private TextField rStxtId;
-
-    @FXML
-    private TextField rStxtEmail;
-
-    @FXML
-    private TextField rStxtPhoneNumber;
-
-    @FXML
-    private TextField rStxtSalary;
-
-    @FXML
-    private ComboBox<?> rSadminComboBox;
-    
     // *************************** clients list window attributes ***************************
     // *cL* client list window indicator
     
@@ -143,6 +116,58 @@ public class DealershipGUI {
 
     @FXML
     private TextField searchClientTxt;
+    
+    // *************************** register seller window attributes ***************************
+    // *rS* register client window indicator
+    @FXML
+    private TextField rStxtName;
+
+    @FXML
+    private TextField rStxtLastname;
+
+    @FXML
+    private TextField rStxtId;
+
+    @FXML
+    private TextField rStxtEmail;
+
+    @FXML
+    private TextField rStxtPhoneNumber;
+
+    @FXML
+    private TextField rStxtSalary;
+
+    @FXML
+    private ComboBox<?> rSadminComboBox;
+    
+    // *************************** seller list window attributes ***************************
+    // *sL* sellers list window indicator
+    @FXML
+    private TableView<?> sellersListTable;
+
+    @FXML
+    private TableColumn<?, ?> sLColumnName;
+
+    @FXML
+    private TableColumn<?, ?> sLColumnLastName;
+
+    @FXML
+    private TableColumn<?, ?> sLColumnId;
+
+    @FXML
+    private TableColumn<?, ?> sLColumnEmail;
+
+    @FXML
+    private TableColumn<?, ?> sLColumnPhoneNumber;
+
+    @FXML
+    private TableColumn<?, ?> sLColumnSalary;
+
+    @FXML
+    private TableColumn<?, ?> sLAdminInCharge;
+
+    @FXML
+    private TextField searchSellerTxt;
     
     // *************************** add vehicle window attributes ***************************
     // *aV* add vehicle window indicator
@@ -346,8 +371,36 @@ public class DealershipGUI {
 
     @FXML
     void openSellerList(ActionEvent event) {
-    	System.out.println("open seller list working");
+    	if (sellerList == null) {
+    		try {
+    			openSellerList();
+			} catch (IOException ioException) {
+				// TODO: handle exception
+			}
+    		
+		}else {
+			
+			listAlreadyOpenAlert("Seller");
+			
+		}
+    	
     }
+    
+    private void openSellerList() throws IOException{
+    	
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/lists/sellers_list.fxml"));
+    	fxmlLoader.setController(this);
+    	Parent sellerListParent = fxmlLoader.load();
+    	
+    	Scene scene = new Scene(sellerListParent);
+		Stage stage = new Stage();
+		stage.setScene(scene);
+		stage.setTitle("Register seller");
+		sellerList = stage;
+		stage.setOnCloseRequest(e -> closeListStage(sellerList) );
+		
+		stage.show();
+	}
     
     // *************************** vehicles menu
     @FXML
@@ -425,6 +478,20 @@ public class DealershipGUI {
     	registerStage.close();
     	registerStage = null;
     	registerOpen = false;
+    }
+    
+    // *************************** seller list window actions ***************************
+    
+    // also calls openRegisterSeller(){}
+    
+    @FXML
+    void removeSeller(ActionEvent event) {
+    	System.out.println("Remove seller working");
+    }
+
+    @FXML
+    void searchSeller(ActionEvent event) {
+    	System.out.println("search seller working");
     }
   
     // *************************** add vehicle window actions ***************************
