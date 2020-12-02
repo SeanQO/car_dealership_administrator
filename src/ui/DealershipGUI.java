@@ -5,6 +5,9 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+import com.sun.xml.internal.ws.wsdl.writer.document.OpenAtts;
+
 import customException.EmptyDataException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +26,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.ButtonType;
@@ -34,7 +38,6 @@ import model.Company;
 import model.Dealer;
 import model.MotorcycleDealer;
 import model.VehicleDealer;
-import oracle.jrockit.jfr.tools.ConCatRepository;
 
 public class DealershipGUI implements Initializable{
 	
@@ -78,6 +81,9 @@ public class DealershipGUI implements Initializable{
     // *************************** dealer window attributes ***************************
     
     @FXML
+    private Label dealerNameLabel;
+    
+    @FXML
     private Label dealerAdminNameLabel;
 
     @FXML
@@ -89,8 +95,8 @@ public class DealershipGUI implements Initializable{
     @FXML
     private Label dealerTotalEarningsLabel;
     
-    // *************************** register client window attributes ***************************
-    // *rD* register client window indicator
+    // *************************** register dealer window attributes ***************************
+    // *rD* register dealer window indicator
     
     @FXML
     private ChoiceBox<String> dealerTypeChoiceBox;
@@ -332,7 +338,28 @@ public class DealershipGUI implements Initializable{
     // *************************** main window action ***************************
     
     @FXML
-    void openDealer(ActionEvent event) throws IOException{
+    void openDealer(ActionEvent event) {
+    	Dealer selectedDealer = mainDealerListTable.getSelectionModel().getSelectedItem();
+    	
+    	if (selectedDealer != null) {
+			try {
+				openDealer();
+				updateDealerWindowInfo(selectedDealer);
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+    			
+		}else {
+			
+			noSelectionAlert();
+			
+		}
+    	
+    	
+    }
+    
+    private void openDealer() throws IOException{
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/main_windows/dealer.fxml"));
     	fxmlLoader.setController(this);
     	Parent dealerPane = fxmlLoader.load();
@@ -363,6 +390,7 @@ public class DealershipGUI implements Initializable{
 			if (runRegister) {
 				try {
 					openRegisterDealer();
+					
 				} catch (IOException ioException) {
 					// TODO: handle exception
 				}
@@ -392,18 +420,12 @@ public class DealershipGUI implements Initializable{
 		
     }
     
-    //load choice box
-    private void loadDealerTypeChoiceBox() {
-    	
-    	dealerTypeChoiceBox.getItems().addAll("Cars dealer",
-    										"Motorcycles dealer",
-    										"Vehicle dealer");
-    	
-    }
-    
     // *************************** dealer window actions ***************************
     
-    // *************************** clients menu
+    
+    // *************************** clients menu *************************** 
+    
+    // *************************** open register client
     
     @FXML
     void openRegisterClient(ActionEvent event) {
@@ -451,6 +473,8 @@ public class DealershipGUI implements Initializable{
 		
     }
     
+ // *************************** open client list
+    
     @FXML
     void openClientList(ActionEvent event) {
     	if (clientList == null) {
@@ -484,7 +508,10 @@ public class DealershipGUI implements Initializable{
 		stage.show();
 	}
     
-    // *************************** sellers menu
+    // *************************** sellers menu *************************** 
+    
+    // *************************** open register seller
+    
     @FXML
     void openRegisterSeller(ActionEvent event) {
     	if (!registerOpen) {
@@ -533,7 +560,9 @@ public class DealershipGUI implements Initializable{
 		stage.show();
 		
     }
-
+    
+    // *************************** open seller list
+    
     @FXML
     void openSellerList(ActionEvent event) {
     	if (sellerList == null) {
@@ -652,7 +681,7 @@ public class DealershipGUI implements Initializable{
     
     // *************************** register window actions ***************************
     
-    // *************************** register client window actions
+    // *************************** register dealer window actions
     
     @FXML
     void registerDealer(ActionEvent event) {
@@ -712,6 +741,10 @@ public class DealershipGUI implements Initializable{
 		}catch (NumberFormatException numberFormatException) {
 			
 			incorrectDataTypeAlert();
+			
+		}catch (NullPointerException nullPointerException) {
+			
+			emptyFieldsAlert();
 			
 		}
     	
@@ -881,9 +914,17 @@ public class DealershipGUI implements Initializable{
     private void incorrectDataTypeAlert() {
     	Alert error = new Alert(AlertType.ERROR);
 		error.setTitle("Error");
-		error.setHeaderText("Make sure that in \"admin  id\" and \"salary\" fields are no characters but numbers");
+		error.setHeaderText("Make sure that in \"admin  id\", \"salary\"  and \"phone number\" fields are in numbers. character not allowed");
 		error.showAndWait();
     	
+    }
+    
+    private void noSelectionAlert() {
+    	Alert error = new Alert(AlertType.ERROR);
+		error.setTitle("Error");
+		error.setHeaderText("No dealer selected, please select a dealer from the list.");
+		error.showAndWait();
+		
     }
     
     // *************************** close stage ***************************
@@ -924,7 +965,17 @@ public class DealershipGUI implements Initializable{
 		loadCompanyWindowTable();
 	}
     
-    // *************************** Load table views***************************
+    private void updateDealerWindowInfo(Dealer dealer) {
+    	
+    	dealerAdminNameLabel.setText(dealer.getAdminName());
+    	dealerTotalSalesLabel.setText(dealer.getSales() + "");
+    	dealerTotalClientsLabel.setText(dealer.getClients().size() + "");
+    	dealerTotalEarningsLabel.setText(dealer.getEarnings() + "");
+    	dealerNameLabel.setText(dealer.getName());
+		
+	}
+    
+    // *************************** Load table views ***************************
     
     private void loadCompanyWindowTable() {
     	if (company.getDealers().size() != 0) {
@@ -940,6 +991,30 @@ public class DealershipGUI implements Initializable{
 	}
     
     
+    // *************************** load choice box ***************************
+    
+   //dealer type in dealer registration
+    private void loadDealerTypeChoiceBox() {
+    	
+    	dealerTypeChoiceBox.getItems().addAll("Cars dealer",
+    										"Motorcycles dealer",
+    										"Vehicle dealer");
+    	
+    }
+    
+    // *************************** get selected item from table ***************************
+    
+    // select dealer in main window
+    @FXML
+    void selectDealer(MouseEvent event) {
+    	Dealer dealer = mainDealerListTable.getSelectionModel().getSelectedItem();
+    	getSelectedDealer(dealer);
+    }
+    
+    private Dealer getSelectedDealer(Dealer dealer) {
+    	return dealer;
+    }
+
 }
 
     

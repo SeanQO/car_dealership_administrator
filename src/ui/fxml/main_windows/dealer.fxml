@@ -13,7 +13,7 @@
    <children>
       <VBox alignment="CENTER" prefHeight="550.0" prefWidth="680.0" spacing="5.0">
          <children>
-            <Label alignment="TOP_CENTER" prefHeight="28.0" prefWidth="236.0" text="Dealer name">
+            <Label fx:id="dealerNameLabel" alignment="TOP_CENTER" prefHeight="28.0" prefWidth="236.0" text="Dealer name">
                <font>
                   <Font name="Verdana Bold" size="22.0" />
                </font>

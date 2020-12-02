@@ -83,7 +83,7 @@
             </Label>
             <ScrollPane prefHeight="153.0" prefWidth="369.0">
                <content>
-                  <TableView fx:id="mainDealerListTable">
+                  <TableView fx:id="mainDealerListTable" onMouseClicked="#selectDealer">
                      <columns>
                         <TableColumn fx:id="columnDealerName" prefWidth="299.0" text="Dealer name" />
                         <TableColumn fx:id="columnAdminName" prefWidth="279.0" text="Admin name" />
