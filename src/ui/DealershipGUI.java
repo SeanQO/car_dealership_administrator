@@ -88,6 +88,9 @@ public class DealershipGUI implements Initializable{
     // *rD* register client window indicator
     
     @FXML
+    private ChoiceBox<String> dealerTypeChoiceBox;
+    
+    @FXML
     private TextField rDtxtName;
 
     @FXML
@@ -308,6 +311,7 @@ public class DealershipGUI implements Initializable{
 		clientList = null;
 		sellerList = null;
 		vehicleList = null;
+		dealerTypeChoiceBox = new ChoiceBox<String>();
 		 
 	}
     
@@ -338,6 +342,7 @@ public class DealershipGUI implements Initializable{
     
     @FXML
     void openRegisterDealer(ActionEvent event) {
+    	
     	if (!registerOpen) {
     		try {
     			openRegisterDealer();
@@ -377,6 +382,18 @@ public class DealershipGUI implements Initializable{
 		stage.setOnCloseRequest(e -> closeRegisterStage() );
 		
 		stage.show();
+		
+		loadDealerTypeChoiceBox();
+		
+    }
+    
+    //load choice box
+    private void loadDealerTypeChoiceBox() {
+    	
+    	dealerTypeChoiceBox.getItems().addAll("Cars dealer",
+    										"Motorcycles dealer",
+    										"vehicle dealer");
+    	
     }
     
     // *************************** dealer window actions ***************************
@@ -634,7 +651,36 @@ public class DealershipGUI implements Initializable{
     
     @FXML
     void registerDealer(ActionEvent event) {
+    	/*
+    	if () {
+    		@FXML
+    	    private ChoiceBox<String> dealerTypeChoiceBox;
+    	    
+    	    @FXML
+    	    private TextField rDtxtName;
 
+    	    @FXML
+    	    private TextField rDtxtAdress;
+
+    	    @FXML
+    	    private TextField rDtxtAdminName;
+
+    	    @FXML
+    	    private TextField rDtxtAdminLastname;
+
+    	    @FXML
+    	    private TextField rDtxtAdminId;
+
+    	    @FXML
+    	    private TextField rDtxtAdminEmail;
+
+    	    @FXML
+    	    private TextField rDtxtAdminPhoneNumber;
+
+    	    @FXML
+    	    private TextField rDtxtAdminSalary;
+		}
+    	*/
     }
     
     // *************************** register client window actions 
@@ -837,6 +883,7 @@ public class DealershipGUI implements Initializable{
 		
 		
 	}
+    
     
 }
 
