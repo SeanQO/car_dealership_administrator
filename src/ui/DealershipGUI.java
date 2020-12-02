@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -232,6 +233,19 @@ public class DealershipGUI {
 
     @FXML
     private TableColumn<?, ?> vLColumnUsage;
+    
+    // *************************** simulation window attributes ***************************
+    @FXML
+    private TextField txtVehicleOneIndicator;
+
+    @FXML
+    private TextField txtVehicleTwoIndicator;
+
+    @FXML
+    private ProgressBar progressBarVOne;
+
+    @FXML
+    private ProgressBar progressBarVTwo;
 
     // *************************** GUI attributes and builder***************************
     private Stage dealerStage;
@@ -245,6 +259,8 @@ public class DealershipGUI {
 	private Stage sellerList;
 	
 	private Stage vehicleList;
+	
+	private Stage simulationStage;
 	
     public DealershipGUI() {
 		dealerStage = null;
@@ -581,7 +597,26 @@ public class DealershipGUI {
     
     @FXML
     void openSimulation(ActionEvent event) {
-    	System.out.println("Open simulation working");
+    	try {
+			
+    		registerOpen = true;
+        	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/simulation/simulation.fxml"));
+        	fxmlLoader.setController(this);
+        	Parent simulationParent = fxmlLoader.load();
+        	
+        	Scene scene = new Scene(simulationParent);
+    		Stage stage = new Stage();
+    		stage.setScene(scene);
+    		stage.setTitle("Simulation");
+    		simulationStage = stage;
+    		stage.setOnCloseRequest(e -> closeSimulationStage() );
+    		
+    		stage.show();
+    		
+		} catch (IOException ioException) {
+			// TODO: handle exception
+		}
+    	
     }
 
     @FXML
@@ -598,6 +633,13 @@ public class DealershipGUI {
     void vehicleCatalog(ActionEvent event) {
     	System.out.println("Open catalog working");
     }
+    
+    // *************************** simulation window actions ***************************    
+    @FXML
+    void runSimulation(ActionEvent event) {
+    	System.out.println("run simulation working");
+    }
+
     // *************************** alerts ***************************
      
     private boolean multipleRegisterAlert(String title) {
@@ -654,6 +696,11 @@ public class DealershipGUI {
 		}
     	
 	}
+    
+    private void closeSimulationStage() {
+    	simulationStage.close();
+    	
+    }
     
 }
 
