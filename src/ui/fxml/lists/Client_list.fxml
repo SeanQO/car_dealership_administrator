@@ -12,9 +12,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ScrollPane layoutY="70.0" prefHeight="429.0" prefWidth="680.0">
+      <ScrollPane layoutY="70.0" prefHeight="359.0" prefWidth="680.0">
          <content>
-            <TableView fx:id="clientsListTable" prefHeight="429.0">
+            <TableView fx:id="clientsListTable" prefHeight="359.0" prefWidth="681.0">
                <columns>
                   <TableColumn fx:id="cLcolumnName" prefWidth="146.0" text="Name" />
                   <TableColumn fx:id="cLcolumnLastName" prefWidth="131.0" text="lastname" />
@@ -35,6 +35,20 @@
             </Label>
             <TextField fx:id="searchClientTxt" prefHeight="25.0" prefWidth="264.0" />
             <Button mnemonicParsing="false" onAction="#searchClient" text="Search Client">
+               <font>
+                  <Font name="Verdana Bold" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutY="430.0" prefHeight="70.0" prefWidth="680.0" spacing="100.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#openRegisterClient" text="Add client">
+               <font>
+                  <Font name="Verdana Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#removeClient" text="Remove client">
                <font>
                   <Font name="Verdana Bold" size="15.0" />
                </font>

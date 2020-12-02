@@ -466,9 +466,16 @@ public class DealershipGUI {
     
     // *************************** clients list window actions ***************************
     
+    // also calls openRegisterClient(){}
+    
     @FXML
     void searchClient(ActionEvent event) {
     	System.out.println("search client working");
+    }
+    
+    @FXML
+    void removeClient(ActionEvent event) {
+    	System.out.println("remove client working");
     }
     
     // *************************** register seller window actions ***************************
