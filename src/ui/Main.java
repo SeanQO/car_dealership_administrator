@@ -19,7 +19,7 @@ public class Main extends Application{
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		FXMLLoader fxmll = new FXMLLoader(getClass().getResource("fxml/main_windows/principal.fxml"));
+		FXMLLoader fxmll = new FXMLLoader(getClass().getResource("fxml/main_windows/main.fxml"));
 		
 		fxmll.setController(dealershipGUI);
 		Parent root = fxmll.load();

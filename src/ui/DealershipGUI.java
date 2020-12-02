@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-import com.sun.xml.internal.ws.wsdl.writer.document.OpenAtts;
-
 import customException.EmptyDataException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
@@ -47,7 +43,7 @@ public class DealershipGUI implements Initializable{
 	//*************************** main screen ***************************
 	
 	@FXML
-	private AnchorPane mainPane;
+	private BorderPane mainPane;
 	
 	// *************************** main window attributes ***************************
 	
@@ -329,13 +325,9 @@ public class DealershipGUI implements Initializable{
     
     private Company company;
     
+    private Dealer currentDealer;
+    
     private boolean registerOpen;
-    
-    private boolean dealerWindowOpen;
-    
-    private Stage dealerStage;
-    
-    private Dealer openDealer;
     
     private Stage registerStage;
 	
@@ -351,9 +343,7 @@ public class DealershipGUI implements Initializable{
 		clientList = null;
 		sellerList = null;
 		vehicleList = null;
-		dealerWindowOpen = false;
-		dealerStage = null;
-		openDealer = null;
+		currentDealer = null;
 		dealerTypeChoiceBox = new ChoiceBox<String>();
 		
 	}
@@ -367,6 +357,20 @@ public class DealershipGUI implements Initializable{
         	company.addCarDealer(new CarDealer("TESTDEALER1", new Admin("Pedro1", "qqq1", "@", 123, 123, 100), "CRA1"));
         	company.addMotorcycleDealer(new MotorcycleDealer("TESTDEALER2", new Admin("Pedro2", "qqq2", "@", 123, 123, 100), "CRA2"));
         	company.addVehicleDealer(new VehicleDealer("TESTDEALER3", new Admin("Pedro3", "qqq3", "@", 123, 123, 100), "CRA3"));
+        	
+        	try {
+        		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/main_windows/principal.fxml"));
+        		fxmlLoader.setController(this);    
+        		
+        		Parent principalPane = fxmlLoader.load();
+            	
+        		mainPane.getChildren().clear();
+            	mainPane.setCenter(principalPane);
+            	
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+        	
         	
 		}
     	
@@ -382,17 +386,14 @@ public class DealershipGUI implements Initializable{
     	Dealer selectedDealer = mainDealerListTable.getSelectionModel().getSelectedItem();
     	
     	if (selectedDealer != null ) {
-    		if (!dealerWindowOpen) {
-    			try {
-    				openDealer = selectedDealer;
-    				openDealer();
-    				updateDealerWindowInfo(selectedDealer);
-    				dealerWindowOpen = true;
-    			} catch (Exception e) {
-    				// TODO: handle exception
-    			}
-			}else {
-				dealerWindowIsOpen();
+    		
+    		try {
+				openDealer();
+				updateDealerWindowInfo(selectedDealer);
+				currentDealer = selectedDealer;
+				
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
 			
     			
@@ -406,18 +407,14 @@ public class DealershipGUI implements Initializable{
     }
     
     private void openDealer() throws IOException{
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/main_windows/dealer.fxml"));
-    	fxmlLoader.setController(this);
-    	Parent dealerPane = fxmlLoader.load();
     	
-    	Scene scene = new Scene(dealerPane);
-		Stage stage = new Stage();
-		dealerStage = stage;
-		stage.setScene(scene);
-		stage.setTitle("DealerShip");
-		stage.setOnCloseRequest(e -> closeDealerStage() );
-		stage.show();
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/main_windows/dealer.fxml"));
+		fxmlLoader.setController(this);    
 		
+		Parent principalPane = fxmlLoader.load();
+    	
+		mainPane.getChildren().clear();
+    	mainPane.setCenter(principalPane);
 		
     }
     
@@ -470,7 +467,26 @@ public class DealershipGUI implements Initializable{
     }
     
     // *************************** dealer window actions ***************************
-
+    
+    
+    @FXML
+    void goBack(ActionEvent event) {
+    	try {
+    		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/main_windows/principal.fxml"));
+    		fxmlLoader.setController(this);    
+    		
+    		Parent principalPane = fxmlLoader.load();
+        	
+    		mainPane.getChildren().clear();
+        	mainPane.setCenter(principalPane);
+        	currentDealer = null;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+    	
+    	
+    }
+    
     // *************************** open register admin
     
     @FXML
@@ -1029,14 +1045,6 @@ public class DealershipGUI implements Initializable{
 		
     }
     
-    private void dealerWindowIsOpen() {
-    	
-    	Alert listAlreadyOpen = new Alert(AlertType.INFORMATION);
-    	listAlreadyOpen.setTitle(" dealer window is open");
-    	listAlreadyOpen.setHeaderText("A dealer window is already open \nOnly one dealer window allowed");
-    	listAlreadyOpen.showAndWait();
-    }
-    
     // *************************** close stage ***************************
     private void  closeRegisterStage() {
 		registerOpen = false;
@@ -1061,12 +1069,6 @@ public class DealershipGUI implements Initializable{
     private void closeSimulationStage() {
     	simulationStage.close();
     	
-    }
-    
-    private void closeDealerStage() {
-    	dealerStage.close();
-    	dealerStage = null;
-    	dealerWindowOpen = false;
     }
     
     // *************************** update showing info ***************************

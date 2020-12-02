@@ -43,6 +43,7 @@
                     </items>
                   </SplitMenuButton>
                   <Button mnemonicParsing="false" onAction="#openRegisterAdmin" text="Change admin" />
+                  <Button mnemonicParsing="false" onAction="#goBack" text="Go back" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
