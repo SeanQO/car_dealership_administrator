@@ -65,7 +65,7 @@ public class DealershipGUI implements Initializable{
     private TableColumn<Dealer, String> columnDealerName;
 
     @FXML
-    private TableColumn<Dealer, String> columnCredits;
+    private TableColumn<Dealer, String> columnAdminName;
     
     @FXML
     private Label mainNitLabel;
@@ -692,6 +692,10 @@ public class DealershipGUI implements Initializable{
     	
     	updateMainWindowInfo();
     	
+    	registerStage.close();
+    	registerStage = null;
+    	registerOpen = false;
+    	
     }
     
     // *************************** register client window actions 
@@ -889,7 +893,7 @@ public class DealershipGUI implements Initializable{
     		
     		mainDealerListTable.setItems(observableList);
     		columnDealerName.setCellValueFactory(new PropertyValueFactory<Dealer,String>("name"));
-    		columnCredits.setCellValueFactory(new PropertyValueFactory<Dealer,String>("adminName"));
+    		columnAdminName.setCellValueFactory(new PropertyValueFactory<Dealer,String>("adminName"));
 		}
 		
 		
