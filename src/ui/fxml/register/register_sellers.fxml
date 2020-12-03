@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -80,16 +79,6 @@
                      </font>
                   </Label>
                   <TextField fx:id="rStxtSalary" />
-               </children>
-            </HBox>
-            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="265.0" spacing="40.0">
-               <children>
-                  <Label prefHeight="19.0" prefWidth="153.0" text="Admin in charge :">
-                     <font>
-                        <Font name="Verdana Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <ComboBox fx:id="rSadminComboBox" prefWidth="150.0" promptText="Admin" />
                </children>
             </HBox>
             <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="265.0" spacing="40.0">

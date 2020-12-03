@@ -87,6 +87,9 @@ public class DealershipGUI implements Initializable{
 
 	@FXML
 	private Label dealerTotalSalesLabel;
+	
+	@FXML
+	private Label dealerTotalSellersLabel;
 
 	@FXML
 	private Label dealerTotalClientsLabel;
@@ -223,34 +226,31 @@ public class DealershipGUI implements Initializable{
 	@FXML
 	private TextField rStxtSalary;
 
-	@FXML
-	private ComboBox<?> rSadminComboBox;
-
 	// *************************** seller list window attributes ***************************
 	// *sL* sellers list window indicator
 	@FXML
-	private TableView<?> sellersListTable;
+	private TableView<Seller> sellersListTable;
 
 	@FXML
-	private TableColumn<?, ?> sLColumnName;
+	private TableColumn<Seller, String> sLColumnName;
 
 	@FXML
-	private TableColumn<?, ?> sLColumnLastName;
+	private TableColumn<Seller, String> sLColumnLastName;
 
 	@FXML
-	private TableColumn<?, ?> sLColumnId;
+	private TableColumn<Seller, Long> sLColumnId;
 
 	@FXML
-	private TableColumn<?, ?> sLColumnEmail;
+	private TableColumn<Seller, String> sLColumnEmail;
 
 	@FXML
-	private TableColumn<?, ?> sLColumnPhoneNumber;
+	private TableColumn<Seller, Long> sLColumnPhoneNumber;
 
 	@FXML
-	private TableColumn<?, ?> sLColumnSalary;
+	private TableColumn<Seller, Double> sLColumnSalary;
 
 	@FXML
-	private TableColumn<?, ?> sLAdminInCharge;
+	private TableColumn<Seller, String> sLAdminInCharge;
 
 	@FXML
 	private TextField searchSellerTxt;
@@ -399,9 +399,10 @@ public class DealershipGUI implements Initializable{
 		if (selectedDealer != null ) {
 
 			try {
+				currentDealer = selectedDealer;
 				openDealer();
 				updateDealerWindowInfo();
-				currentDealer = selectedDealer;
+				
 
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -600,6 +601,7 @@ public class DealershipGUI implements Initializable{
 		if (clientList == null) {
 			try {
 				openClientList();
+				loadClientTable();
 			} catch (IOException ioException) {
 				// TODO: handle exception
 			}
@@ -637,6 +639,7 @@ public class DealershipGUI implements Initializable{
 		if (!registerOpen) {
 			try {
 				openRegisterSeller();
+				loadSellersTable();
 			} catch (IOException ioException) {
 				// TODO: handle exception
 			}
@@ -878,7 +881,6 @@ public class DealershipGUI implements Initializable{
 
 		try {
 
-			//dealer
 			String name = rCTxtName.getText();
 			String lastname = rCTxtLastname.getText();
 			long id = Long.parseLong( rCTxtId.getText() );
@@ -926,9 +928,45 @@ public class DealershipGUI implements Initializable{
 
 	@FXML
 	void registerSeller(ActionEvent event) {
-		registerStage.close();
-		registerStage = null;
-		registerOpen = false;
+		try {
+
+			String name = rStxtName.getText();
+			String lastname = rStxtLastname.getText();
+			long id = Long.parseLong( rStxtId.getText() );
+			String email = rStxtEmail.getText();
+			long phoneNumber = Long.parseLong( rStxtPhoneNumber.getText() );
+			double salary = Double.parseDouble( rStxtSalary.getText() );
+
+			if(name.equals("") || lastname.equals("") || email.equals("") ||
+					(id + "").equals("") || (phoneNumber + "").equals("") || (salary +"").equals("")) {
+				
+				throw new EmptyDataException("");
+			}
+			
+			Seller newSeller = new Seller(name, lastname, email, id, phoneNumber, salary);
+			
+			currentDealer.addSeller(newSeller);
+			currentDealer.getAdmin().addSeller(newSeller);
+	
+			registerStage.close();
+			registerStage = null; 
+			registerOpen = false;
+
+			updateDealerWindowInfo();
+
+		} catch (EmptyDataException emptyDataException) {
+			System.out.println("empty");
+			emptyFieldsAlert();
+
+		}catch (NumberFormatException numberFormatException) {
+
+			incorrectDataTypeAlert();
+
+		}catch (NullPointerException nullPointerException) {
+			emptyFieldsAlert();
+
+		}
+		
 	}
 
 	// *************************** add vehicle window actions 
@@ -1136,6 +1174,7 @@ public class DealershipGUI implements Initializable{
 
 		dealerAdminNameLabel.setText(currentDealer.getAdminName());
 		dealerTotalSalesLabel.setText(currentDealer.getSales() + "");
+		dealerTotalSellersLabel.setText(currentDealer.getSellers().size() + "");
 		dealerTotalClientsLabel.setText(currentDealer.getClients().size() + "");
 		dealerTotalEarningsLabel.setText(currentDealer.getEarnings() + "");
 		dealerNameLabel.setText(currentDealer.getName());
@@ -1177,17 +1216,21 @@ public class DealershipGUI implements Initializable{
 	}
 
 	private void loadSellersTable() {
-		if (currentDealer.getClients().size() != 0) {
+		if (currentDealer.getSellers().size() != 0) {
 
-			ObservableList<Dealer> observableList;
-			observableList = FXCollections.observableArrayList(company.getDealers());
-			mainDealerListTable.setItems(observableList);
-			columnDealerName.setCellValueFactory(new PropertyValueFactory<Dealer,String>("name"));
-			columnAdminName.setCellValueFactory(new PropertyValueFactory<Dealer,String>("adminName"));
-
+			ObservableList<Seller> observableList;
+			observableList = FXCollections.observableArrayList(currentDealer.getSellers());
+			
+			sellersListTable.setItems(observableList);
+			sLColumnName.setCellValueFactory(new PropertyValueFactory<Seller,String>("name"));
+			sLColumnLastName.setCellValueFactory(new PropertyValueFactory<Seller,String>("adminName"));
+			sLColumnId.setCellValueFactory(new PropertyValueFactory<Seller,Long>("id"));
+			sLColumnEmail.setCellValueFactory(new PropertyValueFactory<Seller,String>("email"));
+			sLColumnPhoneNumber.setCellValueFactory(new PropertyValueFactory<Seller,Long>("phoneNumber"));
+			sLColumnSalary.setCellValueFactory(new PropertyValueFactory<Seller,Double>("salary"));
+			
 		}
-
-
+	
 	}
 	/*
     private void loadVehiclesTable() {

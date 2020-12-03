@@ -61,12 +61,25 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Label text="Total sellers:">
+                  <Label text="Total sales:">
                      <font>
                         <Font name="Verdana Bold" size="22.0" />
                      </font>
                   </Label>
                   <Label fx:id="dealerTotalSalesLabel" prefHeight="17.0" prefWidth="420.0" text="0" />
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Label text="Total sellers:">
+                     <font>
+                        <Font name="Verdana Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="dealerTotalSellersLabel" prefHeight="17.0" prefWidth="420.0" text="0" />
                </children>
                <padding>
                   <Insets left="20.0" />
