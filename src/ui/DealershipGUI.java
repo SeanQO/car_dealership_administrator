@@ -2,14 +2,9 @@ package ui;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collection;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import javax.security.sasl.SaslException;
-
 import customException.EmptyDataException;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,7 +19,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -34,7 +28,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import model.Admin;
 import model.CarDealer;
 import model.Client;
@@ -44,7 +37,6 @@ import model.MotorcycleDealer;
 import model.Person;
 import model.Seller;
 import model.VehicleDealer;
-import sun.nio.ch.SelChImpl;
 
 public class DealershipGUI implements Initializable{
 
@@ -101,6 +93,9 @@ public class DealershipGUI implements Initializable{
 
 	@FXML
 	private Label dealerTotalClientsLabel;
+	
+	@FXML
+    private Label availableVehiclesLabel;
 
 	@FXML
 	private Label dealerTotalEarningsLabel;
@@ -1222,12 +1217,13 @@ public class DealershipGUI implements Initializable{
 	}
 
 	private void loadSellersTable() {
+		System.out.println("In");
 		if (currentDealer.getSellers().size() != 0) {
 
 			ObservableList<Person> observableList;
 			observableList = FXCollections.observableArrayList(currentDealer.getSellers());
 			
-			sellersListTable.setItems(observableList);
+			sellersListTable.setItems(observableList);	
 			sLColumnName.setCellValueFactory(new PropertyValueFactory<Person,String>("name"));
 			sLColumnId.setCellValueFactory(new PropertyValueFactory<Person,Long>("id"));
 			sLColumnEmail.setCellValueFactory(new PropertyValueFactory<Person,String>("email"));

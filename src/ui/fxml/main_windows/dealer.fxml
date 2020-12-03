@@ -103,6 +103,22 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
+                  <Label prefHeight="28.0" prefWidth="248.0" text="Available vehicles:">
+                     <font>
+                        <Font name="Verdana Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="availableVehiclesLabel" prefHeight="17.0" prefWidth="420.0" text="0" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
                   <Label text="Total earnings:">
                      <font>
                         <Font name="Verdana Bold" size="22.0" />
