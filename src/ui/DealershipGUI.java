@@ -30,6 +30,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import model.Admin;
 import model.CarDealer;
+import model.Client;
 import model.Company;
 import model.Dealer;
 import model.MotorcycleDealer;
@@ -169,25 +170,25 @@ public class DealershipGUI implements Initializable{
     // *cL* client list window indicator
     
     @FXML
-    private TableView<?> clientsListTable;
+    private TableView<Client> clientsListTable;
 
     @FXML
-    private TableColumn<?, ?> cLcolumnName;
+    private TableColumn<Client, String> cLcolumnName;
 
     @FXML
-    private TableColumn<?, ?> cLcolumnLastName;
+    private TableColumn<Client, String> cLcolumnLastName;
 
     @FXML
-    private TableColumn<?, ?> cLcolumnId;
+    private TableColumn<Client, Long> cLcolumnId;
 
     @FXML
-    private TableColumn<?, ?> cLcolumnEmail;
+    private TableColumn<Client, String> cLcolumnEmail;
 
     @FXML
-    private TableColumn<?, ?> cLcolumnPhoneNumber;
+    private TableColumn<Client, Long> cLcolumnPhoneNumber;
 
     @FXML
-    private TableColumn<?, ?> cLcolumnPurchasedVehicles;
+    private TableColumn<Client, Integer> cLcolumnPurchasedVehicles;
 
     @FXML
     private TextField searchClientTxt;
@@ -1100,6 +1101,7 @@ public class DealershipGUI implements Initializable{
     		ObservableList<Dealer> observableList;
     		observableList = FXCollections.observableArrayList(company.getDealers());
     		mainDealerListTable.setItems(observableList);
+    		
     		columnDealerName.setCellValueFactory(new PropertyValueFactory<Dealer,String>("name"));
     		columnAdminName.setCellValueFactory(new PropertyValueFactory<Dealer,String>("adminName"));
 		}
@@ -1107,6 +1109,58 @@ public class DealershipGUI implements Initializable{
 		
 	}
     
+    private void loadClientTable() {
+    	if (currentDealer.getClients().size() != 0) {
+    		
+    		ObservableList<Client> observableList;
+    		observableList = FXCollections.observableArrayList(currentDealer.getClients());
+    		clientsListTable.setItems(observableList);
+    		
+    		cLcolumnName.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
+    		cLcolumnLastName.setCellValueFactory(new PropertyValueFactory<Client, String>("lastname"));
+    		cLcolumnId.setCellValueFactory(new PropertyValueFactory<Client, Long>("id"));
+    		cLcolumnEmail.setCellValueFactory(new PropertyValueFactory<Client, String>("email"));
+    		cLcolumnPhoneNumber.setCellValueFactory(new PropertyValueFactory<Client, Long>("phoneNumber"));
+    		cLcolumnPurchasedVehicles.setCellValueFactory(new PropertyValueFactory<Client, Integer>("purchasedVehicles"));
+    		
+    		
+		}
+		/*
+
+    @FXML
+    private TableColumn<Client, Integer> cLcolumnPurchasedVehicles;
+		 */
+		
+	}
+    
+    private void loadSellersTable() {
+    	if (currentDealer.getClients().size() != 0) {
+    		
+    		ObservableList<Dealer> observableList;
+    		observableList = FXCollections.observableArrayList(company.getDealers());
+    		mainDealerListTable.setItems(observableList);
+    		columnDealerName.setCellValueFactory(new PropertyValueFactory<Dealer,String>("name"));
+    		columnAdminName.setCellValueFactory(new PropertyValueFactory<Dealer,String>("adminName"));
+    		
+		}
+		
+		
+	}
+    /*
+    private void loadVehiclesTable() {
+    	if (currentDealer.getVehicles.size() != 0) {
+    		
+    		ObservableList<Dealer> observableList;
+    		observableList = FXCollections.observableArrayList(company.getDealers());
+    		mainDealerListTable.setItems(observableList);
+    		columnDealerName.setCellValueFactory(new PropertyValueFactory<Dealer,String>("name"));
+    		columnAdminName.setCellValueFactory(new PropertyValueFactory<Dealer,String>("adminName"));
+    		
+		}
+		
+		
+	}
+    */
     
     // *************************** load choice box ***************************
     
