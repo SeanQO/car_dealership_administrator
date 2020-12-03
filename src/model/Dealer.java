@@ -76,7 +76,16 @@ public abstract class Dealer implements Comparable<Dealer>{
 	public int getSales() {
 		return sales;
 	}
-
+	
+	
+	public void addClient(Client client) {
+		clients.add(client);
+	}
+	
+	public void addSeller(Seller seller) {
+		sellers.add(seller);
+	}
+	
 	public ArrayList<Client> getClients() {
 		return clients;
 	}
