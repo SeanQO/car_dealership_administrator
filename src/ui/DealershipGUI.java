@@ -2,9 +2,14 @@ package ui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import javax.security.sasl.SaslException;
+
 import customException.EmptyDataException;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +24,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -28,12 +34,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import model.Admin;
 import model.CarDealer;
 import model.Client;
 import model.Company;
 import model.Dealer;
 import model.MotorcycleDealer;
+import model.Person;
 import model.Seller;
 import model.VehicleDealer;
 import sun.nio.ch.SelChImpl;
@@ -229,28 +237,25 @@ public class DealershipGUI implements Initializable{
 	// *************************** seller list window attributes ***************************
 	// *sL* sellers list window indicator
 	@FXML
-	private TableView<Seller> sellersListTable;
+	private TableView<Person> sellersListTable;
 
 	@FXML
-	private TableColumn<Seller, String> sLColumnName;
+	private TableColumn<Person, String> sLColumnName;
 
 	@FXML
-	private TableColumn<Seller, String> sLColumnLastName;
+	private TableColumn<Person, String> sLColumnLastName;
 
 	@FXML
-	private TableColumn<Seller, Long> sLColumnId;
+	private TableColumn<Person, Long> sLColumnId;
 
 	@FXML
-	private TableColumn<Seller, String> sLColumnEmail;
+	private TableColumn<Person, String> sLColumnEmail;
 
 	@FXML
-	private TableColumn<Seller, Long> sLColumnPhoneNumber;
+	private TableColumn<Person, Long> sLColumnPhoneNumber;
 
 	@FXML
 	private TableColumn<Seller, Double> sLColumnSalary;
-
-	@FXML
-	private TableColumn<Seller, String> sLAdminInCharge;
 
 	@FXML
 	private TextField searchSellerTxt;
@@ -552,6 +557,7 @@ public class DealershipGUI implements Initializable{
 	void openRegisterClient(ActionEvent event) {
 		if (!registerOpen) {
 			try {
+				loadSellerInchargeTable();
 				openRegisterClient();
 			} catch (IOException ioException) {
 				// TODO: handle exception
@@ -600,8 +606,8 @@ public class DealershipGUI implements Initializable{
 	void openClientList(ActionEvent event) {
 		if (clientList == null) {
 			try {
-				openClientList();
 				loadClientTable();
+				openClientList();
 			} catch (IOException ioException) {
 				// TODO: handle exception
 			}
@@ -639,7 +645,6 @@ public class DealershipGUI implements Initializable{
 		if (!registerOpen) {
 			try {
 				openRegisterSeller();
-				loadSellersTable();
 			} catch (IOException ioException) {
 				// TODO: handle exception
 			}
@@ -690,6 +695,7 @@ public class DealershipGUI implements Initializable{
 	void openSellerList(ActionEvent event) {
 		if (sellerList == null) {
 			try {
+				loadSellersTable();
 				openSellerList();
 			} catch (IOException ioException) {
 				// TODO: handle exception
@@ -1218,35 +1224,20 @@ public class DealershipGUI implements Initializable{
 	private void loadSellersTable() {
 		if (currentDealer.getSellers().size() != 0) {
 
-			ObservableList<Seller> observableList;
+			ObservableList<Person> observableList;
 			observableList = FXCollections.observableArrayList(currentDealer.getSellers());
 			
 			sellersListTable.setItems(observableList);
-			sLColumnName.setCellValueFactory(new PropertyValueFactory<Seller,String>("name"));
-			sLColumnLastName.setCellValueFactory(new PropertyValueFactory<Seller,String>("adminName"));
-			sLColumnId.setCellValueFactory(new PropertyValueFactory<Seller,Long>("id"));
-			sLColumnEmail.setCellValueFactory(new PropertyValueFactory<Seller,String>("email"));
-			sLColumnPhoneNumber.setCellValueFactory(new PropertyValueFactory<Seller,Long>("phoneNumber"));
-			sLColumnSalary.setCellValueFactory(new PropertyValueFactory<Seller,Double>("salary"));
+			sLColumnName.setCellValueFactory(new PropertyValueFactory<Person,String>("name"));
+			sLColumnId.setCellValueFactory(new PropertyValueFactory<Person,Long>("id"));
+			sLColumnEmail.setCellValueFactory(new PropertyValueFactory<Person,String>("email"));
+			sLColumnPhoneNumber.setCellValueFactory(new PropertyValueFactory<Person,Long>("phoneNumber"));
+
 			
 		}
-	
-	}
-	/*
-    private void loadVehiclesTable() {
-    	if (currentDealer.getVehicles.size() != 0) {
-
-    		ObservableList<Dealer> observableList;
-    		observableList = FXCollections.observableArrayList(company.getDealers());
-    		mainDealerListTable.setItems(observableList);
-    		columnDealerName.setCellValueFactory(new PropertyValueFactory<Dealer,String>("name"));
-    		columnAdminName.setCellValueFactory(new PropertyValueFactory<Dealer,String>("adminName"));
-
-		}
-
 
 	}
-	 */
+	 
 	private void loadSellerInchargeTable() {
 		if (currentDealer.getSellers().size() != 0) {
 

@@ -4,7 +4,6 @@ public class Seller extends Person {
 	
 	private static final long serialVersionUID = 1;
 	private static final int MAX_CLIENTS = 5;
-	
 	private double salary;
 	private int sells;
 	private Client[] clients;

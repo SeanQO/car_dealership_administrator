@@ -14,15 +14,14 @@
    <children>
       <ScrollPane layoutY="71.0" prefHeight="359.0" prefWidth="680.0">
          <content>
-            <TableView fx:id="sellersListTable" prefHeight="359.0">
+            <TableView fx:id="sellersListTable">
                <columns>
                   <TableColumn fx:id="sLColumnName" prefWidth="120.0" text="Name" />
-                  <TableColumn fx:id="sLColumnLastName" prefWidth="114.0" text="lastname" />
-                  <TableColumn fx:id="sLColumnId" minWidth="9.0" prefWidth="72.0" text="Id" />
-                  <TableColumn fx:id="sLColumnEmail" prefWidth="70.0" text="Email" />
-                  <TableColumn fx:id="sLColumnPhoneNumber" prefWidth="102.0" text="Phone number" />
-                  <TableColumn fx:id="sLColumnSalary" prefWidth="85.0" text="Salary" />
-                  <TableColumn fx:id="sLAdminInCharge" prefWidth="116.0" text="Admin in charge" />
+                  <TableColumn fx:id="sLColumnLastName" prefWidth="121.0" text="lastname" />
+                  <TableColumn fx:id="sLColumnId" minWidth="9.0" prefWidth="65.0" text="Id" />
+                  <TableColumn fx:id="sLColumnEmail" prefWidth="97.0" text="Email" />
+                  <TableColumn fx:id="sLColumnPhoneNumber" prefWidth="131.0" text="Phone number" />
+                  <TableColumn fx:id="sLColumnSalary" prefWidth="142.0" text="Salary" />
                </columns>
             </TableView>
          </content>
