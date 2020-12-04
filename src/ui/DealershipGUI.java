@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import customException.EmptyDataException;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -28,6 +30,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import model.Admin;
 import model.CarDealer;
 import model.Client;
@@ -250,7 +253,7 @@ public class DealershipGUI implements Initializable{
 	private TableColumn<Person, Long> sLColumnPhoneNumber;
 
 	@FXML
-	private TableColumn<Seller, Double> sLColumnSalary;
+	private TableColumn<Client, Double> sLColumnSalary;
 
 	@FXML
 	private TextField searchSellerTxt;
@@ -960,9 +963,8 @@ public class DealershipGUI implements Initializable{
 			registerOpen = false;
 
 			updateDealerWindowInfo();
-
+			
 		} catch (EmptyDataException emptyDataException) {
-			System.out.println("empty");
 			emptyFieldsAlert();
 
 		}catch (NumberFormatException numberFormatException) {
@@ -972,6 +974,12 @@ public class DealershipGUI implements Initializable{
 		}catch (NullPointerException nullPointerException) {
 			emptyFieldsAlert();
 
+		}
+		
+		try {
+			loadSellersTable();
+		} catch (Exception e) {
+			// if catch, means list its not opened.
 		}
 		
 	}
@@ -1231,7 +1239,7 @@ public class DealershipGUI implements Initializable{
 	}
 
 	private void loadSellersTable() {
-		System.out.println("In");
+		// TODO: errase if from here, open list responsability.
 		if (currentDealer.getSellers().size() != 0) {
 
 			ObservableList<Person> observableList;
@@ -1239,10 +1247,11 @@ public class DealershipGUI implements Initializable{
 			
 			sellersListTable.setItems(observableList);	
 			sLColumnName.setCellValueFactory(new PropertyValueFactory<Person,String>("name"));
+			sLColumnLastName.setCellValueFactory(new PropertyValueFactory<Person,String>("lastname"));
 			sLColumnId.setCellValueFactory(new PropertyValueFactory<Person,Long>("id"));
 			sLColumnEmail.setCellValueFactory(new PropertyValueFactory<Person,String>("email"));
 			sLColumnPhoneNumber.setCellValueFactory(new PropertyValueFactory<Person,Long>("phoneNumber"));
-
+			sLColumnSalary.setCellValueFactory(new PropertyValueFactory<Client,Double>("salary"));
 			
 		}
 
@@ -1251,7 +1260,6 @@ public class DealershipGUI implements Initializable{
 	private void loadSellerInchargeTable() {
 			ObservableList<Person> observableList;
 			observableList = FXCollections.observableArrayList(currentDealer.getAvailableSellers());
-			System.out.println(currentDealer.getAvailableSellers().get(0).getLastName());
 			sellerInChargeTable.setItems(observableList);
 			nameSellerInCharge.setCellValueFactory(new PropertyValueFactory<Person,String>("name"));
 			lastnameSellerInCharge.setCellValueFactory(new PropertyValueFactory<Person,String>("lastname"));

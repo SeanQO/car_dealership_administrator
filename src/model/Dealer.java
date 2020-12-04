@@ -105,16 +105,15 @@ public abstract class Dealer implements Comparable<Dealer>{
 		return null;
 	}
 	
-	public ArrayList<Person> getAvailableSellers(){
-		ArrayList<Person> availableSellers = new ArrayList<Person>();
+	public ArrayList<Seller> getAvailableSellers(){
+		ArrayList<Seller> availableSellers = new ArrayList<Seller>();
 		
 		for (Seller seller : sellers) {
 			if (seller.getClients()[4] == null) {
-				Person person = new Person(seller.getName(), seller.getLastName(), seller.getEmail(), seller.getId(), seller.getPhoneNumber());
-				availableSellers.add(person);
+				availableSellers.add(seller);
+				
 			}
-			
-			
+
 		}
 		
 		return availableSellers;
