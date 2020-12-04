@@ -61,6 +61,7 @@ public abstract class Dealer implements Comparable<Dealer>{
 	}
 	
 	public void setAdmin(Admin admin) {
+		adminName = admin.getName();
 		this.admin = admin;
 	}
 	

@@ -1,11 +1,11 @@
 package ui;
 
 import java.io.IOException;
+
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import customException.EmptyDataException;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,7 +20,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -30,7 +29,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import model.Admin;
 import model.CarDealer;
 import model.Client;
@@ -154,8 +152,6 @@ public class DealershipGUI implements Initializable{
 	@FXML
 	private TextField rATxtSalary;
 
-	@FXML
-	private ComboBox<?> dealerComboBox;
 
 	// *************************** register client window attributes ***************************
 	// *rC* register client window indicator
@@ -189,22 +185,22 @@ public class DealershipGUI implements Initializable{
 	// *cL* client list window indicator
 
 	@FXML
-	private TableView<Client> clientsListTable;
+	private TableView<Person> clientsListTable;
 
 	@FXML
-	private TableColumn<Client, String> cLcolumnName;
+	private TableColumn<Person, String> cLcolumnName;
 
 	@FXML
-	private TableColumn<Client, String> cLcolumnLastName;
+	private TableColumn<Person, String> cLcolumnLastName;
 
 	@FXML
-	private TableColumn<Client, Long> cLcolumnId;
+	private TableColumn<Person, Long> cLcolumnId;
 
 	@FXML
-	private TableColumn<Client, String> cLcolumnEmail;
+	private TableColumn<Person, String> cLcolumnEmail;
 
 	@FXML
-	private TableColumn<Client, Long> cLcolumnPhoneNumber;
+	private TableColumn<Person, Long> cLcolumnPhoneNumber;
 
 	@FXML
 	private TableColumn<Client, Integer> cLcolumnPurchasedVehicles;
@@ -253,7 +249,7 @@ public class DealershipGUI implements Initializable{
 	private TableColumn<Person, Long> sLColumnPhoneNumber;
 
 	@FXML
-	private TableColumn<Client, Double> sLColumnSalary;
+	private TableColumn<Seller, Double> sLColumnSalary;
 
 	@FXML
 	private TextField searchSellerTxt;
@@ -882,7 +878,56 @@ public class DealershipGUI implements Initializable{
 
 
 	}
+	
+	// *************************** register admin window actions 
+	
+    @FXML
+    void registerAdmin(ActionEvent event) {
+    	System.out.println("Hello");
+    	System.out.println(currentDealer.getAdminName());
+    	try {
+    		
+    		String name = rATxtName.getText();
+    		String lastname = rATxtLastname.getText();
+    		long id = Long.parseLong( rATxtId.getText() );
+    		String email = rATxtEmail.getText();
+    		long phoneNumber = Long.parseLong( rATxtPhoneNumber.getText() );
+    		double salary = Double.parseDouble( rATxtSalary.getText() );
 
+    		if(name.equals("") || lastname.equals("") || email.equals("") ||
+					(id + "").equals("") || (phoneNumber + "").equals("") || (salary +"").equals("")) {
+    			throw new EmptyDataException("");
+    		}
+
+    		Admin newAdmin = new Admin(name, lastname, email, id, phoneNumber, salary);
+    		newAdmin.setSellers(currentDealer.getAdmin().getSellers());
+    		currentDealer.setAdmin(newAdmin);
+    		System.out.println(currentDealer.getAdminName());
+        	registerStage.close();
+    		registerStage = null;
+    		registerOpen = false;
+    		
+    		updateDealerWindowInfo();
+    		updateMainWindowInfo();
+    		
+		}catch (EmptyDataException emptyDataException) {
+
+			emptyFieldsAlert();
+
+		}catch (NumberFormatException numberFormatException) {
+
+			incorrectDataTypeAlert();
+
+		}catch (NullPointerException nullPointerException) {
+
+			emptyFieldsAlert();
+
+		}
+    	
+    	System.out.println(currentDealer.getAdminName());
+
+    }
+    
 	// *************************** register client window actions 
 
 	@FXML
@@ -993,12 +1038,6 @@ public class DealershipGUI implements Initializable{
 	}
 
 	// *************************** add vehicle window actions 
-	@FXML
-	void registerAdmin(ActionEvent event) {
-		registerStage.close();
-		registerStage = null;
-		registerOpen = false;
-	}
 
 	// *************************** list window actions ***************************
 
@@ -1222,15 +1261,15 @@ public class DealershipGUI implements Initializable{
 	private void loadClientTable() {
 		if (currentDealer.getClients().size() != 0) {
 
-			ObservableList<Client> observableList;
+			ObservableList<Person> observableList;
 			observableList = FXCollections.observableArrayList(currentDealer.getClients());
 			clientsListTable.setItems(observableList);
 
-			cLcolumnName.setCellValueFactory(new PropertyValueFactory<Client, String>("name"));
-			cLcolumnLastName.setCellValueFactory(new PropertyValueFactory<Client, String>("lastname"));
-			cLcolumnId.setCellValueFactory(new PropertyValueFactory<Client, Long>("id"));
-			cLcolumnEmail.setCellValueFactory(new PropertyValueFactory<Client, String>("email"));
-			cLcolumnPhoneNumber.setCellValueFactory(new PropertyValueFactory<Client, Long>("phoneNumber"));
+			cLcolumnName.setCellValueFactory(new PropertyValueFactory<Person, String>("name"));
+			cLcolumnLastName.setCellValueFactory(new PropertyValueFactory<Person, String>("lastname"));
+			cLcolumnId.setCellValueFactory(new PropertyValueFactory<Person, Long>("id"));
+			cLcolumnEmail.setCellValueFactory(new PropertyValueFactory<Person, String>("email"));
+			cLcolumnPhoneNumber.setCellValueFactory(new PropertyValueFactory<Person, Long>("phoneNumber"));
 			cLcolumnPurchasedVehicles.setCellValueFactory(new PropertyValueFactory<Client, Integer>("purchasedVehicles"));
 
 
@@ -1251,7 +1290,7 @@ public class DealershipGUI implements Initializable{
 			sLColumnId.setCellValueFactory(new PropertyValueFactory<Person,Long>("id"));
 			sLColumnEmail.setCellValueFactory(new PropertyValueFactory<Person,String>("email"));
 			sLColumnPhoneNumber.setCellValueFactory(new PropertyValueFactory<Person,Long>("phoneNumber"));
-			sLColumnSalary.setCellValueFactory(new PropertyValueFactory<Client,Double>("salary"));
+			sLColumnSalary.setCellValueFactory(new PropertyValueFactory<Seller,Double>("salary"));
 			
 		}
 

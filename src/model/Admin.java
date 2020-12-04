@@ -29,6 +29,10 @@ public class Admin extends Person {
 		return sellers;
 	}
 	
+	public void setSellers(ArrayList<Seller> sellers) {
+		this.sellers = sellers; 
+	}
+	
 	
 	public boolean addSeller(Seller seller) {
 		boolean added = false;
