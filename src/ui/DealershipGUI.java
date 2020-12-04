@@ -158,13 +158,13 @@ public class DealershipGUI implements Initializable{
 	// *rC* register client window indicator
 	
 	@FXML
-    private TableView<Seller> sellerInChargeTable;
+    private TableView<Person> sellerInChargeTable;
 
     @FXML
-    private TableColumn<Seller, String> nameSellerInCharge;
+    private TableColumn<Person, String> nameSellerInCharge;
 
     @FXML
-    private TableColumn<Seller, String> lastnameSellerInCharge;
+    private TableColumn<Person, String> lastnameSellerInCharge;
 	
 	@FXML
 	private TextField rCTxtName;
@@ -381,7 +381,7 @@ public class DealershipGUI implements Initializable{
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
-
+			
 
 		}
 
@@ -551,12 +551,17 @@ public class DealershipGUI implements Initializable{
 	@FXML
 	void openRegisterClient(ActionEvent event) {
 		if (!registerOpen) {
-			try {
-				loadSellerInchargeTable();
-				openRegisterClient();
-			} catch (IOException ioException) {
-				// TODO: handle exception
+			if (currentDealer.getAvailableSellers().size() != 0) {
+				try {
+					openRegisterClient();
+					loadSellerInchargeTable();
+				} catch (IOException ioException) {
+					// TODO: handle exception
+				}
+			}else {
+				noAvailableSellersAlert();
 			}
+			
 
 		}else {
 			boolean runRegister = false;
@@ -601,8 +606,8 @@ public class DealershipGUI implements Initializable{
 	void openClientList(ActionEvent event) {
 		if (clientList == null) {
 			try {
-				loadClientTable();
 				openClientList();
+				loadClientTable();
 			} catch (IOException ioException) {
 				// TODO: handle exception
 			}
@@ -690,8 +695,8 @@ public class DealershipGUI implements Initializable{
 	void openSellerList(ActionEvent event) {
 		if (sellerList == null) {
 			try {
-				loadSellersTable();
 				openSellerList();
+				loadSellersTable();
 			} catch (IOException ioException) {
 				// TODO: handle exception
 			}
@@ -893,7 +898,8 @@ public class DealershipGUI implements Initializable{
 				throw new EmptyDataException("");
 			}
 			
-			Seller selectedSellerIncharge= sellerInChargeTable.getSelectionModel().getSelectedItem();
+			Person selectedPersonIncharge = sellerInChargeTable.getSelectionModel().getSelectedItem();
+			Seller selectedSellerIncharge = currentDealer.getSeller(selectedPersonIncharge.getId());
 			
 			if (selectedSellerIncharge == null ) {
 				throw new EmptyDataException(""); 
@@ -1132,6 +1138,14 @@ public class DealershipGUI implements Initializable{
 		error.showAndWait();
 
 	}
+	
+	private void noAvailableSellersAlert() {
+		Alert error = new Alert(AlertType.ERROR);
+		error.setTitle("Error");
+		error.setHeaderText("No available sellers for this client.\n please add more sellers.");
+		error.showAndWait();
+
+	}
 
 	// *************************** close stage ***************************
 	private void  closeRegisterStage() {
@@ -1235,20 +1249,13 @@ public class DealershipGUI implements Initializable{
 	}
 	 
 	private void loadSellerInchargeTable() {
-		if (currentDealer.getSellers().size() != 0) {
-
-			ObservableList<Seller> observableList;
-			// TODO: add method getAvailableSellers
-			observableList = FXCollections.observableArrayList(currentDealer.getSellers());
+			ObservableList<Person> observableList;
+			observableList = FXCollections.observableArrayList(currentDealer.getAvailableSellers());
+			System.out.println(currentDealer.getAvailableSellers().get(0).getLastName());
 			sellerInChargeTable.setItems(observableList);
-			nameSellerInCharge.setCellValueFactory(new PropertyValueFactory<Seller,String>("name"));
-			lastnameSellerInCharge.setCellValueFactory(new PropertyValueFactory<Seller,String>("adminName"));
-
-		}else {
-			// TODO: no available sellers alert
-		}
-
-
+			nameSellerInCharge.setCellValueFactory(new PropertyValueFactory<Person,String>("name"));
+			lastnameSellerInCharge.setCellValueFactory(new PropertyValueFactory<Person,String>("lastname"));
+			
 	}
 
 	// *************************** load choice box ***************************

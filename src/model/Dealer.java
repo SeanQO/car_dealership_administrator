@@ -93,6 +93,32 @@ public abstract class Dealer implements Comparable<Dealer>{
 	public ArrayList<Seller> getSellers() {
 		return sellers;
 	}
+	
+	public Seller getSeller(long id) {
+		for (Seller seller : sellers) {
+			if (seller.getId() == id) {
+				return seller;
+			}
+			
+		}
+		
+		return null;
+	}
+	
+	public ArrayList<Person> getAvailableSellers(){
+		ArrayList<Person> availableSellers = new ArrayList<Person>();
+		
+		for (Seller seller : sellers) {
+			if (seller.getClients()[4] == null) {
+				Person person = new Person(seller.getName(), seller.getLastName(), seller.getEmail(), seller.getId(), seller.getPhoneNumber());
+				availableSellers.add(person);
+			}
+			
+			
+		}
+		
+		return availableSellers;
+	}
 
 	public int compareTo(Dealer p) {
 		int difference;
