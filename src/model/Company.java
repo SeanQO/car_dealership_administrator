@@ -3,7 +3,6 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-import customException.DoubleRegistrationException;
 import customException.EmptyDataException;
 
 public class Company {
@@ -58,14 +57,6 @@ public class Company {
 		return vehicleRoot;
 	}
 
-	public List<Vehicle> getVehicles() {
-		List<Vehicle> vehicles = new ArrayList<Vehicle>();
-		if (vehicleRoot != null) {
-			BSTtoListInOrder(vehicleRoot, vehicles);
-		}
-		return vehicles;
-	}
-
 	public List<Dealer> getDealers() {
 		List<Dealer> dealers = new ArrayList<Dealer>();
 		if (firstDealer != null) {
@@ -77,173 +68,7 @@ public class Company {
 		}
 		return dealers;
 	}
-
-	private void BSTtoListInOrder(Vehicle current, List<Vehicle> list) {
-		if (current.getLeft() != null) {
-			BSTtoListInOrder(current.getLeft(), list);
-		}
-		list.add(current);
-		if (current.getRight() != null) {
-			BSTtoListInOrder(current.getRight(), list);
-		}
-	}
-
 	
-	public void addVehicle(String id, double totalSalePrice, String brand, double weight, String typeOfMotor,
-			double topSpeed, int mileage, boolean used) throws DoubleRegistrationException, EmptyDataException {
-		String emptyData = verifyFields(id, totalSalePrice, brand, weight, typeOfMotor, topSpeed, mileage, used);
-		Vehicle vehicle = null;
-		if (!emptyData.equals("")) {
-			throw new EmptyDataException(emptyData);
-		}
-
-		if (searchVehicle(id) != null) {
-			throw new DoubleRegistrationException(id, "Vehicle");
-		}
-		vehicle = new Vehicle(id, totalSalePrice, brand, weight, typeOfMotor, topSpeed, mileage, used);
-
-		Vehicle current = vehicleRoot;
-
-		boolean wasAdded = false;
-
-		if (vehicleRoot != null) {
-			while (!wasAdded) {
-				if (current.compareTo(vehicle) < 0) {
-					if (current.getLeft() == null) {
-						current.setLeft(vehicle);
-						vehicle.setHead(current);
-						wasAdded = true;
-					} else {
-						current = current.getLeft();
-					}
-				} else {
-					if (current.getRight() == null) {
-						current.setRight(vehicle);
-						vehicle.setHead(current);
-						wasAdded = true;
-					} else {
-						current = current.getRight();
-					}
-				}
-			}
-		} else {
-			vehicleRoot = vehicle;
-		}
-	}
-
-	
-	public void deleteVehicle(String id) {
-		Vehicle nodo = searchVehicle(id);
-		if (nodo != null) {
-			if ((nodo.getLeft() == null || nodo.getRight() == null)
-					&& !(nodo.getLeft() == null && nodo.getRight() == null)) { // Delete element with one child
-				if (nodo == vehicleRoot) {
-					if (nodo.getLeft() != null) {
-						nodo.getLeft().setHead(null);
-						vehicleRoot = nodo.getLeft();
-					} else {
-						nodo.getRight().setHead(null);
-						vehicleRoot = nodo.getRight();
-					}
-				} else {
-					if (nodo.getLeft() != null) {
-						nodo.getLeft().setHead(nodo.getHead());
-						if (nodo.getHead().getLeft() == nodo) {
-							nodo.getHead().setLeft(nodo.getLeft());
-						} else {
-							nodo.getHead().setRight(nodo.getLeft());
-						}
-					} else {
-						nodo.getRight().setHead(nodo.getHead());
-						if (nodo.getHead().getLeft() == nodo) {
-							nodo.getHead().setLeft(nodo.getRight());
-						} else {
-							nodo.getHead().setRight(nodo.getRight());
-						}
-					}
-				}
-			} else if (nodo.getLeft() == null && nodo.getRight() == null) { // Delete sheet
-				if (nodo == vehicleRoot) {
-					vehicleRoot = null;
-				} else {
-					if (nodo.getHead().getLeft() == nodo) {
-						nodo.getHead().setLeft(null);
-					} else {
-						nodo.getHead().setRight(null);
-					}
-				}
-			} else { // Delete element with both children
-				Vehicle min = nodo.getRight().getMin();
-				deleteVehicle(min.getId());
-				min.setHead(nodo.getHead());
-				min.setRight(nodo.getRight());
-				min.setLeft(nodo.getLeft());
-				nodo.getLeft().setHead(min);
-				if (nodo.getRight() != null) {
-					nodo.getRight().setHead(min);
-				}
-				if (nodo == vehicleRoot) {
-					vehicleRoot = min;
-				} else {
-					if (nodo.getHead().getLeft() == nodo) {
-						nodo.getHead().setLeft(min);
-					} else {
-						nodo.getHead().setRight(min);
-					}
-				}
-			}
-		}
-	}
-
-	private String verifyFields(String id, double totalSalePrice, String brand, double weight, String typeOfMotor,
-			double topSpeed, int mileage, boolean used) {
-		String fields = "";
-		if (id.equals("")) {
-			fields = "Id ";
-		}
-		if (totalSalePrice == 0) {
-			fields += "Name ";
-		}
-		if (brand.equals("")) {
-			fields += "Lastname ";
-		}
-		if (weight == 0) {
-			fields += "CelphoneNumber ";
-		}
-		if (typeOfMotor.equals("")) {
-			fields += "Address ";
-		}
-		if (topSpeed == 0) {
-			fields += "topSpedd";
-		}
-		if (mileage == 0) {
-			fields += "mileage";
-		}
-		if (used) {
-			fields += "used";
-		}
-		return fields;
-	}
-
-	public Vehicle searchVehicle(String id) {
-
-		return searchVehicle(vehicleRoot, id);
-	}
-
-	private Vehicle searchVehicle(Vehicle nodo, String id) {
-		if (nodo != null) {
-			if (nodo.getId().compareTo(id) < 0) {
-				return searchVehicle(nodo.getRight(), id);
-			} else if (nodo.getId().compareTo(id) > 0) {
-				return searchVehicle(nodo.getLeft(), id);
-			} else {
-				return nodo;
-			}
-		} else {
-			return null;
-		}
-	}
-
 	public void addCarDealer(CarDealer carDealer) {
 		CarDealer newDealer = carDealer;
 		addDealer(newDealer);

@@ -1,23 +1,26 @@
 package model;
 
+import customException.DoubleRegistrationException;
+import customException.EmptyDataException;
+
 public class VehicleDealer extends Dealer {
 
 	public VehicleDealer(String name, Admin admin, String adress) {
 		super(name, admin, adress);
 		
 	}
-	
-	
+
 	@Override
-	public boolean addVehicle(Vehicle vehicle) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addVehicle(Vehicle vehicle) throws DoubleRegistrationException, EmptyDataException {
+		addVehicle(vehicle.getId(),vehicle.getTotalSalePrice(),vehicle.getBrand(),vehicle.getWeight(),vehicle.getTypeOfMotor(),vehicle.getTopSpeed(),vehicle.getMileage(),vehicle.isUsed());
+		return true;
 	}
+
 
 	@Override
 	public boolean removeVehicle(Vehicle vehicle) {
-		// TODO Auto-generated method stub
-		return false;
+		deleteVehicle(vehicle.getId());
+		return true;
 	}
 	
 
