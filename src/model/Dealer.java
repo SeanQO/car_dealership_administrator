@@ -88,8 +88,14 @@ public abstract class Dealer implements Comparable<Dealer> {
 		return sales;
 	}
 
-	public void addClient(Client client) {
-		clients.add(client);
+	public void addClient(Client client) throws DoubleRegistrationException {
+		for(int i = 0;i<clients.size();i++) {
+			if(clients.get(i).getId()==client.getId()) {
+				String id = ""+clients.get(i).getId();
+				throw new DoubleRegistrationException(id, "clients");
+			}
+			clients.add(client);
+		}
 	}
 
 	public void removeClient(long id) {
@@ -100,8 +106,14 @@ public abstract class Dealer implements Comparable<Dealer> {
 		}
 	}
 
-	public void addSeller(Seller seller) {
-		sellers.add(seller);
+	public void addSeller(Seller seller) throws DoubleRegistrationException {
+		for(int i = 0;i<sellers.size();i++) {
+			if(sellers.get(i).getId()==seller.getId()) {
+				String id = ""+sellers.get(i).getId();
+				throw new DoubleRegistrationException(id, "sellers");
+			}
+			sellers.add(seller);
+		}
 	}
 
 	public void removeSeller(long id) {

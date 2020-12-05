@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import customException.DoubleRegistrationException;
 import customException.EmptyDataException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -973,6 +975,9 @@ public class DealershipGUI implements Initializable{
 
 			emptyFieldsAlert();
 
+		} catch (DoubleRegistrationException e) {
+			
+			repeatingIdAlert();
 		}
 		
 		try {
@@ -1023,6 +1028,8 @@ public class DealershipGUI implements Initializable{
 		}catch (NullPointerException nullPointerException) {
 			emptyFieldsAlert();
 
+		} catch (DoubleRegistrationException e) {
+			repeatingIdAlert();
 		}
 		
 		try {
@@ -1211,6 +1218,15 @@ public class DealershipGUI implements Initializable{
 
 	}
 
+	private void repeatingIdAlert() {
+		Alert error = new Alert(AlertType.ERROR);
+		error.setTitle("the id is repeating");
+		error.setHeaderText("this id is being used at the moment");
+		error.setContentText("Please correct the required fields");
+		error.showAndWait();
+
+	}
+	
 	private void emptyFieldsAlert() {
 		Alert error = new Alert(AlertType.ERROR);
 		error.setTitle("Fields are empty");
