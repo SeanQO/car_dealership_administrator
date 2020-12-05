@@ -6,9 +6,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import javax.swing.plaf.synth.SynthScrollPaneUI;
-
 import customException.DoubleRegistrationException;
 import customException.EmptyDataException;
 import javafx.collections.FXCollections;
@@ -49,7 +46,6 @@ import model.Person;
 import model.Seller;
 import model.Vehicle;
 import model.VehicleDealer;
-import model.GasCar;
 
 public class DealershipGUI implements Initializable{
 
