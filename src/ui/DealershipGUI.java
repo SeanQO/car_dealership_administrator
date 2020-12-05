@@ -351,9 +351,35 @@ public class DealershipGUI implements Initializable{
     private TextField GasolineGasConsumption;
     
     // *************************** electric car window attributes
+    
+    @FXML
+    private ToggleGroup chargerType;
 
+    @FXML
+    private TextField electricBatteryLife;
+
+    @FXML
+    private TextField electricBatteryConsumption;
     
     // *************************** hybrid car window attributes
+    
+    @FXML
+    private ChoiceBox<String> hybridgasolineTypeChoiceBox;
+
+    @FXML
+    private TextField hybridTankCapacity;
+
+    @FXML
+    private TextField hybridGasolineGasConsumption;
+
+    @FXML
+    private ToggleGroup hybridChargerType;
+
+    @FXML
+    private TextField hybridBatteryLife;
+
+    @FXML
+    private TextField hybridBatteryConsumption;
 
 	// *************************** vehicle list window attributes ***************************
 	// *vL* vehicle list window indicator
@@ -1269,6 +1295,7 @@ public class DealershipGUI implements Initializable{
 
 		addCarSecondPane.getChildren().clear();
 		addCarSecondPane.setCenter(coursesListPane);
+		
 
 	}
 
@@ -1280,6 +1307,7 @@ public class DealershipGUI implements Initializable{
 
 		addCarSecondPane.getChildren().clear();
 		addCarSecondPane.setCenter(coursesListPane);
+		loadCGasTypeChoiceBox();
 
 	}
 
@@ -1291,6 +1319,7 @@ public class DealershipGUI implements Initializable{
 
 		addCarSecondPane.getChildren().clear();
 		addCarSecondPane.setCenter(coursesListPane);
+		loadHCGasTypeChoiceBox();
 
 	}
 
@@ -1619,13 +1648,18 @@ public class DealershipGUI implements Initializable{
 
 	}
 	
-	/*
+	
 	private void loadCGasTypeChoiceBox() {
 
-		aMGasTypeChoiceBox.getItems().addAll("Extra","Regular" , "Diesel");
+		gasolineTypeChoiceBox.getItems().addAll("Premium","Regular" , "Diesel");
 
 	}
-	*/
+	
+	private void loadHCGasTypeChoiceBox() {
+		hybridgasolineTypeChoiceBox.getItems().addAll("Premium","Regular" , "Diesel");
+
+	}
+	
 
 	// *************************** get selected item from table ***************************
 
