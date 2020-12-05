@@ -17,10 +17,10 @@
                <children>
                   <RadioButton mnemonicParsing="false" text="Fast charger">
                      <toggleGroup>
-                        <ToggleGroup fx:id="cargerType" />
+                        <ToggleGroup fx:id="chargerType" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Normal charger" toggleGroup="$cargerType" />
+                  <RadioButton mnemonicParsing="false" text="Normal charger" toggleGroup="$chargerType" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
