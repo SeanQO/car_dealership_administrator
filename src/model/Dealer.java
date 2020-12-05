@@ -13,13 +13,12 @@ import java.util.List;
 import customException.DoubleRegistrationException;
 import customException.EmptyDataException;
 
-
 public abstract class Dealer implements Comparable<Dealer> {
 
 	private Dealer nextDealer;
 	private Dealer prevDealer;
 	private Vehicle vehicleRoot;
-	
+
 	private String name;
 	private Admin admin;
 	private String adminName;
@@ -89,9 +88,9 @@ public abstract class Dealer implements Comparable<Dealer> {
 	}
 
 	public void addClient(Client client) throws DoubleRegistrationException {
-		for(int i = 0;i<clients.size();i++) {
-			if(clients.get(i).getId()==client.getId()) {
-				String id = ""+clients.get(i).getId();
+		for (int i = 0; i < clients.size(); i++) {
+			if (clients.get(i).getId() == client.getId()) {
+				String id = "" + clients.get(i).getId();
 				throw new DoubleRegistrationException(id, "clients");
 			}
 			clients.add(client);
@@ -100,14 +99,14 @@ public abstract class Dealer implements Comparable<Dealer> {
 
 	public Client searchClient(long id) {
 		Client searchingClient = null;
-		for(int i = 0;i<clients.size();i++) {
-			if(clients.get(i).getId()==id) {
+		for (int i = 0; i < clients.size(); i++) {
+			if (clients.get(i).getId() == id) {
 				searchingClient = clients.get(i);
 			}
 		}
 		return searchingClient;
 	}
-	
+
 	public void removeClient(long id) {
 		for (int i = 0; i < clients.size(); i++) {
 			if (clients.get(i).getId() == id) {
@@ -117,9 +116,9 @@ public abstract class Dealer implements Comparable<Dealer> {
 	}
 
 	public void addSeller(Seller seller) throws DoubleRegistrationException {
-		for(int i = 0;i<sellers.size();i++) {
-			if(sellers.get(i).getId()==seller.getId()) {
-				String id = ""+sellers.get(i).getId();
+		for (int i = 0; i < sellers.size(); i++) {
+			if (sellers.get(i).getId() == seller.getId()) {
+				String id = "" + sellers.get(i).getId();
 				throw new DoubleRegistrationException(id, "sellers");
 			}
 			sellers.add(seller);
@@ -128,14 +127,14 @@ public abstract class Dealer implements Comparable<Dealer> {
 
 	public Seller searchSeller(long id) {
 		Seller seachingSeller = null;
-		for(int i = 0;i<sellers.size();i++) {
-			if(sellers.get(i).getId()==id) {
+		for (int i = 0; i < sellers.size(); i++) {
+			if (sellers.get(i).getId() == id) {
 				seachingSeller = sellers.get(i);
 			}
 		}
 		return seachingSeller;
 	}
-	
+
 	public void removeSeller(long id) {
 		for (int i = 0; i < sellers.size(); i++) {
 			if (sellers.get(i).getId() == id) {
@@ -162,7 +161,7 @@ public abstract class Dealer implements Comparable<Dealer> {
 		}
 
 	}
-	
+
 	public ArrayList<Client> getClients() {
 		return clients;
 	}
@@ -188,11 +187,8 @@ public abstract class Dealer implements Comparable<Dealer> {
 		for (Seller seller : sellers) {
 			if (seller.getClients()[4] == null) {
 				availableSellers.add(seller);
-
 			}
-
 		}
-
 		return availableSellers;
 	}
 
@@ -207,42 +203,83 @@ public abstract class Dealer implements Comparable<Dealer> {
 	}
 
 	public void exportClients(File file, String s) throws FileNotFoundException {
-		ArrayList <Client>c;
-		c = new ArrayList<Client>();
-		PrintWriter pw =new PrintWriter(file);
+		ArrayList<Client> c = new ArrayList<Client>();
+		PrintWriter pw = new PrintWriter(file);
 		Collections.sort(clients);
-		pw.write("Name,"+s+" lastname,"+s+ "Email,"+s+"id,"+s+"Phone number,"+s+"Seller in charge,"+s);
-		for(int w=0;w<clients.size();w++) {
-			long code=c.get(0).getId();
-			pw.write(clients.get(w).getName()+s+ clients.get(w).getLastName()+s+clients.get(w).getEmail()+s+code+clients.get(w).getPhoneNumber()+s+clients.get(w).getSellerInCharge()+"\n");
+		pw.write("Name," + s + " lastname," + s + "Email," + s + "id," + s + "Phone number," + s + "Seller in charge,"
+				+ s);
+		for (int w = 0; w < clients.size(); w++) {
+			long code = c.get(0).getId();
+			pw.write(clients.get(w).getName() + s + clients.get(w).getLastName() + s + clients.get(w).getEmail() + s
+					+ code + clients.get(w).getPhoneNumber() + s + clients.get(w).getSellerInCharge() + "\n");
 		}
 		pw.close();
 	}
-	
-	/*public void importDataClients(File file) throws IOException {
-		BufferedReader br =new BufferedReader(new FileReader(file));
-		int count=0;
-		String line=br.readLine();
-		while(line!=null) {
-			 if(count>0){
-				 String [] parts=line.split(",");
-				 long id = Long.parseLong(parts[3]);
-				 long pn = Long.parseLong(parts[4]);
-				 Client newClient = new Client(parts[0],parts[1],parts[2],id,pn,parts[5]);
-				 addClient(newClient);
-			 }
-			 count++;
-			 line=br.readLine();
+
+	public void importDataClients(File file) throws IOException, DoubleRegistrationException {
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		ArrayList<Seller> avaliableSellers = getAvailableSellers();
+		boolean f = false;
+		Seller c = null;
+		for (int i = 0; i < avaliableSellers.size() && f == false; i++) {
+			c = avaliableSellers.get(i);
+			f = true;
+		}
+		int count = 0;
+		String line = br.readLine();
+		while (line != null) {
+			if (count > 0) {
+				String[] parts = line.split(",");
+				long id = Long.parseLong(parts[3]);
+				long pn = Long.parseLong(parts[4]);
+				Client newClient = new Client(parts[0], parts[1], parts[2], id, pn, c);
+				addClient(newClient);
+			}
+			count++;
+			line = br.readLine();
 		}
 		br.close();
-	}*/
-	
+	}
+
+	public void exportDataSeller(File file, String s) throws FileNotFoundException {
+		ArrayList<Seller> se = new ArrayList<Seller>();
+		;
+		PrintWriter pw = new PrintWriter(file);
+		Collections.sort(sellers);
+		pw.write("Name," + s + " lastname," + s + "Email," + s + "id," + s + "Phone number," + s + "Salary," + s);
+		for (int w = 0; w < sellers.size(); w++) {
+			long code = se.get(0).getId();
+			pw.write(sellers.get(w).getName() + s + sellers.get(w).getLastName() + s + sellers.get(w).getEmail() + s
+					+ code + sellers.get(w).getPhoneNumber() + s + sellers.get(w).getSalary() + "\n");
+		}
+		pw.close();
+	}
+
+	public void importDataSeller(File file) throws IOException, DoubleRegistrationException {
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		int count = 0;
+		String line = br.readLine();
+		while (line != null) {
+			if (count > 0) {
+				String[] parts = line.split(",");
+				long id = Long.parseLong(parts[3]);
+				long pn = Long.parseLong(parts[4]);
+				double s = Double.parseDouble(parts[5]);
+				Seller newSeller = new Seller(parts[0], parts[1], parts[2], id, pn, s);
+				addSeller(newSeller);
+			}
+			count++;
+			line = br.readLine();
+		}
+		br.close();
+	}
+
 	public void addVehicle(Vehicle vehicle) throws DoubleRegistrationException {
 
 		if (searchVehicle(vehicle.getId()) != null) {
 			throw new DoubleRegistrationException(vehicle.getId(), "Vehicle");
 		}
-		
+
 		Vehicle current = vehicleRoot;
 
 		boolean wasAdded = false;
