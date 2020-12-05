@@ -6,7 +6,7 @@ public class GasCar extends Car implements Gasoline{
 	private double gasConsumption;
 
 	public GasCar(String id, double basePrice, String brand, double weight, String typeOfMotor,
-			int mileage, boolean used,  int numOfPassengers,
+			double mileage, boolean used,  int numOfPassengers,
 			String carType, int noDoors, boolean polarized,
 				double tankCapacity, String gasType, double gasConsumption) {
 

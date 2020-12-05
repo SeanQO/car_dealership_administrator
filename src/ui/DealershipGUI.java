@@ -2,9 +2,13 @@ package ui;
 
 import java.io.IOException;
 
+
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import javax.swing.plaf.synth.SynthScrollPaneUI;
+
 import customException.DoubleRegistrationException;
 import customException.EmptyDataException;
 import javafx.collections.FXCollections;
@@ -36,12 +40,14 @@ import model.CarDealer;
 import model.Client;
 import model.Company;
 import model.Dealer;
+import model.GasCar;
 import model.Motorcycle;
 import model.MotorcycleDealer;
 import model.Person;
 import model.Seller;
 import model.Vehicle;
 import model.VehicleDealer;
+import model.GasCar;
 
 public class DealershipGUI implements Initializable{
 
@@ -931,6 +937,7 @@ public class DealershipGUI implements Initializable{
 			stage.setOnCloseRequest(e -> closeRegisterStage() );
 
 			stage.show();
+			loadCarTypeChoiceBoxChoiceBox();
 		}else {
 			//TODO: alert not motorcycle dealer
 		}
@@ -1272,20 +1279,114 @@ public class DealershipGUI implements Initializable{
 
 	@FXML
 	void addCar(ActionEvent event) {
+		try {
+			
+			String id = aCTxtId.getText();
+			double basePrice = Double.parseDouble( aCTxtBasePrice.getText() );
+			String brand = aCTxtBrand.getText();
+			double weight = Double.parseDouble( aCTxtWeight.getText() );
+			RadioButton selectedButton = (RadioButton) engineType.getSelectedToggle();
+			String typeOfMotor = selectedButton.getText();
+			double mileage = Double.parseDouble( aCTxtMileage.getText() );
+			boolean used = aCPreOwnedRB.isSelected();
+			int numOfPassengers = Integer.parseInt(  aCTxtNumOfPassengers.getText() );
+			String carType = aCCarTypeChoiceBox.getValue();
+			int noDoors = Integer.parseInt( aCTxtNumOfDoors.getText() );
+			boolean polarized = aCPolarized.isSelected();
+			
+			if(id.equals("") || brand.equals("") || typeOfMotor.equals("") || carType.equals("") ||
+					(weight + "").equals("") || (basePrice + "").equals("") || (numOfPassengers +"").equals("") || 
+					(mileage + "").equals("") || (noDoors + "").equals("") ) {
+				throw new EmptyDataException("");
+			}
+			
+			if(typeOfMotor.equals("Gas")) {
+				addGasCar(id, basePrice, brand, weight, typeOfMotor, mileage, used, numOfPassengers, carType, noDoors, polarized);
+				
+			}else if (typeOfMotor.equals("Electric")) {
+				addElectricCar(id, basePrice, brand, weight, typeOfMotor, mileage, used, numOfPassengers, carType, noDoors, polarized);
+				
+			}else if (typeOfMotor.equals("Hybrid")) {
+				addHybridCar(id, basePrice, brand, weight, typeOfMotor, mileage, used, numOfPassengers, carType, noDoors, polarized);
+				
+			}
+			
+		}catch (EmptyDataException emptyDataException) {
+			emptyFieldsAlert();
+
+		}catch (NumberFormatException numberFormatException) {
+
+			incorrectDataTypeAlert();
+
+		}catch (NullPointerException nullPointerException) {
+			emptyFieldsAlert();
+
+		} 
+		
+		try {
+			loadVehiclesTable();
+		} catch (Exception e) {
+			//  if exception, means that table is not opened
+		}
+		
+		
+	}
+
+	private void addGasCar(String id, double basePrice, String brand, double weight, String typeOfMotor,
+			double mileage, boolean used,  int numOfPassengers,
+			String carType, int noDoors, boolean polarized) {
+		
+		try {
+			
+			String gasType = gasolineTypeChoiceBox.getValue();
+			double tankCapacity = Double.parseDouble( GasolineTankCapacity.getText() );
+			double gasConsumption = Double.parseDouble( GasolineGasConsumption.getText() );
+			
+			if (gasType.equals("") || (tankCapacity + "").equals("") || (gasConsumption + "").equals("") ) {
+				throw new EmptyDataException("");
+				
+			}
+			
+			GasCar gasCar = new GasCar(id, basePrice, brand, weight, typeOfMotor, mileage, used, numOfPassengers, carType, noDoors, polarized, tankCapacity, gasType, gasConsumption);
+			
+			currentDealer.addVehicle(gasCar);
+			
+			registerStage.close();
+			registerStage = null; 
+			registerOpen = false;
+
+			updateDealerWindowInfo();
+			
+		} catch (EmptyDataException emptyDataException) {
+			emptyFieldsAlert();
+
+		}catch (NumberFormatException numberFormatException) {
+
+			incorrectDataTypeAlert();
+
+		}catch (NullPointerException nullPointerException) {
+			emptyFieldsAlert();
+
+		} catch (DoubleRegistrationException doubleRegistrationException) {
+
+		}
+		
+		
 
 	}
 
-	private void addGasCar() {
+	private void addElectricCar(String id, double basePrice, String brand, double weight, String typeOfMotor,
+			double mileage, boolean used,  int numOfPassengers,
+			String carType, int noDoors, boolean polarized) {
 
 	}
 
-	private void addElectricCar() {
+	private void addHybridCar(String id, double basePrice, String brand, double weight, String typeOfMotor,
+			double mileage, boolean used,  int numOfPassengers,
+			String carType, int noDoors, boolean polarized) {
 
 	}
-
-	private void addHybridCar() {
-
-	}
+	
 	
 	@FXML
 	void selectElectric(ActionEvent event) throws IOException {
@@ -1657,7 +1758,13 @@ public class DealershipGUI implements Initializable{
 	
 	private void loadHCGasTypeChoiceBox() {
 		hybridgasolineTypeChoiceBox.getItems().addAll("Premium","Regular" , "Diesel");
-
+		
+	}
+	
+	private void loadCarTypeChoiceBoxChoiceBox() {
+		System.out.println("Hello");
+		aCCarTypeChoiceBox.getItems().addAll("Van","Sedan" , "Sport");
+		
 	}
 	
 

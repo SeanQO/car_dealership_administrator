@@ -9,7 +9,7 @@ public class Car extends Vehicle{
 	private boolean polarized;
 
 	public Car(String id, double basePrice, String brand, double weight, String typeOfMotor,
-			int mileage, boolean used,  int numOfPassengers,
+			double mileage, boolean used,  int numOfPassengers,
 			String carType, int noDoors, boolean polarized) {
 		super(id, basePrice, brand, weight,mileage, used, numOfPassengers);
 		
