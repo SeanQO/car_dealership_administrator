@@ -9,7 +9,7 @@ public class HybridCar extends Car implements Electric, Gasoline{
 	public double gasConsumption;
 
 	public HybridCar(String id, double basePrice, String brand, double weight, String typeOfMotor,
-			int mileage, boolean used,  int numOfPassengers,
+			double mileage, boolean used,  int numOfPassengers,
 			String carType, int noDoors, boolean polarized,
 				double tankCapacity, String gasType, double gasConsumption, boolean fastCharger, double batteryLife,double batteryConsumption) {
 		

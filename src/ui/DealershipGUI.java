@@ -42,6 +42,7 @@ import model.Company;
 import model.Dealer;
 import model.ElectricCar;
 import model.GasCar;
+import model.HybridCar;
 import model.Motorcycle;
 import model.MotorcycleDealer;
 import model.Person;
@@ -1419,7 +1420,44 @@ public class DealershipGUI implements Initializable{
 	private void addHybridCar(String id, double basePrice, String brand, double weight, String typeOfMotor,
 			double mileage, boolean used,  int numOfPassengers,
 			String carType, int noDoors, boolean polarized) {
+		try {
 
+			boolean fastCharger = hybridFastCharger.isSelected();
+			double batteryLife = Double.parseDouble( hybridBatteryLife.getText() );
+			double batteryConsumption = Double.parseDouble( hybridBatteryConsumption.getText() );
+			String gasType = hybridgasolineTypeChoiceBox.getValue();
+			double tankCapacity = Double.parseDouble( hybridTankCapacity.getText() );
+			double gasConsumption = Double.parseDouble( hybridGasolineGasConsumption.getText() );
+
+			if ((batteryConsumption + "").equals("") || (batteryLife + "").equals("") 
+					|| gasType.equals("") || (tankCapacity + "").equals("") || (gasConsumption + "").equals("")) {
+				throw new EmptyDataException("");
+
+			}
+
+			HybridCar hybridCar = new HybridCar(id, basePrice, brand, weight, typeOfMotor, mileage, used, numOfPassengers, carType, noDoors, polarized, tankCapacity, gasType, gasConsumption, fastCharger, batteryLife, batteryConsumption);
+
+			currentDealer.addVehicle(hybridCar);
+
+			registerStage.close();
+			registerStage = null; 
+			registerOpen = false;
+
+			updateDealerWindowInfo();
+
+		} catch (EmptyDataException emptyDataException) {
+			emptyFieldsAlert();
+
+		}catch (NumberFormatException numberFormatException) {
+
+			incorrectDataTypeAlert();
+
+		}catch (NullPointerException nullPointerException) {
+			emptyFieldsAlert();
+
+		} catch (DoubleRegistrationException doubleRegistrationException) {
+
+		}
 	}
 	
 	
