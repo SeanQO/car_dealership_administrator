@@ -1,6 +1,7 @@
 package model;
 
 import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -9,9 +10,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import customException.DoubleRegistrationException;
 import customException.EmptyDataException;
+
 
 public abstract class Dealer implements Comparable<Dealer> {
 
@@ -204,19 +205,12 @@ public abstract class Dealer implements Comparable<Dealer> {
 		br.close();
 	}*/
 	
-	public void addVehicle(String id, double totalSalePrice, String brand, double weight, String typeOfMotor,
-			double topSpeed, int mileage, boolean used) throws DoubleRegistrationException, EmptyDataException {
-		String emptyData = verifyFields(id, totalSalePrice, brand, weight, typeOfMotor, topSpeed, mileage, used);
-		Vehicle vehicle = null;
-		if (!emptyData.equals("")) {
-			throw new EmptyDataException(emptyData);
-		}
+	public void addVehicle(Vehicle vehicle) throws DoubleRegistrationException {
 
-		if (searchVehicle(id) != null) {
-			throw new DoubleRegistrationException(id, "Vehicle");
+		if (searchVehicle(vehicle.getId()) != null) {
+			throw new DoubleRegistrationException(vehicle.getId(), "Vehicle");
 		}
-		vehicle = new Vehicle(id, totalSalePrice, brand, weight, typeOfMotor, topSpeed, mileage, used);
-
+		
 		Vehicle current = vehicleRoot;
 
 		boolean wasAdded = false;
@@ -308,36 +302,6 @@ public abstract class Dealer implements Comparable<Dealer> {
 			}
 		}
 	}
-	
-	private String verifyFields(String id, double totalSalePrice, String brand, double weight, String typeOfMotor,
-			double topSpeed, int mileage, boolean used) {
-		String fields = "";
-		if (id.equals("")) {
-			fields = "Id ";
-		}
-		if (totalSalePrice == 0) {
-			fields += "Name ";
-		}
-		if (brand.equals("")) {
-			fields += "Lastname ";
-		}
-		if (weight == 0) {
-			fields += "CelphoneNumber ";
-		}
-		if (typeOfMotor.equals("")) {
-			fields += "Address ";
-		}
-		if (topSpeed == 0) {
-			fields += "topSpedd";
-		}
-		if (mileage == 0) {
-			fields += "mileage";
-		}
-		if (used) {
-			fields += "used";
-		}
-		return fields;
-	}
 
 	public Vehicle searchVehicle(String id) {
 
@@ -357,8 +321,5 @@ public abstract class Dealer implements Comparable<Dealer> {
 			return null;
 		}
 	}
-	public abstract boolean addVehicle(Vehicle vehicle) throws DoubleRegistrationException, EmptyDataException;
-
-	public abstract boolean removeVehicle(Vehicle vehicle);
 
 }

@@ -8,9 +8,16 @@ public class Car extends Vehicle{
 	private int noDoors;
 	private boolean polarized;
 
-	public Car(String id, double totalSalePrice, String brand, double weight, String typeOfMotor, double topSpeed, int mileage, boolean used) {
-		super(id, totalSalePrice, brand, weight, typeOfMotor, topSpeed, mileage, used);
-
+	public Car(String id, double basePrice, String brand, double weight, String typeOfMotor,
+			int mileage, boolean used,  int numOfPassengers,
+			String carType, int noDoors, boolean polarized) {
+		super(id, basePrice, brand, weight,mileage, used, numOfPassengers);
+		
+		
+		this.carType = carType;
+		this.noDoors = noDoors;
+		this.polarized = polarized;
+		
 	}
 
 	public String getCarType() {

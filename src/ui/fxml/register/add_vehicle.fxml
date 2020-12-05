@@ -48,16 +48,6 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
-                        <Label prefHeight="19.0" prefWidth="47.0" text="Id :">
-                           <font>
-                              <Font name="Verdana Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="txtId" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-                     <children>
                         <Label prefHeight="19.0" prefWidth="97.0" text="Brand :">
                            <font>
                               <Font name="Verdana Bold" size="15.0" />

@@ -10,15 +10,13 @@ public class VehicleDealer extends Dealer {
 		
 	}
 
-	@Override
-	public boolean addVehicle(Vehicle vehicle) throws DoubleRegistrationException, EmptyDataException {
-		addVehicle(vehicle.getId(),vehicle.getTotalSalePrice(),vehicle.getBrand(),vehicle.getWeight(),vehicle.getTypeOfMotor(),vehicle.getTopSpeed(),vehicle.getMileage(),vehicle.isUsed());
+	public boolean addMotorcycle(Vehicle vehicle) throws DoubleRegistrationException{
+		addVehicle(vehicle);
 		return true;
 	}
 
-
-	@Override
-	public boolean removeVehicle(Vehicle vehicle) {
+	
+	public boolean removeMotorcycle(Vehicle vehicle) {
 		deleteVehicle(vehicle.getId());
 		return true;
 	}

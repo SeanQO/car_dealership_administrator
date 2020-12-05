@@ -1,7 +1,6 @@
 package model;
 
 import customException.DoubleRegistrationException;
-import customException.EmptyDataException;
 
 public class MotorcycleDealer extends Dealer {
 
@@ -10,16 +9,14 @@ public class MotorcycleDealer extends Dealer {
 		
 	}
 	
-	@Override
-	public boolean addVehicle(Vehicle vehicle) throws DoubleRegistrationException, EmptyDataException {
-		addVehicle(vehicle.getId(),vehicle.getTotalSalePrice(),vehicle.getBrand(),vehicle.getWeight(),vehicle.getTypeOfMotor(),vehicle.getTopSpeed(),vehicle.getMileage(),vehicle.isUsed());
+	public boolean addMotorcycle(Motorcycle motorcycle) throws DoubleRegistrationException{
+		addVehicle(motorcycle);
 		return true;
 	}
 
-
-	@Override
-	public boolean removeVehicle(Vehicle vehicle) {
-		deleteVehicle(vehicle.getId());
+	
+	public boolean removeMotorcycle(Motorcycle motorcycle) {
+		deleteVehicle(motorcycle.getId());
 		return true;
 	}
 	

@@ -7,26 +7,25 @@ public class Vehicle {
 	private Vehicle left;
 	
 	private String id;
-	private double totalSalePrice;
+	private double basePrice;
 	private String brand;
 	private double weight;
-	private String typeOfMotor;
 	private double topSpeed;
-	private int mileage;
+	private double mileage;
 	private boolean used;
-	private int numOfpassengers;
+	private int numOfPassengers;
 	
-	public Vehicle(String id, double totalSalePrice, String brand, double weight, String typeOfMotor, double topSpeed,
-			int mileage, boolean used) {
+	public Vehicle(String id, double basePrice, String brand, double weight,
+					double mileage, boolean used, int numOfPassengers) {
 		super();
 		this.id = id;
-		this.totalSalePrice = totalSalePrice;
+		this.basePrice = basePrice;
 		this.brand = brand;
 		this.weight = weight;
-		this.typeOfMotor = typeOfMotor;
-		this.topSpeed = topSpeed;
+		topSpeed = 0;//TODO: give random topSpeed
 		this.mileage = mileage;
 		this.used = used;
+		this.numOfPassengers = numOfPassengers;
 	}
 
 	
@@ -34,9 +33,9 @@ public class Vehicle {
 	public String getId() {
 		return id;
 	}
-
-	public double getTotalSalePrice() {
-		return totalSalePrice;
+	
+	public double getBasePrice() {
+		return basePrice;
 	}
 
 	public String getBrand() {
@@ -47,15 +46,11 @@ public class Vehicle {
 		return weight;
 	}
 
-	public String getTypeOfMotor() {
-		return typeOfMotor;
-	}
-
 	public double getTopSpeed() {
 		return topSpeed;
 	}
 
-	public int getMileage() {
+	public double getMileage() {
 		return mileage;
 	}
 
@@ -76,7 +71,7 @@ public class Vehicle {
 	}
 	
 	public int getNumOfPassengers() {
-		return numOfpassengers;
+		return numOfPassengers;
 	}
 
 	public void setHead(Vehicle head) {
@@ -92,7 +87,7 @@ public class Vehicle {
 	}
 
 	public String vehiculeInfo() {
-		return ""+id+","+totalSalePrice+","+","+brand+","+weight+","+topSpeed+","+mileage+","+used;
+		return ""+id+","+basePrice+","+","+brand+","+weight+","+topSpeed+","+mileage+","+used;
 	}
 	
 	public int compareTo(Vehicle v) {

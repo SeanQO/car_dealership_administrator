@@ -15,7 +15,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
@@ -37,6 +36,7 @@ import model.Dealer;
 import model.MotorcycleDealer;
 import model.Person;
 import model.Seller;
+import model.Vehicle;
 import model.VehicleDealer;
 
 public class DealershipGUI implements Initializable{
@@ -275,7 +275,7 @@ public class DealershipGUI implements Initializable{
 	private TextField aVTxtNumOfPassengers;
 
 	@FXML
-	private ChoiceBox<?> aVEngineTypeChoiceBox;
+	private ChoiceBox<String> aVEngineTypeChoiceBox;
 
 	@FXML
 	private TextField aVTxtMileage;
@@ -695,7 +695,9 @@ public class DealershipGUI implements Initializable{
 		if (sellerList == null) {
 			try {
 				openSellerList();
-				loadSellersTable();
+				if (currentDealer.getSellers().size() != 0) {
+					loadSellersTable();
+				}
 			} catch (IOException ioException) {
 				// TODO: handle exception
 			}
@@ -883,8 +885,6 @@ public class DealershipGUI implements Initializable{
 	
     @FXML
     void registerAdmin(ActionEvent event) {
-    	System.out.println("Hello");
-    	System.out.println(currentDealer.getAdminName());
     	try {
     		
     		String name = rATxtName.getText();
@@ -923,8 +923,6 @@ public class DealershipGUI implements Initializable{
 			emptyFieldsAlert();
 
 		}
-    	
-    	System.out.println(currentDealer.getAdminName());
 
     }
     
@@ -975,6 +973,12 @@ public class DealershipGUI implements Initializable{
 
 			emptyFieldsAlert();
 
+		}
+		
+		try {
+			loadClientTable();
+		} catch (Exception e) {
+			// if catch, means list its not opened.
 		}
 
 	}
@@ -1032,9 +1036,55 @@ public class DealershipGUI implements Initializable{
 	// *************************** add vehicle window actions 
 	@FXML
 	void addVehicle(ActionEvent event) {
-		registerStage.close();
-		registerStage = null;
-		registerOpen = false;
+		
+		loadEngineTypeChoiceBox();
+		
+		try {
+			
+			String id = aVTxtId.getText();
+			double basePrice = Double.parseDouble( aVTxtBasePrice.getText() );
+			String brand = aVTxtBrand.getText();
+			double weight = Double.parseDouble( aVTxtWeight.getText() );
+			int numOfPassengers = Integer.parseInt( aVTxtNumOfPassengers.getText() );
+			double mileage = Double.parseDouble( aVTxtMileage.getText() );
+			
+			if(id.equals("") || brand.equals("") ||
+					(weight + "").equals("") || (basePrice + "").equals("") || (numOfPassengers +"").equals("") || 
+					(mileage + "").equals("")) {
+    			throw new EmptyDataException("");
+    		}
+			
+			String engineType = aVEngineTypeChoiceBox.getValue();
+			
+			boolean used = aVPreOwnedRB.isSelected();
+			
+			if (aVEngineTypeChoiceBox.equals("Hibrid")) {
+
+			}else if (aVEngineTypeChoiceBox.equals("Gas")) {
+
+			}else if (aVEngineTypeChoiceBox.equals("Electric")) {
+
+
+			}
+			
+			registerStage.close();
+			registerStage = null; 
+			registerOpen = false;
+
+			updateDealerWindowInfo();
+			
+		} catch (EmptyDataException emptyDataException) {
+			emptyFieldsAlert();
+
+		}catch (NumberFormatException numberFormatException) {
+
+			incorrectDataTypeAlert();
+
+		}catch (NullPointerException nullPointerException) {
+			emptyFieldsAlert();
+
+		}
+		
 	}
 
 	// *************************** add vehicle window actions 
@@ -1278,9 +1328,6 @@ public class DealershipGUI implements Initializable{
 	}
 
 	private void loadSellersTable() {
-		// TODO: errase if from here, open list responsability.
-		if (currentDealer.getSellers().size() != 0) {
-
 			ObservableList<Person> observableList;
 			observableList = FXCollections.observableArrayList(currentDealer.getSellers());
 			
@@ -1291,8 +1338,6 @@ public class DealershipGUI implements Initializable{
 			sLColumnEmail.setCellValueFactory(new PropertyValueFactory<Person,String>("email"));
 			sLColumnPhoneNumber.setCellValueFactory(new PropertyValueFactory<Person,Long>("phoneNumber"));
 			sLColumnSalary.setCellValueFactory(new PropertyValueFactory<Seller,Double>("salary"));
-			
-		}
 
 	}
 	 
@@ -1315,6 +1360,15 @@ public class DealershipGUI implements Initializable{
 				"Vehicle dealer");
 
 	}
+	
+	private void loadEngineTypeChoiceBox() {
+
+		aVEngineTypeChoiceBox.getItems().addAll("Hibrid",
+				"Gas",
+				"Electric");
+
+	}
+	
 
 	// *************************** get selected item from table ***************************
 
