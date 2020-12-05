@@ -338,7 +338,22 @@ public class DealershipGUI implements Initializable{
 
     @FXML
     private BorderPane addCarSecondPane;
+    
+    // *************************** gas car window attributes
+    
+    @FXML
+    private ChoiceBox<String> gasolineTypeChoiceBox;
 
+    @FXML
+    private TextField GasolineTankCapacity;
+
+    @FXML
+    private TextField GasolineGasConsumption;
+    
+    // *************************** electric car window attributes
+
+    
+    // *************************** hybrid car window attributes
 
 	// *************************** vehicle list window attributes ***************************
 	// *vL* vehicle list window indicator
