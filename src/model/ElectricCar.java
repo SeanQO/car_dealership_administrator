@@ -6,7 +6,7 @@ public class ElectricCar extends Car implements Electric{
 	private double batteryConsumption;
 
 	public ElectricCar(String id, double basePrice, String brand, double weight, String typeOfMotor,
-				int mileage, boolean used,  int numOfPassengers,
+				double mileage, boolean used,  int numOfPassengers,
 				String carType, int noDoors, boolean polarized,
 				boolean fastCharger, double batteryLife, double batteryConsumption) {
 

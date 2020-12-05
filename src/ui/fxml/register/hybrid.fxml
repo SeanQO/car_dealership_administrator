@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -46,12 +45,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="440.0" spacing="30.0">
                <children>
-                  <RadioButton mnemonicParsing="false" text="Fast charger">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="hybridChargerType" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Normal charger" toggleGroup="$hybridChargerType" />
+                  <RadioButton fx:id="hybridFastCharger" mnemonicParsing="false" text="Fast charger" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">

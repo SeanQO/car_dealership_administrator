@@ -40,6 +40,7 @@ import model.CarDealer;
 import model.Client;
 import model.Company;
 import model.Dealer;
+import model.ElectricCar;
 import model.GasCar;
 import model.Motorcycle;
 import model.MotorcycleDealer;
@@ -359,7 +360,7 @@ public class DealershipGUI implements Initializable{
     // *************************** electric car window attributes
     
     @FXML
-    private ToggleGroup chargerType;
+    private RadioButton ElectricFastCharger;
 
     @FXML
     private TextField electricBatteryLife;
@@ -379,7 +380,7 @@ public class DealershipGUI implements Initializable{
     private TextField hybridGasolineGasConsumption;
 
     @FXML
-    private ToggleGroup hybridChargerType;
+    private RadioButton hybridFastCharger;
 
     @FXML
     private TextField hybridBatteryLife;
@@ -1378,6 +1379,40 @@ public class DealershipGUI implements Initializable{
 	private void addElectricCar(String id, double basePrice, String brand, double weight, String typeOfMotor,
 			double mileage, boolean used,  int numOfPassengers,
 			String carType, int noDoors, boolean polarized) {
+		try {
+			
+			boolean fastCharger = ElectricFastCharger.isSelected();
+			double batteryLife = Double.parseDouble( electricBatteryLife.getText() );
+			double batteryConsumption = Double.parseDouble( electricBatteryConsumption.getText() );
+
+			if ((batteryConsumption + "").equals("") || (batteryLife + "").equals("") ) {
+				throw new EmptyDataException("");
+
+			}
+
+			ElectricCar electricCar = new ElectricCar(id, basePrice, brand, weight, typeOfMotor, mileage, used, numOfPassengers, carType, noDoors, polarized, fastCharger, batteryLife, batteryConsumption);
+
+			currentDealer.addVehicle(electricCar);
+
+			registerStage.close();
+			registerStage = null; 
+			registerOpen = false;
+
+			updateDealerWindowInfo();
+
+		} catch (EmptyDataException emptyDataException) {
+			emptyFieldsAlert();
+
+		}catch (NumberFormatException numberFormatException) {
+
+			incorrectDataTypeAlert();
+
+		}catch (NullPointerException nullPointerException) {
+			emptyFieldsAlert();
+
+		} catch (DoubleRegistrationException doubleRegistrationException) {
+
+		}
 
 	}
 
