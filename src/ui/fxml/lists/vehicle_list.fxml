@@ -29,26 +29,27 @@
       </HBox>
       <ScrollPane layoutX="1.0" layoutY="71.0" prefHeight="430.0" prefWidth="680.0">
          <content>
-            <TableView fx:id="coursesListTable" editable="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0">
+            <TableView fx:id="vehiclesListTable" editable="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0">
                <columns>
                   <TableColumn fx:id="vLColumnBrand" prefWidth="121.0" text="Brand" />
                   <TableColumn fx:id="vLColumnPrice" prefWidth="55.0" text="Price" />
-                  <TableColumn fx:id="columnWeigth" prefWidth="89.0" text="weigth" />
+                  <TableColumn fx:id="vLcolumnWeigth" prefWidth="89.0" text="weigth" />
                   <TableColumn fx:id="vLColumnEngine" prefWidth="91.0" text="Engine" />
                   <TableColumn fx:id="vLColumnTopSpeed" prefWidth="99.0" text="Top speed" />
                   <TableColumn fx:id="vLcolumnAceleration" prefWidth="75.0" text="Aceleration" />
-                  <TableColumn fx:id="columnPassengers" prefWidth="75.0" text="Passengers" />
+                  <TableColumn fx:id="vLcolumnPassengers" prefWidth="75.0" text="Passengers" />
                   <TableColumn fx:id="vLColumnMileage" prefWidth="75.0" text="Mileage" />
                   <TableColumn fx:id="vLColumnUsage" prefWidth="75.0" text="Usage" />
                </columns>
             </TableView>
          </content>
       </ScrollPane>
-      <HBox alignment="CENTER" layoutY="501.0" prefHeight="70.0" prefWidth="680.0" spacing="80.0">
+      <HBox alignment="CENTER" layoutY="501.0" prefHeight="70.0" prefWidth="680.0" spacing="40.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#openSimulation" text="Simulation" />
+            <Button mnemonicParsing="false" onAction="#openSimulation" prefHeight="25.0" prefWidth="78.0" text="Simulation" />
             <Button mnemonicParsing="false" onAction="#vehicleCatalog" text="Vehicle catalog" />
-            <Button mnemonicParsing="false" onAction="#openAddVehicle" text="Add vehicle" />
+            <Button mnemonicParsing="false" onAction="#openAddCar" prefHeight="25.0" prefWidth="70.0" text="Add car" />
+            <Button mnemonicParsing="false" onAction="#openAddMotorcycle" prefHeight="25.0" prefWidth="121.0" text="Add motorcycle" />
             <Button mnemonicParsing="false" onAction="#openSellVehicle" text="Sell vehicle" />
          </children>
       </HBox>

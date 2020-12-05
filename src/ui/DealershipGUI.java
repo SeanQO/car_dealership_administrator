@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import customException.DoubleRegistrationException;
 import customException.EmptyDataException;
 import javafx.collections.FXCollections;
@@ -18,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -35,6 +35,7 @@ import model.CarDealer;
 import model.Client;
 import model.Company;
 import model.Dealer;
+import model.Motorcycle;
 import model.MotorcycleDealer;
 import model.Person;
 import model.Seller;
@@ -84,6 +85,10 @@ public class DealershipGUI implements Initializable{
 
 	@FXML
 	private Label dealerNameLabel;
+	
+	 @FXML
+	 private MenuItem addMotorcyclleMItem;
+
 
 	@FXML
 	private Label dealerAdminNameLabel;
@@ -256,34 +261,41 @@ public class DealershipGUI implements Initializable{
 	@FXML
 	private TextField searchSellerTxt;
 
-	// *************************** add vehicle window attributes ***************************
-	// *aV* add vehicle window indicator
+	// *************************** add Motorcycle window attributes ***************************
+	// *aM* add motorcycle window indicator
+	
 	@FXML
-	private TextField aVTxtId;
+    private TextField aMTxtId;
 
-	@FXML
-	private TextField aVTxtBasePrice;
+    @FXML
+    private TextField aMTxtBasePrice;
 
-	@FXML
-	private TextField txtId;
+    @FXML
+    private TextField aMTxtBrand;
 
-	@FXML
-	private TextField aVTxtBrand;
+    @FXML
+    private TextField aMTxtWeight;
 
-	@FXML
-	private TextField aVTxtWeight;
+    @FXML
+    private TextField aMTxtNumOfPassengers;
 
-	@FXML
-	private TextField aVTxtNumOfPassengers;
+    @FXML
+    private ChoiceBox<String> aMMotorcycleTypeChoiceBox;
 
-	@FXML
-	private ChoiceBox<String> aVEngineTypeChoiceBox;
+    @FXML
+    private ChoiceBox<String> aMGasTypeChoiceBox;
 
-	@FXML
-	private TextField aVTxtMileage;
+    @FXML
+    private TextField aMTxtGasConsuption;
 
-	@FXML
-	private RadioButton aVPreOwnedRB;
+    @FXML
+    private TextField aMTxtTankCapacity;
+
+    @FXML
+    private TextField aMTxtMileage;
+
+    @FXML
+    private RadioButton aMPreOwnedRB;
 
 	// *************************** vehicle list window attributes ***************************
 	// *vL* vehicle list window indicator
@@ -291,34 +303,34 @@ public class DealershipGUI implements Initializable{
 	private TextField searchVehicleTxt;
 
 	@FXML
-	private TableView<?> coursesListTable;
+	private TableView<Vehicle> vehiclesListTable;
 
 	@FXML
-	private TableColumn<?, ?> vLColumnBrand;
+	private TableColumn<Vehicle, String> vLColumnBrand;
 
 	@FXML
-	private TableColumn<?, ?> vLColumnPrice;
+	private TableColumn<Vehicle, Double> vLColumnPrice;
 
 	@FXML
-	private TableColumn<?, ?> columnWeigth;
+	private TableColumn<Vehicle, Double> vLcolumnWeigth;
 
 	@FXML
-	private TableColumn<?, ?> vLColumnEngine;
+	private TableColumn<Vehicle, String> vLColumnEngine;
 
 	@FXML
-	private TableColumn<?, ?> vLColumnTopSpeed;
+	private TableColumn<Vehicle, String> vLColumnTopSpeed;
 
 	@FXML
-	private TableColumn<?, ?> vLcolumnAceleration;
+	private TableColumn<Vehicle, String> vLcolumnAceleration;
 
 	@FXML
-	private TableColumn<?, ?> columnPassengers;
+	private TableColumn<Vehicle, Integer> vLcolumnPassengers;
 
 	@FXML
-	private TableColumn<?, ?> vLColumnMileage;
+	private TableColumn<Vehicle, Double> vLColumnMileage;
 
 	@FXML
-	private TableColumn<?, ?> vLColumnUsage;
+	private TableColumn<Vehicle, Boolean> vLColumnUsage;
 
 	// *************************** simulation window attributes ***************************
 	@FXML
@@ -728,14 +740,17 @@ public class DealershipGUI implements Initializable{
 		stage.show();
 	}
 
-	// *************************** vehicles menu
+	// *************************** vehicles menu  ***************************
 
-	// *************************** open Add vehicle
+	// *************************** open Add motorcycle
+	
 	@FXML
-	void openAddVehicle(ActionEvent event) {
+	void openAddMotorcycle(ActionEvent event) {
 		if (!registerOpen) {
 			try {
-				openAddVehicle();
+				openAddMotorcycle();
+				loadMGasTypeChoiceBox();
+				loadMotorcycleTypeChoiceBox();
 			} catch (IOException ioException) {
 				// TODO: handle exception
 			}
@@ -744,11 +759,11 @@ public class DealershipGUI implements Initializable{
 		}else {
 			boolean runRegister = false;
 
-			runRegister = multipleRegisterAlert("Register seller");
+			runRegister = multipleRegisterAlert("Add motorcycle");
 
 			if (runRegister) {
 				try {
-					openAddVehicle();
+					openAddMotorcycle();
 				} catch (IOException ioException) {
 					// TODO: handle exception
 				}
@@ -757,34 +772,55 @@ public class DealershipGUI implements Initializable{
 
 
 		}
+
 	}
 
-	private void openAddVehicle() throws IOException{
-		registerOpen = true;
+	private void openAddMotorcycle() throws IOException{
+		if (currentDealer instanceof MotorcycleDealer) {
+			registerOpen = true;
 
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/register/add_vehicle.fxml"));
-		fxmlLoader.setController(this);
-		Parent addVehicPane = fxmlLoader.load();
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/register/add_Motorcycle.fxml"));
+			fxmlLoader.setController(this);
+			Parent registerSellerPane = fxmlLoader.load();
 
-		Scene scene = new Scene(addVehicPane);
-		Stage stage = new Stage();
-		stage.setScene(scene);
-		stage.setTitle("Register Vehicle");
-		registerStage = stage;
+			Scene scene = new Scene(registerSellerPane);
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.setTitle("Register client");
+			registerStage = stage;
 
-		stage.setOnCloseRequest(e -> closeRegisterStage() );
+			stage.setOnCloseRequest(e -> closeRegisterStage() );
 
-		stage.show();
+			stage.show();
+		}else {
+			//TODO: alert not motorcycle dealer
+		}
+		
+
 	}
-
+	
+	// *************************** open Add car
+	
+	@FXML
+	void openAddCar(ActionEvent event) {
+		
+	}
+	
+	
 	// *************************** open vehicle list
 
 	@FXML
 	void openVehicleList(ActionEvent event) {
+		System.out.println("In");
 		if (vehicleList == null) {
 			try {
 				openVehicleList();
+				if (currentDealer.getVehicles().size() != 0) {
+					loadVehiclesTable();
+				}
+				
 			} catch (IOException ioException) {
+				ioException.printStackTrace();
 				// TODO: handle exception
 			}
 
@@ -992,6 +1028,7 @@ public class DealershipGUI implements Initializable{
 
 	@FXML
 	void registerSeller(ActionEvent event) {
+
 		try {
 
 			String name = rStxtName.getText();
@@ -1010,6 +1047,7 @@ public class DealershipGUI implements Initializable{
 			Seller newSeller = new Seller(name, lastname, email, id, phoneNumber, salary);
 			
 			currentDealer.addSeller(newSeller);
+			
 			currentDealer.getAdmin().addSeller(newSeller);
 	
 			registerStage.close();
@@ -1038,48 +1076,44 @@ public class DealershipGUI implements Initializable{
 			// if catch, means list its not opened.
 		}
 		
+		
 	}
 
-	// *************************** add vehicle window actions 
+	// *************************** add motorcycle window actions 
 	@FXML
-	void addVehicle(ActionEvent event) {
-		
-		loadEngineTypeChoiceBox();
-		
+	void addMotorcycle(ActionEvent event) {
 		try {
-			
-			String id = aVTxtId.getText();
-			double basePrice = Double.parseDouble( aVTxtBasePrice.getText() );
-			String brand = aVTxtBrand.getText();
-			double weight = Double.parseDouble( aVTxtWeight.getText() );
-			int numOfPassengers = Integer.parseInt( aVTxtNumOfPassengers.getText() );
-			double mileage = Double.parseDouble( aVTxtMileage.getText() );
-			
+
+			String id = aMTxtId.getText();
+			double basePrice = Double.parseDouble( aMTxtBasePrice.getText() );
+			String brand = aMTxtBrand.getText();
+			double weight = Double.parseDouble( aMTxtWeight.getText() );
+			int numOfPassengers = Integer.parseInt( aMTxtNumOfPassengers.getText() );
+			double mileage = Double.parseDouble( aMTxtMileage.getText() );
+			double tankCapacity = Double.parseDouble( aMTxtTankCapacity.getText() );
+			double gasConsumtion = Double.parseDouble( aMTxtGasConsuption.getText() );
+
 			if(id.equals("") || brand.equals("") ||
 					(weight + "").equals("") || (basePrice + "").equals("") || (numOfPassengers +"").equals("") || 
-					(mileage + "").equals("")) {
-    			throw new EmptyDataException("");
-    		}
-			
-			String engineType = aVEngineTypeChoiceBox.getValue();
-			
-			boolean used = aVPreOwnedRB.isSelected();
-			
-			if (aVEngineTypeChoiceBox.equals("Hibrid")) {
-
-			}else if (aVEngineTypeChoiceBox.equals("Gas")) {
-
-			}else if (aVEngineTypeChoiceBox.equals("Electric")) {
-
-
+					(mileage + "").equals("") || (tankCapacity + "").equals("") || (gasConsumtion + "").equals("") ) {
+				throw new EmptyDataException("");
 			}
-			
+
+			String motorcycleType = aMMotorcycleTypeChoiceBox.getValue();
+			String gasType = aMGasTypeChoiceBox.getValue();
+			boolean used = aMPreOwnedRB.isSelected();
+
+			Motorcycle newMotorcycle = new Motorcycle(id, basePrice, brand, weight, mileage, used, numOfPassengers, tankCapacity, gasType, gasConsumtion, motorcycleType);
+
+			currentDealer.addVehicle(newMotorcycle);
+
 			registerStage.close();
 			registerStage = null; 
 			registerOpen = false;
 
 			updateDealerWindowInfo();
 			
+
 		} catch (EmptyDataException emptyDataException) {
 			emptyFieldsAlert();
 
@@ -1090,11 +1124,19 @@ public class DealershipGUI implements Initializable{
 		}catch (NullPointerException nullPointerException) {
 			emptyFieldsAlert();
 
+		}catch (DoubleRegistrationException doubleRegistrationException) {
+
 		}
 		
-	}
+		try {
+			loadVehiclesTable();
+		} catch (Exception e) {
+			//  if exception, means that table is not opened
+		}
 
-	// *************************** add vehicle window actions 
+	}
+	
+	// *************************** add car window actions 
 
 	// *************************** list window actions ***************************
 
@@ -1299,11 +1341,20 @@ public class DealershipGUI implements Initializable{
 	}
 
 	private void updateDealerWindowInfo() {
+		if (currentDealer instanceof CarDealer) {
+			addMotorcyclleMItem.setDisable(true);
+		}else if (currentDealer instanceof MotorcycleDealer) {
+			
+		}else {
+			addMotorcyclleMItem.setDisable(false);
+		}
+		
 
 		dealerAdminNameLabel.setText(currentDealer.getAdminName());
 		dealerTotalSalesLabel.setText(currentDealer.getSales() + "");
 		dealerTotalSellersLabel.setText(currentDealer.getSellers().size() + "");
 		dealerTotalClientsLabel.setText(currentDealer.getClients().size() + "");
+		availableVehiclesLabel.setText(currentDealer.getVehicles().size()  + "");
 		dealerTotalEarningsLabel.setText(currentDealer.getEarnings() + "");
 		dealerNameLabel.setText(currentDealer.getName());
 
@@ -1316,9 +1367,10 @@ public class DealershipGUI implements Initializable{
 			ObservableList<Dealer> observableList;
 			observableList = FXCollections.observableArrayList(company.getDealers());
 			mainDealerListTable.setItems(observableList);
-
+			
 			columnDealerName.setCellValueFactory(new PropertyValueFactory<Dealer,String>("name"));
 			columnAdminName.setCellValueFactory(new PropertyValueFactory<Dealer,String>("adminName"));
+			
 		}
 
 
@@ -1365,6 +1417,26 @@ public class DealershipGUI implements Initializable{
 			lastnameSellerInCharge.setCellValueFactory(new PropertyValueFactory<Person,String>("lastname"));
 			
 	}
+	
+	private void loadVehiclesTable() {
+		ObservableList<Vehicle> observableList;
+		observableList = FXCollections.observableArrayList(currentDealer.getVehicles());
+		vehiclesListTable.setItems(observableList);
+		
+		vLColumnBrand.setCellValueFactory(new PropertyValueFactory<Vehicle,String>("brand"));
+		vLColumnPrice.setCellValueFactory(new PropertyValueFactory<Vehicle,Double>("basePrice"));
+		vLcolumnWeigth.setCellValueFactory(new PropertyValueFactory<Vehicle,Double>("weight"));
+		vLcolumnPassengers.setCellValueFactory(new PropertyValueFactory<Vehicle,Integer>("numOfPassengers"));
+		vLColumnMileage.setCellValueFactory(new PropertyValueFactory<Vehicle,Double>("mileage"));
+		vLColumnUsage.setCellValueFactory(new PropertyValueFactory<Vehicle,Boolean>("used"));
+		
+		vLColumnEngine.setCellValueFactory(new PropertyValueFactory<Vehicle,String>("brand"));
+		vLColumnTopSpeed.setCellValueFactory(new PropertyValueFactory<Vehicle,String>("brand"));
+		vLcolumnAceleration.setCellValueFactory(new PropertyValueFactory<Vehicle,String>("brand"));
+		
+
+	}
+
 
 	// *************************** load choice box ***************************
 
@@ -1377,14 +1449,25 @@ public class DealershipGUI implements Initializable{
 
 	}
 	
-	private void loadEngineTypeChoiceBox() {
+	private void loadMotorcycleTypeChoiceBox() {
 
-		aVEngineTypeChoiceBox.getItems().addAll("Hibrid",
-				"Gas",
-				"Electric");
+		aMMotorcycleTypeChoiceBox.getItems().addAll("Superbike", "Naker","Chopper");
 
 	}
 	
+	private void loadMGasTypeChoiceBox() {
+
+		aMGasTypeChoiceBox.getItems().addAll("Extra","Regular" , "Diesel");
+
+	}
+	
+	/*
+	private void loadCGasTypeChoiceBox() {
+
+		aMGasTypeChoiceBox.getItems().addAll("Extra","Corriente" , "Diesel");
+
+	}
+	*/
 
 	// *************************** get selected item from table ***************************
 
