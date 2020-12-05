@@ -92,8 +92,10 @@ public abstract class Dealer implements Comparable<Dealer> {
 				String id = "" + clients.get(i).getId();
 				throw new DoubleRegistrationException(id, "clients");
 			}
-			clients.add(client);
+			
 		}
+		
+		clients.add(client);
 	}
 
 	public Client searchClient(long id) {
@@ -120,8 +122,10 @@ public abstract class Dealer implements Comparable<Dealer> {
 				String id = "" + sellers.get(i).getId();
 				throw new DoubleRegistrationException(id, "sellers");
 			}
-			sellers.add(seller);
+			
 		}
+		
+		sellers.add(seller);
 	}
 
 	public Seller searchSeller(long id) {
