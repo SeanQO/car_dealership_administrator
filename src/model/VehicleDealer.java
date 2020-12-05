@@ -1,7 +1,6 @@
 package model;
 
 import customException.DoubleRegistrationException;
-import customException.EmptyDataException;
 
 public class VehicleDealer extends Dealer {
 
