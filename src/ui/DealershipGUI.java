@@ -351,7 +351,15 @@ public class DealershipGUI implements Initializable{
     private TextField GasolineGasConsumption;
     
     // *************************** electric car window attributes
+    
+    @FXML
+    private ToggleGroup cargerType;
 
+    @FXML
+    private TextField electricBatteryLife;
+
+    @FXML
+    private TextField electricBatteryConsumption;
     
     // *************************** hybrid car window attributes
 
