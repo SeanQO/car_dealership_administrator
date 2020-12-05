@@ -23,6 +23,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Alert.AlertType;
@@ -296,6 +297,48 @@ public class DealershipGUI implements Initializable{
 
     @FXML
     private RadioButton aMPreOwnedRB;
+    
+    // *************************** add car window attributes ***************************
+	// *aC* add motorcycle window indicator
+    @FXML
+    private TextField aCTxtId;
+    
+    @FXML
+    private MenuItem addCarItem;
+
+    @FXML
+    private TextField aCTxtBasePrice;
+
+    @FXML
+    private TextField aCTxtBrand;
+
+    @FXML
+    private TextField aCTxtWeight;
+
+    @FXML
+    private TextField aCTxtNumOfDoors;
+
+    @FXML
+    private TextField aCTxtNumOfPassengers;
+
+    @FXML
+    private ChoiceBox<String> aCCarTypeChoiceBox;
+
+    @FXML
+    private ToggleGroup engineType;
+
+    @FXML
+    private TextField aCTxtMileage;
+
+    @FXML
+    private RadioButton aCPolarized;
+
+    @FXML
+    private RadioButton aCPreOwnedRB;
+
+    @FXML
+    private BorderPane addCarSecondPane;
+
 
 	// *************************** vehicle list window attributes ***************************
 	// *vL* vehicle list window indicator
@@ -803,7 +846,55 @@ public class DealershipGUI implements Initializable{
 	
 	@FXML
 	void openAddCar(ActionEvent event) {
+		if (!registerOpen) {
+			try {
+				openAddCar();
+			} catch (IOException ioException) {
+				// TODO: handle exception
+			}
+
+
+		}else {
+			boolean runRegister = false;
+
+			runRegister = multipleRegisterAlert("Add car");
+
+			if (runRegister) {
+				try {
+					openAddCar();
+				} catch (IOException ioException) {
+					// TODO: handle exception
+				}
+
+			}
+
+
+		}
+
+	}
+
+	private void openAddCar() throws IOException{
+		if (currentDealer instanceof CarDealer) {
+			registerOpen = true;
+
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/register/add_car.fxml"));
+			fxmlLoader.setController(this);
+			Parent registerSellerPane = fxmlLoader.load();
+
+			Scene scene = new Scene(registerSellerPane);
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.setTitle("Register client");
+			registerStage = stage;
+
+			stage.setOnCloseRequest(e -> closeRegisterStage() );
+
+			stage.show();
+		}else {
+			//TODO: alert not motorcycle dealer
+		}
 		
+
 	}
 	
 	
@@ -1344,9 +1435,10 @@ public class DealershipGUI implements Initializable{
 		if (currentDealer instanceof CarDealer) {
 			addMotorcyclleMItem.setDisable(true);
 		}else if (currentDealer instanceof MotorcycleDealer) {
-			
+			addCarItem.setDisable(true);
 		}else {
 			addMotorcyclleMItem.setDisable(false);
+			addCarItem.setDisable(false);
 		}
 		
 
@@ -1464,7 +1556,7 @@ public class DealershipGUI implements Initializable{
 	/*
 	private void loadCGasTypeChoiceBox() {
 
-		aMGasTypeChoiceBox.getItems().addAll("Extra","Corriente" , "Diesel");
+		aMGasTypeChoiceBox.getItems().addAll("Extra","Regular" , "Diesel");
 
 	}
 	*/
@@ -1481,6 +1573,41 @@ public class DealershipGUI implements Initializable{
 	private Dealer getSelectedDealer(Dealer dealer) {
 		return dealer;
 	}
+	
+	//locate **********************************************************************************************
+
+    @FXML
+    void selectElectric(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/register/electric.fxml"));
+		fxmlLoader.setController(this);
+		Parent coursesListPane = fxmlLoader.load();
+    	
+		addCarSecondPane.getChildren().clear();
+		addCarSecondPane.setCenter(coursesListPane);
+		
+    }
+
+    @FXML
+    void selectGas(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/register/gas.fxml"));
+		fxmlLoader.setController(this);
+		Parent coursesListPane = fxmlLoader.load();
+    	
+		addCarSecondPane.getChildren().clear();
+		addCarSecondPane.setCenter(coursesListPane);
+    	
+    }
+
+    @FXML
+    void selectHybrid(ActionEvent event) throws IOException {
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/register/hybrid.fxml"));
+		fxmlLoader.setController(this);
+		Parent coursesListPane = fxmlLoader.load();
+    	
+		addCarSecondPane.getChildren().clear();
+		addCarSecondPane.setCenter(coursesListPane);
+		
+    }
 
 }
 

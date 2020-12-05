@@ -38,7 +38,7 @@
                   </SplitMenuButton>
                   <SplitMenuButton mnemonicParsing="false" text="Vehicles">
                     <items>
-                      <MenuItem mnemonicParsing="false" onAction="#openAddCar" text="add Car" />
+                      <MenuItem fx:id="addCarItem" mnemonicParsing="false" onAction="#openAddCar" text="add Car" />
                         <MenuItem fx:id="addMotorcyclleMItem" mnemonicParsing="false" onAction="#openAddMotorcycle" text="add Motorcycle" />
                       <MenuItem mnemonicParsing="false" onAction="#openVehicleList" text="vehicle list" />
                     </items>

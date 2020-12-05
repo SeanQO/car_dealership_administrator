@@ -7,7 +7,9 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -95,9 +97,12 @@
                               <Font name="Verdana Bold" size="15.0" />
                            </font>
                         </Label>
-                        <RadioButton fx:id="aCgasCar" mnemonicParsing="false" text="Gas" />
-                        <RadioButton fx:id="aCElectric" mnemonicParsing="false" text="Electric" />
-                        <RadioButton fx:id="aCHybrid" mnemonicParsing="false" text="Hybrid" />
+                        <RadioButton mnemonicParsing="false" onAction="#selectGas" text="Gas">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="engineType" />
+                           </toggleGroup></RadioButton>
+                        <RadioButton mnemonicParsing="false" onAction="#selectElectric" text="Electric" toggleGroup="$engineType" />
+                        <RadioButton mnemonicParsing="false" onAction="#selectHybrid" text="Hybrid" toggleGroup="$engineType" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
@@ -135,12 +140,14 @@
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="addCarSecondPane" layoutX="401.0" layoutY="50.0" prefHeight="550.0" prefWidth="400.0">
-         <children>
-            <Separator layoutX="-6.0" layoutY="6.0" orientation="VERTICAL" prefHeight="543.0" prefWidth="9.0" />
-            <Separator layoutX="-403.0" layoutY="2.0" prefHeight="4.0" prefWidth="800.0" />
-         </children>
-      </AnchorPane>
+      <BorderPane fx:id="addCarSecondPane" layoutX="400.0" layoutY="50.0" prefHeight="550.0" prefWidth="400.0">
+         <left>
+            <Separator orientation="VERTICAL" prefHeight="404.0" prefWidth="7.0" BorderPane.alignment="CENTER" />
+         </left>
+         <top>
+            <Separator prefHeight="4.0" prefWidth="800.0" BorderPane.alignment="CENTER" />
+         </top>
+      </BorderPane>
       <HBox alignment="CENTER" prefHeight="50.0" prefWidth="800.0" spacing="60.0">
          <children>
             <Label text="Add new Car">
@@ -148,7 +155,7 @@
                   <Font name="Verdana Bold" size="22.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" onAction="#addVehicle" text="Add vehicle">
+            <Button mnemonicParsing="false" onAction="#openAddCar" text="Add car">
                <font>
                   <Font name="Verdana Bold" size="15.0" />
                </font>
