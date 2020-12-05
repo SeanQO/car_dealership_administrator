@@ -202,6 +202,40 @@ public abstract class Dealer implements Comparable<Dealer> {
 		return difference;
 	}
 
+	public void importDataVehicle(File file) throws IOException, DoubleRegistrationException {
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		int count = 0;
+		String line = br.readLine();
+		while (line != null) {
+			if (count > 0) {
+				String[] parts = line.split(",");
+				double bp = Double.parseDouble(parts[1]);
+				double w = Double.parseDouble(parts[3]);
+				double m = Double.parseDouble(parts[5]);
+				boolean iu = Boolean.parseBoolean(parts[6]);
+				int np = Integer.parseInt(parts[7]);
+				Vehicle newVehicle = new Vehicle(parts[0], bp, parts[2], w, m, iu, np);
+				addVehicle(newVehicle);
+			}
+			count++;
+			line = br.readLine();
+		}
+		br.close();
+	}
+
+	public void exportVehicles(File file, String s) throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(file);
+		pw.write("id," + s + " base prince," + s + "brand," + s + "weight," + s + "mileage," + s + "used," + s
+				+ "number of passengers" + s);
+		for (int i = 0; i < getVehicles().size(); i++) {
+			pw.write(getVehicles().get(i).getId() + s + getVehicles().get(i).getBasePrice() + s
+					+ getVehicles().get(i).getBrand() + s + getVehicles().get(i).getWeight() + s
+					+ getVehicles().get(i).getMileage() + s + getVehicles().get(i).isUsed() + s
+					+ getVehicles().get(i).getNumOfPassengers() + s);
+		}
+		pw.close();
+	}
+
 	public void exportClients(File file, String s) throws FileNotFoundException {
 		ArrayList<Client> c = new ArrayList<Client>();
 		PrintWriter pw = new PrintWriter(file);
