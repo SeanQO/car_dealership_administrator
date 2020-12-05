@@ -98,6 +98,16 @@ public abstract class Dealer implements Comparable<Dealer> {
 		}
 	}
 
+	public Client searchClient(long id) {
+		Client searchingClient = null;
+		for(int i = 0;i<clients.size();i++) {
+			if(clients.get(i).getId()==id) {
+				searchingClient = clients.get(i);
+			}
+		}
+		return searchingClient;
+	}
+	
 	public void removeClient(long id) {
 		for (int i = 0; i < clients.size(); i++) {
 			if (clients.get(i).getId() == id) {
@@ -116,6 +126,16 @@ public abstract class Dealer implements Comparable<Dealer> {
 		}
 	}
 
+	public Seller searchSeller(long id) {
+		Seller seachingSeller = null;
+		for(int i = 0;i<sellers.size();i++) {
+			if(sellers.get(i).getId()==id) {
+				seachingSeller = sellers.get(i);
+			}
+		}
+		return seachingSeller;
+	}
+	
 	public void removeSeller(long id) {
 		for (int i = 0; i < sellers.size(); i++) {
 			if (sellers.get(i).getId() == id) {
