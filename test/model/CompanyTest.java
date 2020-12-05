@@ -11,6 +11,7 @@ public class CompanyTest {
 
 	private Company company;
 	private Admin admin;
+	private Dealer dealer;
 	
 	public void setup1() {
 		company = new Company("car inc", 1235, admin);
@@ -18,7 +19,8 @@ public class CompanyTest {
 	
 	public void setup2() throws DoubleRegistrationException, EmptyDataException {
 		company = new Company("car inc", 1235, admin);
-		company.addVehicle("1234", 1234, "mercedez", 214, "aspirado", 200, 0, false);
+		Vehicle newV = new Vehicle("1234", 342, "mercedez", 342, 234, false, 4);
+		dealer.addVehicle(newV);
 	}
 	
 	public void setup3() {
@@ -28,13 +30,13 @@ public class CompanyTest {
 	@Test
 	public void test1() {
 		setup1();
-		assertEquals(0,company.getVehicles().size());
+		
 	}
 
 	@Test
 	public void test2() throws DoubleRegistrationException, EmptyDataException {
 		setup2();
-		assertEquals(1,company.getVehicles().size());
+		assertEquals(1,dealer.getVehicles().size());
 	}
 	
 	@Test

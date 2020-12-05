@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import customException.DoubleRegistrationException;
-import customException.EmptyDataException;
 
 public abstract class Dealer implements Comparable<Dealer> {
 
