@@ -1229,6 +1229,57 @@ public class DealershipGUI implements Initializable{
 	
 	// *************************** add car window actions 
 
+	@FXML
+	void addCar(ActionEvent event) {
+
+	}
+
+	private void addGasCar() {
+
+	}
+
+	private void addElectricCar() {
+
+	}
+
+	private void addHybridCar() {
+
+	}
+	
+	@FXML
+	void selectElectric(ActionEvent event) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/register/electric.fxml"));
+		fxmlLoader.setController(this);
+		Parent coursesListPane = fxmlLoader.load();
+
+		addCarSecondPane.getChildren().clear();
+		addCarSecondPane.setCenter(coursesListPane);
+
+	}
+
+	@FXML
+	void selectGas(ActionEvent event) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/register/gas.fxml"));
+		fxmlLoader.setController(this);
+		Parent coursesListPane = fxmlLoader.load();
+
+		addCarSecondPane.getChildren().clear();
+		addCarSecondPane.setCenter(coursesListPane);
+
+	}
+
+	@FXML
+	void selectHybrid(ActionEvent event) throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/register/hybrid.fxml"));
+		fxmlLoader.setController(this);
+		Parent coursesListPane = fxmlLoader.load();
+
+		addCarSecondPane.getChildren().clear();
+		addCarSecondPane.setCenter(coursesListPane);
+
+	}
+
+
 	// *************************** list window actions ***************************
 
 	// *************************** clients list window actions 
@@ -1549,7 +1600,7 @@ public class DealershipGUI implements Initializable{
 	
 	private void loadMGasTypeChoiceBox() {
 
-		aMGasTypeChoiceBox.getItems().addAll("Extra","Regular" , "Diesel");
+		aMGasTypeChoiceBox.getItems().addAll("Premium","Regular" , "Diesel");
 
 	}
 	
@@ -1573,41 +1624,6 @@ public class DealershipGUI implements Initializable{
 	private Dealer getSelectedDealer(Dealer dealer) {
 		return dealer;
 	}
-	
-	//locate **********************************************************************************************
-
-    @FXML
-    void selectElectric(ActionEvent event) throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/register/electric.fxml"));
-		fxmlLoader.setController(this);
-		Parent coursesListPane = fxmlLoader.load();
-    	
-		addCarSecondPane.getChildren().clear();
-		addCarSecondPane.setCenter(coursesListPane);
-		
-    }
-
-    @FXML
-    void selectGas(ActionEvent event) throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/register/gas.fxml"));
-		fxmlLoader.setController(this);
-		Parent coursesListPane = fxmlLoader.load();
-    	
-		addCarSecondPane.getChildren().clear();
-		addCarSecondPane.setCenter(coursesListPane);
-    	
-    }
-
-    @FXML
-    void selectHybrid(ActionEvent event) throws IOException {
-    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/register/hybrid.fxml"));
-		fxmlLoader.setController(this);
-		Parent coursesListPane = fxmlLoader.load();
-    	
-		addCarSecondPane.getChildren().clear();
-		addCarSecondPane.setCenter(coursesListPane);
-		
-    }
 
 }
 

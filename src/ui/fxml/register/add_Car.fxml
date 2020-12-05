@@ -155,7 +155,7 @@
                   <Font name="Verdana Bold" size="22.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" onAction="#openAddCar" text="Add car">
+            <Button mnemonicParsing="false" onAction="#addCar" text="Add car">
                <font>
                   <Font name="Verdana Bold" size="15.0" />
                </font>
