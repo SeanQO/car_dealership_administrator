@@ -69,6 +69,39 @@ public class Company {
 		return dealers;
 	}
 	
+	public int getNumOfVehicleDealers() {
+		int dealers = 0;
+		for (Dealer dealer : getDealers()) {
+			if (dealer instanceof VehicleDealer) {
+				dealers ++;
+			}
+		}
+		
+		return dealers;
+	}
+	
+	public int getNumOfMotorcycleDealers() {
+		int dealers = 0;
+		for (Dealer dealer : getDealers()) {
+			if (dealer instanceof MotorcycleDealer) {
+				dealers ++;
+			}
+		}
+		
+		return dealers;
+	}
+	
+	public int getNumOfCarDealers() {
+		int dealers = 0;
+		for (Dealer dealer : getDealers()) {
+			if (dealer instanceof CarDealer) {
+				dealers ++;
+			}
+		}
+		
+		return dealers;
+	}
+	
 	public void addCarDealer(CarDealer carDealer) {
 		CarDealer newDealer = carDealer;
 		addDealer(newDealer);

@@ -3,12 +3,10 @@ package ui;
 import java.io.IOException;
 
 
+
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
 import customException.DoubleRegistrationException;
 import customException.EmptyDataException;
 import customException.NotSpecializedDealerException;
@@ -23,6 +21,8 @@ import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.PieChart.Data;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -450,6 +450,9 @@ public class DealershipGUI implements Initializable{
 
     @FXML
     private NumberAxis y;
+    
+    @FXML
+    private PieChart pieChart;
 
 	// *************************** GUI attributes and builder***************************
 
@@ -1916,6 +1919,18 @@ public class DealershipGUI implements Initializable{
 		}
 		
 		numWorkersChart.getData().addAll(set1);
+		
+		ObservableList<Data> list = FXCollections.observableArrayList(
+				new PieChart.Data("Vehicle Dealer", company.getNumOfVehicleDealers()),
+				new PieChart.Data("Motorcycle Dealer", company.getNumOfMotorcycleDealers()),
+				new PieChart.Data("Car Dealer", company.getNumOfCarDealers())
+				
+				);
+		
+	
+		
+		pieChart.setData(list);
+		
 	}
 	
 
