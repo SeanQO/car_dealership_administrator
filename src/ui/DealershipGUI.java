@@ -1,5 +1,6 @@
 package ui;
 
+
 import java.io.IOException;
 
 
@@ -56,9 +57,6 @@ import model.Vehicle;
 import model.VehicleDealer;
 
 public class DealershipGUI implements Initializable{
-
-
-
 
 	//*************************** main screen ***************************
 
@@ -597,7 +595,7 @@ public class DealershipGUI implements Initializable{
 		stage.show();
 
 		loadDealerTypeChoiceBox();
-		loadCharts();
+		
 
 	}
 
@@ -1083,6 +1081,12 @@ public class DealershipGUI implements Initializable{
 			emptyFieldsAlert();
 
 		}
+		
+		try {
+			loadCharts();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 
 
 	}
@@ -1240,6 +1244,7 @@ public class DealershipGUI implements Initializable{
 		
 		try {
 			loadSellersTable();
+			loadCharts();
 		} catch (Exception e) {
 			// if catch, means list its not opened.
 		}
@@ -1758,6 +1763,7 @@ public class DealershipGUI implements Initializable{
 	// *************************** Load table views ***************************
 
 	private void loadCompanyWindowTable() {
+		company.sortCByFullName();
 		if (company.getDealers().size() != 0) {
 			ObservableList<Dealer> observableList;
 			observableList = FXCollections.observableArrayList(company.getDealers());
@@ -1915,7 +1921,7 @@ public class DealershipGUI implements Initializable{
 		XYChart.Series<String, Integer> set1 = new XYChart.Series<>();
 		
 		for (Dealer dealer : company.getDealers()) {
-			set1.getData().add( new XYChart.Data<>(dealer.getName(), dealer.getSellers().size()));
+			set1.getData().add( new XYChart.Data<>(dealer.getName() + " ", dealer.getSellers().size()));
 		}
 		
 		numWorkersChart.getData().addAll(set1);
