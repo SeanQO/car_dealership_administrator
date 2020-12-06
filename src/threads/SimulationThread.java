@@ -18,6 +18,7 @@ public class SimulationThread extends Thread{
 	public void run() {
 		while(!sm.finished()) {
 			sm.advance();
+			dsg.updateBar();
 			try {
 				Thread.sleep(sleepTime);
 			}catch(InterruptedException e) {

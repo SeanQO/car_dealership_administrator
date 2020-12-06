@@ -1614,6 +1614,11 @@ public class DealershipGUI implements Initializable{
 	void runSimulation(ActionEvent event) {
 		System.out.println("run simulation working");
 	}
+	
+	
+	public void updateBar() {
+		
+	}
 
 	// *************************** alerts ***************************
 
