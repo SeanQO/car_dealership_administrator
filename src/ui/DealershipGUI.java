@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import customException.DoubleRegistrationException;
 import customException.EmptyDataException;
+import customException.NotSpecializedDealerException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -841,6 +842,8 @@ public class DealershipGUI implements Initializable{
 				loadMotorcycleTypeChoiceBox();
 			} catch (IOException ioException) {
 				// TODO: handle exception
+			} catch (NotSpecializedDealerException e) {
+				notSpecializedAlarm(e);
 			}
 
 
@@ -854,6 +857,8 @@ public class DealershipGUI implements Initializable{
 					openAddMotorcycle();
 				} catch (IOException ioException) {
 					// TODO: handle exception
+				} catch (NotSpecializedDealerException e) {
+					notSpecializedAlarm(e);
 				}
 
 			}
@@ -863,8 +868,8 @@ public class DealershipGUI implements Initializable{
 
 	}
 
-	private void openAddMotorcycle() throws IOException{
-		if (currentDealer instanceof MotorcycleDealer) {
+	private void openAddMotorcycle() throws IOException, NotSpecializedDealerException{
+		if (currentDealer instanceof MotorcycleDealer || currentDealer instanceof VehicleDealer) {
 			registerOpen = true;
 
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/register/add_Motorcycle.fxml"));
@@ -881,7 +886,7 @@ public class DealershipGUI implements Initializable{
 
 			stage.show();
 		}else {
-			//TODO: alert not motorcycle dealer
+			throw new NotSpecializedDealerException("Motorcycle");
 		}
 		
 
@@ -896,6 +901,8 @@ public class DealershipGUI implements Initializable{
 				openAddCar();
 			} catch (IOException ioException) {
 				// TODO: handle exception
+			} catch (NotSpecializedDealerException e) {
+				notSpecializedAlarm(e);
 			}
 
 
@@ -909,6 +916,8 @@ public class DealershipGUI implements Initializable{
 					openAddCar();
 				} catch (IOException ioException) {
 					// TODO: handle exception
+				} catch (NotSpecializedDealerException e) {
+					notSpecializedAlarm(e);
 				}
 
 			}
@@ -918,8 +927,8 @@ public class DealershipGUI implements Initializable{
 
 	}
 
-	private void openAddCar() throws IOException{
-		if (currentDealer instanceof CarDealer) {
+	private void openAddCar() throws IOException, NotSpecializedDealerException{
+		if (currentDealer instanceof CarDealer || currentDealer instanceof VehicleDealer) {
 			registerOpen = true;
 
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/register/add_car.fxml"));
@@ -937,7 +946,7 @@ public class DealershipGUI implements Initializable{
 			stage.show();
 			loadCarTypeChoiceBoxChoiceBox();
 		}else {
-			//TODO: alert not motorcycle dealer
+			throw new NotSpecializedDealerException("Car");
 		}
 		
 
@@ -1656,6 +1665,13 @@ public class DealershipGUI implements Initializable{
 		error.setHeaderText("No available sellers for this client.\n please add more sellers.");
 		error.showAndWait();
 
+	}
+	
+	private void notSpecializedAlarm(NotSpecializedDealerException e) {
+		Alert error = new Alert(AlertType.ERROR);
+		error.setTitle("Error");
+		error.setHeaderText(e.getMessage());
+		error.showAndWait();
 	}
 
 	// *************************** close stage ***************************
