@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 import customException.DoubleRegistrationException;
 import customException.EmptyDataException;
 import customException.NotSpecializedDealerException;
@@ -17,6 +20,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -433,6 +440,16 @@ public class DealershipGUI implements Initializable{
 
 	@FXML
 	private ProgressBar progressBarVTwo;
+	
+	// *************************** charts window attributes ***************************
+	@FXML
+    private BarChart<String, Integer> numWorkersChart;
+
+    @FXML
+    private CategoryAxis x;
+
+    @FXML
+    private NumberAxis y;
 
 	// *************************** GUI attributes and builder***************************
 
@@ -577,6 +594,7 @@ public class DealershipGUI implements Initializable{
 		stage.show();
 
 		loadDealerTypeChoiceBox();
+		loadCharts();
 
 	}
 
@@ -788,6 +806,7 @@ public class DealershipGUI implements Initializable{
 		stage.setOnCloseRequest(e -> closeRegisterStage() );
 
 		stage.show();
+		loadCharts();
 
 	}
 
@@ -1865,6 +1884,41 @@ public class DealershipGUI implements Initializable{
 	private Dealer getSelectedDealer(Dealer dealer) {
 		return dealer;
 	}
+	
+	// *************************** Open Charts ***************************	
+	@FXML
+    void opencharts(ActionEvent event) throws IOException{
+		if (company.getDealers().size() != 0) {
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/charts/dealerCharts.fxml"));
+			fxmlLoader.setController(this);
+			Parent chartPane = fxmlLoader.load();
+
+			Scene scene = new Scene(chartPane);
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.setTitle("charts");
+
+			stage.show();
+			
+			loadCharts();
+		}else {
+			noSelectionAlert();
+		}
+		
+    }
+	
+	@SuppressWarnings("unchecked")
+	private void loadCharts() {
+		XYChart.Series<String, Integer> set1 = new XYChart.Series<>();
+		
+		for (Dealer dealer : company.getDealers()) {
+			set1.getData().add( new XYChart.Data<>(dealer.getName(), dealer.getSellers().size()));
+		}
+		
+		numWorkersChart.getData().addAll(set1);
+	}
+	
+
 
 }
 

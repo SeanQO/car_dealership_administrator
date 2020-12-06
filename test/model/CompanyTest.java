@@ -2,6 +2,7 @@ package model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 import org.junit.jupiter.api.Test;
 
 import customException.DoubleRegistrationException;
@@ -14,7 +15,10 @@ public class CompanyTest {
 	private Dealer dealer;
 	
 	public void setup1() {
-		company = new Company("car inc", 1235, admin);
+		company = new Company("concesionario la 9na", 123456789, 
+				new Admin("Carlos", "Perea", "carlosPera@gmail.com", 123456987, 374456985, 8000000));
+		company.addCarDealer(new CarDealer("testDealer", admin, "calle 2 #23-2"));
+		
 	}
 	
 	public void setup2() throws DoubleRegistrationException, EmptyDataException {
@@ -27,9 +31,13 @@ public class CompanyTest {
 		company = new Company("car inc", 1235, admin);
 		company.addCarDealer(new CarDealer("one dealer", admin, "calle 2 #23-2"));
 	}
+	
 	@Test
 	public void test1() {
 		setup1();
+		
+		assertEquals(1, company.getDealers().size(), "the new dealer was not registered");
+		assertEquals("testDealer", company.getDealers().get(0).getName(), "threre was a registrarion but the desired one");
 		
 	}
 

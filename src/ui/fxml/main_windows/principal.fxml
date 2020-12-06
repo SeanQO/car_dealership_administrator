@@ -101,6 +101,11 @@
                         <Font name="Verdana Bold" size="15.0" />
                      </font>
                   </Button>
+                  <Button mnemonicParsing="false" onAction="#opencharts" text="Show charts">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
                   <Button mnemonicParsing="false" onAction="#openRegisterDealer" text="Register dealer">
                      <font>
                         <Font name="Verdana Bold" size="15.0" />
